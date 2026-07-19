@@ -15,21 +15,34 @@ export function AppTable({
       className={clsx(
         `
         overflow-hidden
-        rounded-3xl
+
+        rounded-2xl
+        md:rounded-3xl
+
         border
         border-[var(--border)]
+
         bg-[var(--card)]
+
         shadow-sm
         `,
         className
       )}
     >
-      <div className="overflow-x-auto">
-
-        <table className="w-full">
+      <div
+        className="
+          w-full
+          overflow-x-auto
+        "
+      >
+        <table
+          className="
+            min-w-[700px]
+            w-full
+          "
+        >
           {children}
         </table>
-
       </div>
     </div>
   );

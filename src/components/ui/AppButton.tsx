@@ -27,13 +27,41 @@ export function AppButton({
       {...props}
       disabled={loading || props.disabled}
       className={clsx(
-        "inline-flex items-center justify-center rounded-2xl px-5 py-3 text-sm font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5",
+        `
+        inline-flex
+        min-h-11
+        w-full
+        items-center
+        justify-center
+        gap-2
+
+        rounded-2xl
+
+        px-5
+        py-3
+
+        text-sm
+        font-semibold
+
+        transition-all
+        duration-200
+
+        active:scale-[.98]
+
+        disabled:cursor-not-allowed
+        disabled:opacity-50
+
+        md:min-h-12
+        md:w-auto
+
+        hover:-translate-y-0.5
+        `,
 
         {
-          "bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)] shadow-md":
+          "bg-[var(--primary)] text-white shadow-md hover:bg-[var(--primary-hover)]":
             variant === "primary",
 
-          "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700":
+          "bg-slate-100 text-slate-700 hover:bg-slate-200":
             variant === "secondary",
 
           "border border-[var(--border)] bg-[var(--card)] hover:bg-[var(--hover)]":

@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { Sidebar } from "@/components/app/sidebar/Sidebar";
 import { Topbar } from "@/components/app/topbar/Topbar";
 import { MobileBottomNav } from "@/components/mobile/MobileBottomNav";
+import { TopbarMobile } from "@/components/app/topbar/TopbarMobile";
 
 type Props = {
   children: ReactNode;
@@ -24,6 +25,8 @@ export function AppLayout({
       <div className="flex min-w-0 flex-1 flex-col">
 
         <Topbar />
+
+        <TopbarMobile />
 
         <main
   className="

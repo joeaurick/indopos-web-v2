@@ -24,36 +24,58 @@ export function AppModal({
         fixed
         inset-0
         z-50
+
         flex
-        items-center
-        justify-center
+        items-end
+
         bg-black/40
         backdrop-blur-sm
-        p-6
+
+        p-3
+
+        md:items-center
+        md:p-6
       "
     >
       <div
         className="
           w-full
-          max-w-2xl
-          rounded-3xl
+
+          max-h-[92vh]
+          overflow-y-auto
+
+          rounded-t-3xl
+          md:rounded-3xl
+
           border
           border-[var(--border)]
+
           bg-[var(--card)]
+
           shadow-2xl
+
+          md:max-w-2xl
+          md:mx-auto
         "
       >
         <div
           className="
+            sticky
+            top-0
+
             flex
             items-center
             justify-between
+
             border-b
             border-[var(--border)]
-            p-6
+
+            bg-[var(--card)]
+
+            p-5
           "
         >
-          <h2 className="text-xl font-bold">
+          <h2 className="text-lg md:text-xl font-bold">
             {title}
           </h2>
 
@@ -70,7 +92,7 @@ export function AppModal({
           </button>
         </div>
 
-        <div className="p-6">
+        <div className="p-5 md:p-6">
           {children}
         </div>
       </div>
