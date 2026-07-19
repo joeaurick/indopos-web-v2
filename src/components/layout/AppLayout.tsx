@@ -37,16 +37,17 @@ export function AppLayout({
     px-4
     pt-4
 
-    pb-[120px]
-
     sm:px-5
     md:p-8
   "
 >
-          <div className="mx-auto w-full max-w-[1700px]">
-            {children}
-          </div>
-        </main>
+  <div className="mx-auto w-full max-w-[1700px]">
+    {children}
+
+    {/* Spacer khusus Bottom Navigation */}
+    <div className="h-28 md:hidden" />
+  </div>
+</main>
 
       </div>
 

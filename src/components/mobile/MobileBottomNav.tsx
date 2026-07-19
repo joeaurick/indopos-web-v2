@@ -50,18 +50,14 @@ export function MobileBottomNav() {
     inset-x-0
     bottom-0
     z-50
-
-    h-20
-
+    h-24
+    md:hidden
+    pb-[env(safe-area-inset-bottom)]
     border-t
     border-[var(--border)]
-
     bg-[var(--card)]/95
     backdrop-blur-xl
-
     shadow-[0_-8px_30px_rgba(0,0,0,.08)]
-
-    md:hidden
   "
 >
         <div className="grid h-full grid-cols-5">
