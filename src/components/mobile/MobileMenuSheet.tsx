@@ -179,64 +179,7 @@ useEffect(() => {
 
         </div>
 
-        <div
-  className="
-    mb-6
-    flex
-    items-center
-    gap-4
-    rounded-3xl
-    border
-    border-slate-200
-    bg-slate-50
-    p-4
-  "
->
-  {business?.logo_url ? (
-    <img
-      src={business.logo_url}
-      alt="Logo"
-      className="
-        h-14
-        w-14
-        rounded-2xl
-        border
-        object-cover
-      "
-    />
-  ) : (
-    <div
-      className="
-        flex
-        h-14
-        w-14
-        items-center
-        justify-center
-        rounded-2xl
-        bg-gradient-to-br
-        from-teal-500
-        to-emerald-600
-        text-xl
-        font-bold
-        text-white
-      "
-    >
-      {(business?.name?.charAt(0) ?? "I").toUpperCase()}
-    </div>
-  )}
-
-  <div className="min-w-0">
-
-    <h3 className="truncate font-bold">
-      {business?.name || "IndoPOS"}
-    </h3>
-
-    <p className="truncate text-sm text-slate-500">
-      {business?.business_type || "Business"}
-    </p>
-
-  </div>
-</div>
+        
 
         {/* Menu */}
 

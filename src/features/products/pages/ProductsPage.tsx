@@ -159,7 +159,13 @@ export function ProductsPage() {
 
   return (
     <>
-      <div className="space-y-6 pb-40">
+      <div
+  className="
+    space-y-6
+    pb-32
+    md:pb-0
+  "
+>
 
   <ProductToolbar
     search={search}

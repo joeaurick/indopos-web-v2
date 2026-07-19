@@ -51,7 +51,7 @@ export function MobileBottomNav() {
     bottom-0
     z-50
 
-    h-24
+    h-20
 
     border-t
     border-[var(--border)]
