@@ -45,20 +45,26 @@ export function MobileBottomNav() {
   return (
     <>
       <div
-        className="
-          fixed
-          bottom-0
-          left-0
-          right-0
-          z-50
-          border-t
-          border-[var(--border)]
-          bg-[var(--card)]
-          shadow-lg
-          md:hidden
-        "
-      >
-        <div className="grid grid-cols-5">
+  className="
+    fixed
+    inset-x-0
+    bottom-0
+    z-50
+
+    h-24
+
+    border-t
+    border-[var(--border)]
+
+    bg-[var(--card)]/95
+    backdrop-blur-xl
+
+    shadow-[0_-8px_30px_rgba(0,0,0,.08)]
+
+    md:hidden
+  "
+>
+        <div className="grid h-full grid-cols-5">
 
           {menus.map((item) => {
 
@@ -72,12 +78,13 @@ export function MobileBottomNav() {
                 key={item.name}
                 href={item.href}
                 className="
-                  flex
-                  flex-col
-                  items-center
-                  justify-center
-                  py-3
-                "
+  flex
+  h-full
+  flex-col
+  items-center
+  justify-center
+  gap-1
+"
               >
                 <Icon
                   size={20}
@@ -106,12 +113,13 @@ export function MobileBottomNav() {
           <button
             onClick={() => setOpen(true)}
             className="
-              flex
-              flex-col
-              items-center
-              justify-center
-              py-3
-            "
+  flex
+  h-full
+  flex-col
+  items-center
+  justify-center
+  gap-1
+"
           >
             <Menu
               size={20}

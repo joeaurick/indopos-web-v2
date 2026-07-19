@@ -11,8 +11,7 @@ import { DashboardTopProducts } from "@/components/dashboard/DashboardTopProduct
 import { DashboardPaymentMethod } from "@/components/dashboard/DashboardPaymentMethod";
 import { DashboardInventoryAlert } from "@/components/dashboard/DashboardInventoryAlert";
 import { DashboardHeroStats } from "@/components/dashboard/DashboardHeroStats";
-
-import { AppButton } from "@/components/ui";
+import { DashboardActions } from "@/components/dashboard/DashboardActions";
 
 import {
   CalendarDays,
@@ -37,136 +36,86 @@ export default async function DashboardPage() {
       {/* HERO */}
 
       <div
-        className="
-          mb-8
-          overflow-hidden
-          rounded-[32px]
-          border
-          border-[var(--border)]
-          bg-[var(--card)]
-          p-8
-          shadow-sm
-        "
-      >
-        <div
   className="
-  mb-6
-  overflow-hidden
-  rounded-2xl
-  md:rounded-[32px]
+    mb-6
+    rounded-3xl
+    border
+    border-[var(--border)]
+    bg-[var(--card)]
+    p-5
+    shadow-sm
 
-  border
-  border-[var(--border)]
-
-  bg-[var(--card)]
-
-  p-5
-  md:p-8
-
-  shadow-sm
-"
->
-
-          {/* LEFT */}
-
-          <div className="min-w-0 flex-1">
-
-            <div
-  className="
-    flex
-    items-center
-    gap-2
-
-    text-xs
-    md:text-sm
-
-    text-[var(--text-muted)]
+    lg:p-8
   "
 >
+  <div
+    className="
+      flex
+      flex-col
+      gap-8
 
-              <CalendarDays size={16} />
-
-              {new Date().toLocaleDateString("id-ID", {
-                weekday: "long",
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-
-            </div>
-
-            <h1
-  className="
-    mt-2
-    text-3xl
-    md:text-4xl
-    font-bold
-    tracking-tight
-  "
->
-              Dashboard
-            </h1>
-
-            <p
-  className="
-    mt-3
-    max-w-2xl
-
-    text-sm
-    md:text-[15px]
-
-    leading-6
-
-    text-[var(--text-muted)]
-  "
->
-              Selamat datang kembali di IndoPOS.
-              Pantau seluruh aktivitas bisnis Anda secara real-time.
-            </p>
-
-            <DashboardHeroStats />
-
-          </div>
-
-          {/* RIGHT */}
-
-<div
-  className="
-    flex
-    flex-wrap
-    gap-3
-    xl:flex-col
-    xl:w-[240px]
-  "
->
-
-  <AppButton className="
-h-11
-px-5
-xl:w-full
-">
-    + Penjualan Baru
-  </AppButton>
-
-  <AppButton
-    variant="secondary"
-    className="h-12 w-full"
+      xl:flex-row
+      xl:items-start
+      xl:justify-between
+    "
   >
-    + Cash In
-  </AppButton>
+    {/* LEFT */}
 
-  <AppButton
-    variant="outline"
-    className="h-12 w-full"
-  >
-    + Cash Out
-  </AppButton>
+    <div className="min-w-0 flex-1">
 
-</div>
+      <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
 
-        </div>
+        <CalendarDays size={16} />
+
+        {new Date().toLocaleDateString("id-ID", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })}
 
       </div>
+
+      <h1
+        className="
+          mt-3
+          text-3xl
+          font-bold
+          tracking-tight
+
+          lg:text-5xl
+        "
+      >
+        Dashboard
+      </h1>
+
+      <p
+        className="
+          mt-3
+          max-w-3xl
+          text-sm
+          leading-7
+          text-[var(--text-muted)]
+
+          lg:text-base
+        "
+      >
+        Selamat datang kembali di IndoPOS.
+        Pantau seluruh aktivitas bisnis Anda secara real-time.
+      </p>
+
+      <div className="mt-6">
+        <DashboardHeroStats />
+      </div>
+
+    </div>
+
+    {/* RIGHT */}
+
+    <DashboardActions />
+
+  </div>
+</div>
 
       <DashboardStats />
 
@@ -210,9 +159,9 @@ xl:w-full
 
   <DashboardPaymentMethod />
 
-
 </div>
 
+<div className="h-20 md:hidden" />
     </AppLayout>
   );
 }

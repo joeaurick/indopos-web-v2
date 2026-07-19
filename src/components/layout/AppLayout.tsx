@@ -26,16 +26,20 @@ export function AppLayout({
         <Topbar />
 
         <main
-          className="
-            min-w-0
-            flex-1
-            overflow-x-hidden
-            overflow-y-auto
-            p-4
-            md:p-8
-            pb-24
-          "
-        >
+  className="
+    min-w-0
+    flex-1
+    overflow-x-hidden
+
+    px-4
+    pt-4
+
+    pb-40 md:pb-8
+
+    sm:px-5
+    md:p-8
+  "
+>
           <div className="mx-auto w-full max-w-[1700px]">
             {children}
           </div>
