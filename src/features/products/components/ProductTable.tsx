@@ -4,6 +4,7 @@ import { Package } from "lucide-react";
 
 import { Product } from "../types";
 import { ProductActions } from "./ProductActions";
+import { ProductMobileCard } from "./ProductMobileCard";
 
 function getStockStatus(stock: number) {
   if (stock === 0) {
@@ -42,129 +43,239 @@ export function ProductTable({
   onDelete,
 }: Props) {
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow">
-      <table className="w-full">
-        <thead className="bg-slate-50">
-          <tr>
-            <th className="px-6 py-4 text-left">
-              Produk
-            </th>
+    <>
+      {/* ================= MOBILE ================= */}
 
-            <th className="px-6 py-4 text-left">
-              SKU
-            </th>
+      <div
+  className="
+    space-y-4
+    pb-40
+    lg:hidden
+  "
+>
 
-            <th className="px-6 py-4 text-left">
-              Kategori
-            </th>
+        {loading ? (
+          <div className="rounded-2xl bg-white py-12 text-center shadow">
+            Memuat data...
+          </div>
+        ) : products.length === 0 ? (
+          <div className="rounded-2xl bg-white py-12 text-center text-slate-400 shadow">
+            Produk tidak ditemukan.
+          </div>
+        ) : (
+          products.map((product) => (
+            <ProductMobileCard
+              key={product.id}
+              product={product}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
+          ))
+        )}
 
-            <th className="px-6 py-4 text-right">
-              Harga
-            </th>
+      </div>
 
-            <th className="px-6 py-4 text-center">
-              Stock
-            </th>
+      {/* ================= DESKTOP ================= */}
 
-            <th className="px-6 py-4 text-center">
-              Status
-            </th>
+      <div className="hidden overflow-hidden rounded-2xl bg-white shadow lg:block">
 
-            <th className="px-6 py-4 text-center">
-              Action
-            </th>
-          </tr>
-        </thead>
+        <table className="w-full">
 
-        <tbody>
-          {loading ? (
+          <thead className="bg-slate-50">
+
             <tr>
-              <td
-                colSpan={7}
-                className="py-12 text-center"
-              >
-                Memuat data...
-              </td>
-            </tr>
-          ) : products.length === 0 ? (
-            <tr>
-              <td
-                colSpan={7}
-                className="py-12 text-center text-slate-400"
-              >
-                Produk tidak ditemukan.
-              </td>
-            </tr>
-          ) : (
-            products.map((product) => {
-              const status =
-                getStockStatus(product.stock);
 
-              return (
-                <tr
-                  key={product.id}
-                  className="border-t hover:bg-slate-50"
+              <th className="px-6 py-4 text-left">
+                Produk
+              </th>
+
+              <th className="px-6 py-4 text-left">
+                SKU
+              </th>
+
+              <th className="px-6 py-4 text-left">
+                Kategori
+              </th>
+
+              <th className="px-6 py-4 text-right">
+                Harga
+              </th>
+
+              <th className="px-6 py-4 text-center">
+                Stock
+              </th>
+
+              <th className="px-6 py-4 text-center">
+                Status
+              </th>
+
+              <th className="px-6 py-4 text-center">
+                Action
+              </th>
+
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            {loading ? (
+
+              <tr>
+
+                <td
+                  colSpan={7}
+                  className="py-12 text-center"
                 >
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100">
-                        <Package className="text-slate-500" />
+                  Memuat data...
+                </td>
+
+              </tr>
+
+            ) : products.length === 0 ? (
+
+              <tr>
+
+                <td
+                  colSpan={7}
+                  className="py-12 text-center text-slate-400"
+                >
+                  Produk tidak ditemukan.
+                </td>
+
+              </tr>
+
+            ) : (
+
+              products.map((product) => {
+
+                const status =
+                  getStockStatus(product.stock);
+
+                return (
+
+                  <tr
+                    key={product.id}
+                    className="border-t transition hover:bg-slate-50"
+                  >
+
+                    <td className="px-6 py-4">
+
+                      <div className="flex items-center gap-3">
+
+                        <div
+                          className="
+                            flex
+                            h-12
+                            w-12
+                            items-center
+                            justify-center
+                            rounded-xl
+                            bg-slate-100
+                          "
+                        >
+
+                          <Package className="text-slate-500" />
+
+                        </div>
+
+                        <div>
+
+                          <p className="font-semibold">
+                            {product.name}
+                          </p>
+
+                        </div>
+
                       </div>
 
-                      <div className="font-semibold">
-                        {product.name}
-                      </div>
-                    </div>
-                  </td>
+                    </td>
 
-                  <td className="px-6 py-4">
-                    {product.sku}
-                  </td>
+                    <td className="px-6 py-4">
+                      {product.sku}
+                    </td>
 
-                  <td className="px-6 py-4">
-                    <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
-                      {product.category_name ??
-                        "Tanpa Kategori"}
-                    </span>
-                  </td>
+                    <td className="px-6 py-4">
 
-                  <td className="px-6 py-4 text-right font-semibold">
-                    Rp{" "}
-                    {product.price.toLocaleString(
-                      "id-ID"
-                    )}
-                  </td>
+                      <span
+                        className="
+                          rounded-full
+                          bg-blue-100
+                          px-3
+                          py-1
+                          text-sm
+                          font-medium
+                          text-blue-700
+                        "
+                      >
+                        {product.category_name ??
+                          "Tanpa Kategori"}
+                      </span>
 
-                  <td className="px-6 py-4 text-center">
-                    <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold">
-                      {product.stock}
-                    </span>
-                  </td>
+                    </td>
 
-                  <td className="px-6 py-4 text-center">
-                    <span
-                      className={`rounded-full px-3 py-1 text-sm font-semibold ${status.className}`}
-                    >
-                      {status.label}
-                    </span>
-                  </td>
+                    <td className="px-6 py-4 text-right font-semibold">
 
-                  <td className="px-6 py-4">
-                    <ProductActions
-                      onEdit={() =>
-                        onEdit(product)
-                      }
-                      onDelete={() =>
-                        onDelete(product)
-                      }
-                    />
-                  </td>
-                </tr>
-              );
-            })
-          )}
-        </tbody>
-      </table>
-    </div>
+                      Rp{" "}
+                      {product.price.toLocaleString(
+                        "id-ID"
+                      )}
+
+                    </td>
+
+                    <td className="px-6 py-4 text-center">
+
+                      <span
+                        className="
+                          rounded-full
+                          bg-slate-100
+                          px-3
+                          py-1
+                          text-sm
+                          font-semibold
+                        "
+                      >
+                        {product.stock}
+                      </span>
+
+                    </td>
+
+                    <td className="px-6 py-4 text-center">
+
+                      <span
+                        className={`rounded-full px-3 py-1 text-sm font-semibold ${status.className}`}
+                      >
+                        {status.label}
+                      </span>
+
+                    </td>
+
+                    <td className="px-6 py-4">
+
+                      <ProductActions
+                        onEdit={() =>
+                          onEdit(product)
+                        }
+                        onDelete={() =>
+                          onDelete(product)
+                        }
+                      />
+
+                    </td>
+
+                  </tr>
+
+                );
+
+              })
+
+            )}
+
+          </tbody>
+
+        </table>
+
+      </div>
+    </>
   );
 }

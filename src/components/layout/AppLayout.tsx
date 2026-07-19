@@ -37,7 +37,7 @@ export function AppLayout({
     px-4
     pt-4
 
-    pb-40 md:pb-8
+    pb-[calc(88px+env(safe-area-inset-bottom))]
 
     sm:px-5
     md:p-8

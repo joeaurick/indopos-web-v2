@@ -159,30 +159,24 @@ export function ProductsPage() {
 
   return (
     <>
-      <div className="space-y-6">
+      <div className="space-y-6 pb-40">
 
-        <ProductToolbar
-          search={search}
-          onSearch={setSearch}
-          selectedCategory={
-            selectedCategory
-          }
-          onSelectCategory={
-            setSelectedCategory
-          }
-          onAdd={() =>
-            setOpenCreateDialog(true)
-          }
-        />
+  <ProductToolbar
+    search={search}
+    onSearch={setSearch}
+    selectedCategory={selectedCategory}
+    onSelectCategory={setSelectedCategory}
+    onAdd={() => setOpenCreateDialog(true)}
+  />
 
-        <ProductTable
-          products={filteredProducts}
-          loading={loading}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
+  <ProductTable
+    products={filteredProducts}
+    loading={loading}
+    onEdit={handleEdit}
+    onDelete={handleDelete}
+  />
 
-      </div>
+</div>
 
       <ProductDialog
         open={openCreateDialog}
