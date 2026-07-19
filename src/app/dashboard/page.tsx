@@ -50,21 +50,39 @@ export default async function DashboardPage() {
       >
         <div
   className="
-    flex
-    flex-col
-    gap-8
+  mb-6
+  overflow-hidden
+  rounded-2xl
+  md:rounded-[32px]
 
-    xl:flex-row
-    xl:items-start
-    xl:justify-between
-  "
+  border
+  border-[var(--border)]
+
+  bg-[var(--card)]
+
+  p-5
+  md:p-8
+
+  shadow-sm
+"
 >
 
           {/* LEFT */}
 
           <div className="min-w-0 flex-1">
 
-            <div className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
+            <div
+  className="
+    flex
+    items-center
+    gap-2
+
+    text-xs
+    md:text-sm
+
+    text-[var(--text-muted)]
+  "
+>
 
               <CalendarDays size={16} />
 
@@ -77,11 +95,31 @@ export default async function DashboardPage() {
 
             </div>
 
-            <h1 className="mt-3 text-4xl font-bold tracking-tight">
+            <h1
+  className="
+    mt-2
+    text-3xl
+    md:text-4xl
+    font-bold
+    tracking-tight
+  "
+>
               Dashboard
             </h1>
 
-            <p className="mt-3 max-w-2xl text-[15px] text-[var(--text-muted)]">
+            <p
+  className="
+    mt-3
+    max-w-2xl
+
+    text-sm
+    md:text-[15px]
+
+    leading-6
+
+    text-[var(--text-muted)]
+  "
+>
               Selamat datang kembali di IndoPOS.
               Pantau seluruh aktivitas bisnis Anda secara real-time.
             </p>
@@ -95,15 +133,18 @@ export default async function DashboardPage() {
 <div
   className="
     flex
-    w-full
-    flex-col
+    flex-wrap
     gap-3
-
-    xl:w-[220px]
+    xl:flex-col
+    xl:w-[240px]
   "
 >
 
-  <AppButton className="h-12 w-full">
+  <AppButton className="
+h-11
+px-5
+xl:w-full
+">
     + Penjualan Baru
   </AppButton>
 
@@ -129,7 +170,16 @@ export default async function DashboardPage() {
 
       <DashboardStats />
 
-<div className="mt-6 grid gap-6 xl:grid-cols-3">
+<div
+  className="
+    mt-6
+    grid
+    gap-4
+    md:gap-6
+
+    xl:grid-cols-3
+  "
+>
 
   <div className="xl:col-span-2">
     <DashboardChart />
@@ -139,7 +189,16 @@ export default async function DashboardPage() {
 
 </div>
 
-<div className="mt-6 grid gap-6 xl:grid-cols-2">
+<div
+  className="
+    mt-6
+    grid
+    gap-4
+    md:gap-6
+
+    xl:grid-cols-2
+  "
+>
 
   <DashboardTopProducts />
 

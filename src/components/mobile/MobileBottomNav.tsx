@@ -22,7 +22,7 @@ const menus = [
   },
   {
     name: "POS",
-    href: "/point-of-sale",
+    href: "/pos",
     icon: ShoppingCart,
   },
   {
