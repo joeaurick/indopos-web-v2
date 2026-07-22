@@ -3,7 +3,6 @@ import { create } from "zustand";
 import { salesService } from "../services/sales.service";
 import { SaleItem } from "../types";
 
-
 type SaleDetailState = {
   open: boolean;
 
@@ -24,6 +23,7 @@ type SaleDetailState = {
   items: SaleItem[];
 
   openDetail: (
+    businessId: string,
     saleId: string,
     invoice: string,
     createdAt: string,
@@ -34,7 +34,9 @@ type SaleDetailState = {
 
   closeDetail: () => void;
 
-  refreshDetail: () => Promise<void>;
+  refreshDetail: (
+    businessId: string
+  ) => Promise<void>;
 };
 
 export const useSaleDetailStore =
@@ -58,6 +60,7 @@ export const useSaleDetailStore =
     items: [],
 
     openDetail: async (
+      businessId,
       saleId,
       invoice,
       createdAt,
@@ -72,6 +75,7 @@ export const useSaleDetailStore =
       try {
         const items =
           await salesService.getSaleDetail(
+            businessId,
             saleId
           );
 
@@ -94,7 +98,9 @@ export const useSaleDetailStore =
       }
     },
 
-    refreshDetail: async () => {
+    refreshDetail: async (
+      businessId
+    ) => {
       const {
         saleId,
         invoice,
@@ -107,6 +113,7 @@ export const useSaleDetailStore =
       if (!saleId) return;
 
       await get().openDetail(
+        businessId,
         saleId,
         invoice,
         createdAt,

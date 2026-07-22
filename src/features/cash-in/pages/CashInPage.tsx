@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 
 import { notify } from "@/lib/notify";
 
@@ -14,19 +17,30 @@ import { CashInForm } from "../components/CashInForm";
 
 import { useCashInStore } from "../store/cash-in.store";
 
-export function CashInPage() {
+type Props = {
+  businessId: string;
+};
+
+export function CashInPage({
+  businessId,
+}: Props) {
   const cashIn = useCashInStore(
     (state) => state.data.cashIn
   );
 
-  const deleteCashIn =
-    useCashInStore(
-      (state) => state.deleteCashIn
-    );
-
   const loading =
     useCashInStore(
       (state) => state.loading
+    );
+
+  const fetchCashIn =
+    useCashInStore(
+      (state) => state.fetchCashIn
+    );
+
+  const deleteCashIn =
+    useCashInStore(
+      (state) => state.deleteCashIn
     );
 
   const [openForm, setOpenForm] =
@@ -42,16 +56,34 @@ export function CashInPage() {
     setSelectedId,
   ] = useState<string | null>(null);
 
+  useEffect(() => {
+    fetchCashIn(businessId);
+  }, [
+    businessId,
+    fetchCashIn,
+  ]);
+
   const selectedCashIn =
     cashIn.find(
-      (item) => item.id === selectedId
+      (item) =>
+        item.id === selectedId
     ) ?? null;
 
   async function handleDelete() {
     if (!selectedId) return;
 
+    const toast =
+      notify.loading(
+        "Menghapus Cash In..."
+      );
+
     try {
-      await deleteCashIn(selectedId);
+      await deleteCashIn(
+        businessId,
+        selectedId
+      );
+
+      notify.dismiss(toast);
 
       notify.success(
         "Cash In berhasil dihapus."
@@ -61,6 +93,8 @@ export function CashInPage() {
 
       setSelectedId(null);
     } catch (error: any) {
+      notify.dismiss(toast);
+
       notify.error(
         error?.message ??
           "Gagal menghapus Cash In."
@@ -94,26 +128,31 @@ export function CashInPage() {
         }
       />
 
-      <CashInSummary />
+      <CashInSummary
+  businessId={businessId}
+/>
 
       <div className="mt-6">
-        <CashInFilter />
+        <CashInFilter
+    businessId={businessId}
+  />
       </div>
 
       <div className="mt-6">
-        <CashInTable
-          onEdit={(id: string) => {
-            setSelectedId(id);
-            setOpenForm(true);
-          }}
-          onDelete={(id: string) => {
-            setSelectedId(id);
-            setOpenDelete(true);
-          }}
-        />
-      </div>
+  <CashInTable businessId={businessId}
+    onEdit={(id: string) => {
+      setSelectedId(id);
+      setOpenForm(true);
+    }}
+    onDelete={(id: string) => {
+      setSelectedId(id);
+      setOpenDelete(true);
+    }}
+  />
+</div>
 
       <CashInForm
+        businessId={businessId}
         open={openForm}
         mode={
           selectedCashIn

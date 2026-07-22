@@ -1,10 +1,18 @@
 import { AppLayout } from "@/components/layout/AppLayout";
+
+import { getCurrentBusinessId } from "@/lib/business/get-current-business";
+
 import { InventoryPage } from "@/features/inventory";
 
-export default function Page() {
+export default async function Page() {
+  const businessId =
+    await getCurrentBusinessId();
+
   return (
     <AppLayout>
-      <InventoryPage />
+      <InventoryPage
+        businessId={businessId}
+      />
     </AppLayout>
   );
 }

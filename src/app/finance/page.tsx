@@ -2,10 +2,17 @@ import { AppLayout } from "@/components/layout/AppLayout";
 
 import { FinancePage } from "@/features/finance";
 
-export default function Page() {
+import { getCurrentBusinessId } from "@/lib/business/get-current-business";
+
+export default async function Page() {
+  const businessId =
+    await getCurrentBusinessId();
+
   return (
     <AppLayout>
-      <FinancePage />
+      <FinancePage
+        businessId={businessId}
+      />
     </AppLayout>
   );
 }

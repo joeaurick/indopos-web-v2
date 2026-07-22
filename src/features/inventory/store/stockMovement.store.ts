@@ -12,9 +12,12 @@ type StockMovementState = {
 
   loading: boolean;
 
-  fetchMovements: () => Promise<void>;
+  fetchMovements: (
+    businessId: string
+  ) => Promise<void>;
 
   createMovement: (
+    businessId: string,
     payload: StockMovementPayload
   ) => Promise<void>;
 };
@@ -27,14 +30,18 @@ export const useStockMovementStore =
       loading: false,
 
       fetchMovements:
-        async () => {
+        async (
+          businessId
+        ) => {
           set({
             loading: true,
           });
 
           try {
             const movements =
-              await stockMovementService.getMovements();
+              await stockMovementService.getMovements(
+                businessId
+              );
 
             set({
               movements,
@@ -47,12 +54,18 @@ export const useStockMovementStore =
         },
 
       createMovement:
-        async (payload) => {
+        async (
+          businessId,
+          payload
+        ) => {
           await stockMovementService.createMovement(
+            businessId,
             payload
           );
 
-          await get().fetchMovements();
+          await get().fetchMovements(
+            businessId
+          );
         },
     })
   );

@@ -7,7 +7,13 @@ import { FinanceSummary } from "../components/FinanceSummary";
 import { FinanceChart } from "../components/FinanceChart";
 import { FinanceHistory } from "../components/FinanceHistory";
 
-export function FinancePage() {
+type Props = {
+  businessId: string;
+};
+
+export function FinancePage({
+  businessId,
+}: Props) {
   return (
     <>
       <PageHeader
@@ -15,16 +21,24 @@ export function FinancePage() {
         subtitle="Ringkasan keuangan, pemasukan, pengeluaran, dan riwayat transaksi."
       />
 
-      <FinanceFilter />
+      <FinanceFilter
+        businessId={businessId}
+      />
 
-      <FinanceSummary />
+      <FinanceSummary
+        businessId={businessId}
+      />
 
       <div className="mt-6">
-        <FinanceChart />
+        <FinanceChart
+          businessId={businessId}
+        />
       </div>
 
       <div className="mt-6">
-        <FinanceHistory />
+        <FinanceHistory
+          businessId={businessId}
+        />
       </div>
     </>
   );

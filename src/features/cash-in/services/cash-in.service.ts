@@ -1,4 +1,4 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
 
 import {
   CashIn,
@@ -6,8 +6,11 @@ import {
   CashInFilter,
 } from "../types";
 
+const supabase = getSupabaseClient();
+
 export const cashInService = {
   async getCashIn(
+    businessId: string,
     filter?: Partial<CashInFilter>
   ): Promise<CashInData> {
     // ==========================
@@ -20,6 +23,7 @@ export const cashInService = {
     } = await supabase
       .from("cash_in_categories")
       .select("*")
+      .eq("business_id", businessId)
       .eq("is_active", true)
       .order("name");
 
@@ -43,6 +47,7 @@ export const cashInService = {
           is_active
         )
       `)
+      .eq("business_id", businessId)
       .eq("is_active", true)
       .order("cash_in_date", {
         ascending: false,
@@ -187,6 +192,7 @@ export const cashInService = {
   },
 
   async createCashIn(
+    businessId: string,
     data: {
       category_id: string | null;
 
@@ -208,7 +214,11 @@ export const cashInService = {
     const { error } =
       await supabase
         .from("cash_in")
-        .insert(data);
+        .insert({
+          ...data,
+          business_id: businessId,
+          is_active: true,
+        });
 
     if (error) {
       throw error;
@@ -216,6 +226,7 @@ export const cashInService = {
   },
 
   async updateCashIn(
+    businessId: string,
     id: string,
     data: Partial<CashIn>
   ) {
@@ -223,6 +234,7 @@ export const cashInService = {
       await supabase
         .from("cash_in")
         .update(data)
+        .eq("business_id", businessId)
         .eq("id", id);
 
     if (error) {
@@ -231,6 +243,7 @@ export const cashInService = {
   },
 
   async deleteCashIn(
+    businessId: string,
     id: string
   ) {
     const { error } =
@@ -239,6 +252,7 @@ export const cashInService = {
         .update({
           is_active: false,
         })
+        .eq("business_id", businessId)
         .eq("id", id);
 
     if (error) {

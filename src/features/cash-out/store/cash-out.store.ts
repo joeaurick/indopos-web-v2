@@ -19,7 +19,9 @@ type CashOutState = {
     filter: Partial<CashOutFilter>
   ) => void;
 
-  fetchCashOut: () => Promise<void>;
+  fetchCashOut: (
+    businessId: string
+  ) => Promise<void>;
 
   uploadReceipt: (
     file: File
@@ -30,6 +32,7 @@ type CashOutState = {
   ) => Promise<void>;
 
   createExpense: (
+    businessId: string,
     data: {
       category_id: string | null;
       title: string;
@@ -43,11 +46,13 @@ type CashOutState = {
   ) => Promise<void>;
 
   updateExpense: (
+    businessId: string,
     id: string,
     data: Partial<Expense>
   ) => Promise<void>;
 
   deleteExpense: (
+    businessId: string,
     id: string
   ) => Promise<void>;
 };
@@ -86,7 +91,9 @@ export const useCashOutStore =
         },
       }),
 
-    fetchCashOut: async () => {
+    fetchCashOut: async (
+      businessId
+    ) => {
       set({
         loading: true,
       });
@@ -94,16 +101,16 @@ export const useCashOutStore =
       try {
         const data =
           await cashOutService.getCashOut(
+            businessId,
             get().filter
           );
 
         set({
           data,
-          loading: false,
         });
       } catch (error) {
         console.error(error);
-
+      } finally {
         set({
           loading: false,
         });
@@ -127,6 +134,7 @@ export const useCashOutStore =
     },
 
     createExpense: async (
+      businessId,
       payload
     ) => {
       set({
@@ -135,28 +143,24 @@ export const useCashOutStore =
 
       try {
         await cashOutService.createExpense(
+          businessId,
           payload
         );
 
-        const data =
-          await cashOutService.getCashOut(
-            get().filter
-          );
-
-        set({
-          data,
-          loading: false,
-        });
+        await get().fetchCashOut(
+          businessId
+        );
       } catch (error) {
+        throw error;
+      } finally {
         set({
           loading: false,
         });
-
-        throw error;
       }
     },
 
     updateExpense: async (
+      businessId,
       id,
       payload
     ) => {
@@ -166,29 +170,25 @@ export const useCashOutStore =
 
       try {
         await cashOutService.updateExpense(
+          businessId,
           id,
           payload
         );
 
-        const data =
-          await cashOutService.getCashOut(
-            get().filter
-          );
-
-        set({
-          data,
-          loading: false,
-        });
+        await get().fetchCashOut(
+          businessId
+        );
       } catch (error) {
+        throw error;
+      } finally {
         set({
           loading: false,
         });
-
-        throw error;
       }
     },
 
     deleteExpense: async (
+      businessId,
       id
     ) => {
       set({
@@ -197,24 +197,19 @@ export const useCashOutStore =
 
       try {
         await cashOutService.deleteExpense(
+          businessId,
           id
         );
 
-        const data =
-          await cashOutService.getCashOut(
-            get().filter
-          );
-
-        set({
-          data,
-          loading: false,
-        });
+        await get().fetchCashOut(
+          businessId
+        );
       } catch (error) {
+        throw error;
+      } finally {
         set({
           loading: false,
         });
-
-        throw error;
       }
     },
   }));

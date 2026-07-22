@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
+
+const supabase = getSupabaseClient();
 
 import { ReceiptPrint } from "@/features/pos/components/ReceiptPrint";
 

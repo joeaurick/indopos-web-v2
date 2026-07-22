@@ -27,6 +27,8 @@ import {
 import { useCashOutStore } from "../store/cash-out.store";
 
 type Props = {
+  businessId: string;
+
   open: boolean;
 
   mode: "create" | "edit";
@@ -39,6 +41,7 @@ type Props = {
 };
 
 export function CashOutForm({
+  businessId,
   open,
   mode,
   expense,
@@ -257,16 +260,17 @@ export function CashOutForm({
         mode === "create"
       ) {
         await createExpense(
-          payload
-        );
+  businessId,
+  payload
+);
 
-        notify.dismiss(
-          toastId
-        );
+notify.dismiss(
+  toastId
+);
 
-        notify.success(
-          "Pengeluaran berhasil ditambahkan."
-        );
+notify.success(
+  "Pengeluaran berhasil ditambahkan."
+);
       } else {
         if (!expense) {
           throw new Error(
@@ -275,17 +279,18 @@ export function CashOutForm({
         }
 
         await updateExpense(
-          expense.id,
-          payload
-        );
+  businessId,
+  expense.id,
+  payload
+);
 
-        notify.dismiss(
-          toastId
-        );
+notify.dismiss(
+  toastId
+);
 
-        notify.success(
-          "Pengeluaran berhasil diperbarui."
-        );
+notify.success(
+  "Pengeluaran berhasil diperbarui."
+);
       }
 
       onSuccess?.();

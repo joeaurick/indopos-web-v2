@@ -8,7 +8,7 @@ type DashboardState = {
 
   data: DashboardData;
 
-  fetchDashboard: () => Promise<void>;
+  fetchDashboard: (businessId: string) => Promise<void>;
 };
 
 const initialData: DashboardData = {
@@ -54,14 +54,14 @@ export const useDashboardStore =
 
     data: initialData,
 
-    fetchDashboard: async () => {
+    fetchDashboard: async (businessId: string) => {
       set({
         loading: true,
       });
 
       try {
         const data =
-          await dashboardService.getDashboard();
+  await dashboardService.getDashboard(businessId);
 
         set({
   data: {

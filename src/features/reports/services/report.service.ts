@@ -1,4 +1,5 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
+const supabase = getSupabaseClient();
 
 import {
   ReportData,
@@ -8,6 +9,7 @@ import {
 
 export const reportService = {
   async getReports(
+    businessId: string,
     filter?: ReportFilter
   ): Promise<ReportData> {
     let salesQuery = supabase
@@ -19,6 +21,7 @@ export const reportService = {
         status,
         created_at
       `)
+      .eq("business_id", businessId)
       .eq("is_active", true);
 
     let purchaseQuery = supabase
@@ -30,6 +33,7 @@ export const reportService = {
         status,
         created_at
       `)
+      .eq("business_id", businessId)
       .eq("is_active", true);
 
     let cashInQuery = supabase
@@ -41,6 +45,7 @@ export const reportService = {
         receipt_number,
         cash_in_date
       `)
+      .eq("business_id", businessId)
       .eq("is_active", true);
 
     let expenseQuery = supabase
@@ -52,6 +57,7 @@ export const reportService = {
         receipt_number,
         expense_date
       `)
+      .eq("business_id", businessId)
       .eq("is_active", true);
 
     // FILTER akan ditambahkan setelah ini
@@ -217,14 +223,14 @@ if (expenseError) {
 
 const totalSales =
   sales?.reduce(
-    (sum, item: any) =>
+    (sum: number, item: any) =>
       sum + Number(item.total),
     0
   ) ?? 0;
 
 const totalCashIn =
   cashIn?.reduce(
-    (sum, item: any) =>
+    (sum: number, item: any) =>
       sum + Number(item.amount),
     0
   ) ?? 0;
@@ -235,14 +241,14 @@ const totalIncome =
 
 const totalPurchases =
   purchases?.reduce(
-    (sum, item: any) =>
+    (sum: number, item: any) =>
       sum + Number(item.total),
     0
   ) ?? 0;
 
 const totalExpenses =
   expenses?.reduce(
-    (sum, item: any) =>
+    (sum: number, item: any) =>
       sum + Number(item.amount),
     0
   ) ?? 0;
@@ -356,7 +362,8 @@ const { data: saleItems } =
         id,
         name
       )
-    `);
+    `)
+    .eq("business_id", businessId);
 
 const productMap = new Map<
   string,

@@ -1,6 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import Link from "next/link";
 
 import {
@@ -10,7 +14,13 @@ import {
 
 import { useCashInStore } from "../store/cash-in.store";
 
-export function CashInFilter() {
+type Props = {
+  businessId: string;
+};
+
+export function CashInFilter({
+  businessId,
+}: Props) {
   const {
     filter,
     setFilter,
@@ -21,19 +31,29 @@ export function CashInFilter() {
   const [search, setSearch] =
     useState(filter.search);
 
+  useEffect(() => {
+    fetchCashIn(businessId);
+  }, [
+    businessId,
+    fetchCashIn,
+  ]);
+
   return (
     <div className="mb-6 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
 
       <div className="mb-5 flex items-center justify-between">
 
         <div>
+
           <h3 className="text-lg font-semibold">
             Filter Pemasukan
           </h3>
 
           <p className="text-sm text-slate-500">
-            Cari transaksi berdasarkan kategori, tanggal, atau kata kunci.
+            Cari transaksi berdasarkan kategori,
+            tanggal, atau kata kunci.
           </p>
+
         </div>
 
         <Link
@@ -76,6 +96,7 @@ export function CashInFilter() {
           }
           className="rounded-xl border border-slate-200 px-3"
         >
+
           <option value="">
             Semua Kategori
           </option>
@@ -90,6 +111,7 @@ export function CashInFilter() {
               </option>
             )
           )}
+
         </select>
 
         <input
@@ -126,7 +148,9 @@ export function CashInFilter() {
               search,
             });
 
-            fetchCashIn();
+            fetchCashIn(
+              businessId
+            );
           }}
           className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
         >
@@ -144,7 +168,9 @@ export function CashInFilter() {
               endDate: "",
             });
 
-            fetchCashIn();
+            fetchCashIn(
+              businessId
+            );
           }}
           className="rounded-xl border border-slate-300 px-6 py-3 hover:bg-slate-100"
         >

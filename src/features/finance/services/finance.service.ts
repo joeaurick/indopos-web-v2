@@ -1,4 +1,6 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
+
+const supabase = getSupabaseClient();
 
 import {
   FinanceData,
@@ -9,8 +11,10 @@ import {
 
 export const financeService = {
   async getFinance(
+    businessId: string,
     filter?: FinanceFilter
   ): Promise<FinanceData> {
+
     let salesQuery = supabase
       .from("sales")
       .select(`
@@ -20,6 +24,7 @@ export const financeService = {
         status,
         created_at
       `)
+      .eq("business_id", businessId)
       .eq("is_active", true);
 
     let purchaseQuery = supabase
@@ -31,19 +36,21 @@ export const financeService = {
         status,
         created_at
       `)
+      .eq("business_id", businessId)
       .eq("is_active", true);
 
-      let cashInQuery = supabase
-  .from("cash_in")
-  .select(`
-    id,
-    title,
-    amount,
-    receipt_number,
-    created_at,
-    cash_in_date
-  `)
-  .eq("is_active", true);
+    let cashInQuery = supabase
+      .from("cash_in")
+      .select(`
+        id,
+        title,
+        amount,
+        receipt_number,
+        created_at,
+        cash_in_date
+      `)
+      .eq("business_id", businessId)
+      .eq("is_active", true);
 
     let expenseQuery = supabase
       .from("expenses")
@@ -55,7 +62,10 @@ export const financeService = {
         payment_method,
         receipt_number
       `)
+      .eq("business_id", businessId)
       .eq("is_active", true);
+
+    // SELANJUTNYA BIARKAN PERSIS SEPERTI FILE KAMU
 
     if (filter) {
       const now = new Date();
@@ -217,14 +227,14 @@ if (cashInError) {
 
     const totalSales =
       sales?.reduce(
-        (sum, item: any) =>
+        (sum: number, item: any) =>
           sum + Number(item.total),
         0
       ) ?? 0;
 
       const totalCashIn =
   cashIn?.reduce(
-    (sum, item: any) =>
+    (sum: number, item: any) =>
       sum + Number(item.amount),
     0
   ) ?? 0;
@@ -235,14 +245,14 @@ const totalIncome =
 
     const totalPurchases =
       purchases?.reduce(
-        (sum, item: any) =>
+        (sum: number, item: any) =>
           sum + Number(item.total),
         0
       ) ?? 0;
 
     const totalExpenses =
       expenses?.reduce(
-        (sum, item: any) =>
+        (sum: number, item: any) =>
           sum + Number(item.amount),
         0
       ) ?? 0;

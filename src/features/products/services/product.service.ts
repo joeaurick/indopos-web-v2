@@ -1,11 +1,16 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
+
 import {
   Product,
   ProductPayload,
 } from "../types";
 
+const supabase = getSupabaseClient();
+
 export const productService = {
-  async getProducts(): Promise<Product[]> {
+  async getProducts(
+    businessId: string
+  ): Promise<Product[]> {
     const { data, error } = await supabase
       .from("products")
       .select(`
@@ -14,6 +19,7 @@ export const productService = {
           name
         )
       `)
+      .eq("business_id", businessId)
       .eq("is_active", true)
       .order("name", {
         ascending: true,
@@ -42,12 +48,14 @@ export const productService = {
   },
 
   async createProduct(
+    businessId: string,
     payload: ProductPayload
   ) {
     const { data, error } = await supabase
       .from("products")
       .insert({
         ...payload,
+        business_id: businessId,
         is_active: true,
       })
       .select(`
@@ -66,6 +74,7 @@ export const productService = {
   },
 
   async updateProduct(
+    businessId: string,
     id: string,
     payload: ProductPayload
   ) {
@@ -73,6 +82,7 @@ export const productService = {
       .from("products")
       .update(payload)
       .eq("id", id)
+      .eq("business_id", businessId)
       .select(`
         *,
         categories (
@@ -88,13 +98,17 @@ export const productService = {
     return data;
   },
 
-  async deleteProduct(id: string) {
+  async deleteProduct(
+    businessId: string,
+    id: string
+  ) {
     const { error } = await supabase
       .from("products")
       .update({
         is_active: false,
       })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("business_id", businessId);
 
     if (error) {
       throw error;

@@ -13,11 +13,15 @@ import { useCashInStore } from "../store/cash-in.store";
 import type { CashIn } from "../types";
 
 type Props = {
+  businessId: string;
+
   onEdit?: (id: string) => void;
+
   onDelete?: (id: string) => void;
 };
 
 export function CashInTable({
+  businessId,
   onEdit,
   onDelete,
 }: Props) {
@@ -37,8 +41,11 @@ export function CashInTable({
     );
 
   useEffect(() => {
-    fetchCashIn();
-  }, [fetchCashIn]);
+    fetchCashIn(businessId);
+  }, [
+    businessId,
+    fetchCashIn,
+  ]);
 
   return (
     <Card className="overflow-hidden">
@@ -136,8 +143,7 @@ export function CashInTable({
                     </td>
 
                     <td className="px-5 py-4">
-                      {item.category?.name ??
-                        "-"}
+                      {item.category?.name ?? "-"}
                     </td>
 
                     <td className="px-5 py-4">
@@ -161,15 +167,12 @@ export function CashInTable({
                     </td>
 
                     <td className="px-5 py-4 text-right font-semibold text-emerald-600">
-
                       Rp{" "}
-
                       {Number(
                         item.amount
                       ).toLocaleString(
                         "id-ID"
                       )}
-
                     </td>
 
                     <td className="px-5 py-4">
@@ -184,9 +187,7 @@ export function CashInTable({
                           }
                           className="rounded-lg bg-amber-500 p-2 text-white transition hover:bg-amber-600"
                         >
-                          <Pencil
-                            size={16}
-                          />
+                          <Pencil size={16} />
                         </button>
 
                         <button
@@ -197,9 +198,7 @@ export function CashInTable({
                           }
                           className="rounded-lg bg-red-600 p-2 text-white transition hover:bg-red-700"
                         >
-                          <Trash2
-                            size={16}
-                          />
+                          <Trash2 size={16} />
                         </button>
 
                       </div>

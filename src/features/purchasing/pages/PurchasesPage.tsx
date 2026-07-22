@@ -16,7 +16,13 @@ import { PurchaseTable } from "../components/PurchaseTable";
 import { PurchaseDialog } from "../components/PurchaseDialog";
 import { PurchaseForm } from "../components/PurchaseForm";
 
-export function PurchasesPage() {
+type Props = {
+  businessId: string;
+};
+
+export function PurchasesPage({
+  businessId,
+}: Props) {
   const [search, setSearch] =
     useState("");
 
@@ -53,8 +59,13 @@ export function PurchasesPage() {
     );
 
   useEffect(() => {
-    fetchPurchases();
-  }, [fetchPurchases]);
+    fetchPurchases(
+      businessId
+    );
+  }, [
+    businessId,
+    fetchPurchases,
+  ]);
 
   const filtered =
     useMemo(() => {
@@ -72,7 +83,10 @@ export function PurchasesPage() {
             .toLowerCase()
             .includes(keyword)
       );
-    }, [purchases, search]);
+    }, [
+      purchases,
+      search,
+    ]);
 
   async function handleReceive(
     purchase: PurchaseOrder
@@ -84,6 +98,7 @@ export function PurchasesPage() {
 
     try {
       await receivePurchase(
+        businessId,
         purchase.id
       );
 
@@ -116,6 +131,7 @@ export function PurchasesPage() {
 
     try {
       await deletePurchase(
+        businessId,
         purchase.id
       );
 
@@ -184,6 +200,7 @@ export function PurchasesPage() {
         }
       >
         <PurchaseForm
+          businessId={businessId}
           onSuccess={() =>
             setOpenDialog(false)
           }

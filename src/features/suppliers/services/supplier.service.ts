@@ -1,15 +1,20 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
 
 import {
   Supplier,
   SupplierPayload,
 } from "../types";
 
+const supabase = getSupabaseClient();
+
 export const supplierService = {
-  async getSuppliers(): Promise<Supplier[]> {
+  async getSuppliers(
+    businessId: string
+  ): Promise<Supplier[]> {
     const { data, error } = await supabase
       .from("suppliers")
       .select("*")
+      .eq("business_id", businessId)
       .eq("is_active", true)
       .order("name", {
         ascending: true,
@@ -23,12 +28,14 @@ export const supplierService = {
   },
 
   async createSupplier(
+    businessId: string,
     payload: SupplierPayload
   ) {
     const { data, error } = await supabase
       .from("suppliers")
       .insert({
         ...payload,
+        business_id: businessId,
         is_active: true,
       })
       .select()
@@ -42,6 +49,7 @@ export const supplierService = {
   },
 
   async updateSupplier(
+    businessId: string,
     id: string,
     payload: SupplierPayload
   ) {
@@ -49,6 +57,7 @@ export const supplierService = {
       .from("suppliers")
       .update(payload)
       .eq("id", id)
+      .eq("business_id", businessId)
       .select()
       .single();
 
@@ -59,13 +68,17 @@ export const supplierService = {
     return data;
   },
 
-  async deleteSupplier(id: string) {
+  async deleteSupplier(
+    businessId: string,
+    id: string
+  ) {
     const { error } = await supabase
       .from("suppliers")
       .update({
         is_active: false,
       })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("business_id", businessId);
 
     if (error) {
       throw error;

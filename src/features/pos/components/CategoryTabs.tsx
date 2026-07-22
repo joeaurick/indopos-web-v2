@@ -6,7 +6,13 @@ import { Grid2x2 } from "lucide-react";
 import { useCategoryStore } from "@/features/categories";
 import { useProductStore } from "@/features/products";
 
-export function CategoryTabs() {
+type Props = {
+  businessId: string;
+};
+
+export function CategoryTabs({
+  businessId,
+}: Props) {
   const categories = useCategoryStore(
     (state) => state.categories
   );
@@ -24,8 +30,8 @@ export function CategoryTabs() {
   );
 
   useEffect(() => {
-    fetchCategories();
-  }, [fetchCategories]);
+    fetchCategories(businessId);
+  }, [businessId, fetchCategories]);
 
   return (
     <div

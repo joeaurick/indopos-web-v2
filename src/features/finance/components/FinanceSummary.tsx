@@ -17,6 +17,10 @@ import { Card } from "@/components/ui/Card";
 
 import { useFinanceStore } from "../store/finance.store";
 
+type Props = {
+  businessId: string;
+};
+
 type SummaryCardProps = {
   title: string;
   value: number;
@@ -35,6 +39,7 @@ function SummaryCard({
   return (
     <Card className="p-6">
       <div className="flex items-center justify-between">
+
         <div>
 
           <p className="text-sm text-slate-500">
@@ -43,8 +48,12 @@ function SummaryCard({
 
           <h2 className="mt-2 text-4xl font-bold">
             {count
-              ? value.toLocaleString("id-ID")
-              : `Rp ${value.toLocaleString("id-ID")}`}
+              ? value.toLocaleString(
+                  "id-ID"
+                )
+              : `Rp ${value.toLocaleString(
+                  "id-ID"
+                )}`}
           </h2>
 
         </div>
@@ -54,12 +63,15 @@ function SummaryCard({
         >
           <Icon size={30} />
         </div>
+
       </div>
     </Card>
   );
 }
 
-export function FinanceSummary() {
+export function FinanceSummary({
+  businessId,
+}: Props) {
   const fetchFinance =
     useFinanceStore(
       (state) => state.fetchFinance
@@ -75,9 +87,21 @@ export function FinanceSummary() {
       (state) => state.data.summary
     );
 
+  const filter =
+    useFinanceStore(
+      (state) => state.filter
+    );
+
   useEffect(() => {
-    fetchFinance();
-  }, [fetchFinance]);
+    fetchFinance(
+      businessId,
+      filter
+    );
+  }, [
+    businessId,
+    filter,
+    fetchFinance,
+  ]);
 
   const cards = [
     {
@@ -106,7 +130,7 @@ export function FinanceSummary() {
     },
     {
       title: "Sales",
-      value: summary.totalIncome,
+      value: summary.totalSales,
       icon: CircleDollarSign,
       color: "bg-green-600",
     },
@@ -143,6 +167,7 @@ export function FinanceSummary() {
 
   return (
     <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3">
+
       {cards.map((card) => (
         <div key={card.title}>
           {loading ? (
@@ -158,6 +183,7 @@ export function FinanceSummary() {
           )}
         </div>
       ))}
+
     </div>
   );
 }

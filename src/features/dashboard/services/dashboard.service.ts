@@ -1,94 +1,97 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
 import { DashboardData } from "../types";
 
 export const dashboardService = {
-  async getDashboard(): Promise<DashboardData> {
+  async getDashboard(
+  businessId: string
+): Promise<DashboardData> {
     const today = new Date();
 
     today.setHours(0, 0, 0, 0);
+
+    const supabase = getSupabaseClient();
 
     // ======================
     // Sales Hari Ini
     // ======================
 
     const { data: todaySales } =
-      await supabase
-        .from("sales")
-        .select("*")
-        .eq("is_active", true)
-        .gte(
-          "created_at",
-          today.toISOString()
-        );
+  await supabase
+    .from("sales")
+    .select("*")
+    .eq("business_id", businessId)
+    .eq("is_active", true)
+    .gte(
+      "created_at",
+      today.toISOString()
+    );
 
     // ======================
     // Cash In Hari Ini
     // ======================
 
     const { data: todayCashIn } =
-      await supabase
-        .from("cash_in")
-        .select("amount")
-        .eq("is_active", true)
-        .gte(
-          "cash_in_date",
-          today
-            .toISOString()
-            .slice(0, 10)
-        );
+  await supabase
+    .from("cash_in")
+    .select("amount")
+    .eq("business_id", businessId)
+    .eq("is_active", true)
+    .gte(
+      "cash_in_date",
+      today
+        .toISOString()
+        .slice(0, 10)
+    );
 
     // ======================
     // Purchase Hari Ini
     // ======================
 
     const {
-      data: todayPurchases,
-    } = await supabase
-      .from("purchase_orders")
-      .select("total")
-      .eq("is_active", true)
-      .gte(
-        "created_at",
-        today.toISOString()
-      );
+  data: todayPurchases,
+} = await supabase
+  .from("purchase_orders")
+  .select("total")
+  .eq("business_id", businessId)
+  .eq("is_active", true)
+  .gte(
+    "created_at",
+    today.toISOString()
+  );
 
     // ======================
     // Cash Out Hari Ini
     // ======================
 
     const {
-      data: todayCashOut,
-    } = await supabase
-      .from("expenses")
-      .select("amount")
-      .eq("is_active", true)
-      .gte(
-        "expense_date",
-        today
-          .toISOString()
-          .slice(0, 10)
-      );
+  data: todayCashOut,
+} = await supabase
+  .from("expenses")
+  .select("amount")
+  .eq("business_id", businessId)
+  .eq("is_active", true)
+  .gte(
+    "expense_date",
+    today
+      .toISOString()
+      .slice(0, 10)
+  );
 
     // ======================
     // Summary
     // ======================
 
     const totalSales =
-      todaySales?.reduce(
-        (
-          sum,
-          item: any
-        ) =>
-          sum +
-          Number(item.total),
-        0
-      ) ?? 0;
+  todaySales?.reduce(
+    (sum: number, item: any) =>
+      sum + Number(item.total),
+    0
+  ) ?? 0;
 
     const totalCashIn =
       todayCashIn?.reduce(
         (
-          sum,
-          item: any
+          sum: number, item: any
         ) =>
           sum +
           Number(item.amount),
@@ -98,8 +101,7 @@ export const dashboardService = {
     const totalPurchases =
       todayPurchases?.reduce(
         (
-          sum,
-          item: any
+          sum: number, item: any
         ) =>
           sum +
           Number(item.total),
@@ -109,8 +111,7 @@ export const dashboardService = {
     const totalCashOut =
       todayCashOut?.reduce(
         (
-          sum,
-          item: any
+          sum: number, item: any
         ) =>
           sum +
           Number(item.amount),
@@ -144,11 +145,12 @@ export const dashboardService = {
 
     const { count: productCount } =
       await supabase
-        .from("products")
-        .select("*", {
-          count: "exact",
-          head: true,
-        });
+  .from("products")
+  .select("*", {
+    count: "exact",
+    head: true,
+  })
+  .eq("business_id", businessId);
 
     // ======================
 // Total Customer
@@ -156,12 +158,13 @@ export const dashboardService = {
 
 const { count: customerCount } =
   await supabase
-    .from("customers")
-    .select("*", {
-      count: "exact",
-      head: true,
-    })
-    .eq("is_active", true);
+  .from("customers")
+  .select("*", {
+    count: "exact",
+    head: true,
+  })
+  .eq("business_id", businessId)
+  .eq("is_active", true);
 
 // ======================
 // Total Supplier
@@ -169,12 +172,13 @@ const { count: customerCount } =
 
 const { count: supplierCount } =
   await supabase
-    .from("suppliers")
-    .select("*", {
-      count: "exact",
-      head: true,
-    })
-    .eq("is_active", true);    
+  .from("suppliers")
+  .select("*", {
+    count: "exact",
+    head: true,
+  })
+  .eq("business_id", businessId)
+  .eq("is_active", true);  
 
     // ======================
     // Low Stock
@@ -182,18 +186,19 @@ const { count: supplierCount } =
 
     const { data: lowStockProducts } =
   await supabase
-    .from("products")
-    .select(`
-      id,
-      name,
-      stock,
-      minimum_stock
-    `)
-    .lte("stock", 5)
-    .order("stock", {
-      ascending: true,
-    })
-    .limit(5);
+  .from("products")
+  .select(`
+    id,
+    name,
+    stock,
+    minimum_stock
+  `)
+  .eq("business_id", businessId)
+  .lte("stock", 5)
+  .order("stock", {
+    ascending: true,
+  })
+  .limit(5);
 
     // ======================
 // Recent Transactions
@@ -208,6 +213,7 @@ const { data: recentSales } =
       total,
       created_at
     `)
+    .eq("business_id", businessId)
     .eq("is_active", true)
     .order("created_at", {
       ascending: false,
@@ -224,6 +230,7 @@ const { data: recentCashIn } =
       cash_in_date,
       receipt_number
     `)
+    .eq("business_id", businessId)
     .eq("is_active", true)
     .order("cash_in_date", {
       ascending: false,
@@ -240,6 +247,7 @@ const { data: recentExpenses } =
       expense_date,
       receipt_number
     `)
+    .eq("business_id", businessId)
     .eq("is_active", true)
     .order("expense_date", {
       ascending: false,
@@ -300,15 +308,16 @@ const recentTransactions = [
 
     const { data: saleItems } =
       await supabase
-        .from("sale_items")
-        .select(`
-  quantity,
-  subtotal,
-  products(
-    id,
-    name
-  )
-`);
+  .from("sale_items")
+  .select(`
+    quantity,
+    subtotal,
+    products(
+      id,
+      name
+    )
+  `)
+  .eq("business_id", businessId);
 
     const productMap = new Map();
 
@@ -386,13 +395,14 @@ for (let i = 0; i < 30; i++) {
 // SALES
 const { data: sales30Days } =
   await supabase
-    .from("sales")
-    .select("created_at,total")
-    .eq("is_active", true)
-    .gte(
-      "created_at",
-      startDate.toISOString()
-    );
+  .from("sales")
+  .select("created_at,total")
+  .eq("business_id", businessId)
+  .eq("is_active", true)
+  .gte(
+    "created_at",
+    startDate.toISOString()
+  );
 
 sales30Days?.forEach(
   (item: any) => {
@@ -417,17 +427,16 @@ sales30Days?.forEach(
 // CASH IN
 const { data: cashIn30Days } =
   await supabase
-    .from("cash_in")
-    .select(
-      "cash_in_date,amount"
-    )
-    .eq("is_active", true)
-    .gte(
-      "cash_in_date",
-      startDate
-        .toISOString()
-        .slice(0, 10)
-    );
+  .from("cash_in")
+  .select("cash_in_date,amount")
+  .eq("business_id", businessId)
+  .eq("is_active", true)
+  .gte(
+    "cash_in_date",
+    startDate
+      .toISOString()
+      .slice(0, 10)
+  );
 
 cashIn30Days?.forEach(
   (item: any) => {
@@ -452,13 +461,14 @@ cashIn30Days?.forEach(
 // PURCHASE
 const { data: purchase30Days } =
   await supabase
-    .from("purchase_orders")
-    .select("created_at,total")
-    .eq("is_active", true)
-    .gte(
-      "created_at",
-      startDate.toISOString()
-    );
+  .from("purchase_orders")
+  .select("created_at,total")
+  .eq("business_id", businessId)
+  .eq("is_active", true)
+  .gte(
+    "created_at",
+    startDate.toISOString()
+  );
 
 purchase30Days?.forEach(
   (item: any) => {
@@ -483,17 +493,16 @@ purchase30Days?.forEach(
 // CASH OUT
 const { data: expense30Days } =
   await supabase
-    .from("expenses")
-    .select(
-      "expense_date,amount"
-    )
-    .eq("is_active", true)
-    .gte(
-      "expense_date",
-      startDate
-        .toISOString()
-        .slice(0, 10)
-    );
+  .from("expenses")
+  .select("expense_date,amount")
+  .eq("business_id", businessId)
+  .eq("is_active", true)
+  .gte(
+    "expense_date",
+    startDate
+      .toISOString()
+      .slice(0, 10)
+  );
 
 expense30Days?.forEach(
   (item: any) => {
@@ -533,12 +542,13 @@ const dailySales =
 
 const { data: paymentSales } =
   await supabase
-    .from("sales")
-    .select(`
-      payment_method,
-      total
-    `)
-    .eq("is_active", true);
+  .from("sales")
+  .select(`
+    payment_method,
+    total
+  `)
+  .eq("business_id", businessId)
+  .eq("is_active", true);
 
 const paymentMap = new Map<
   string,
@@ -579,19 +589,20 @@ const paymentMethods =
 
     const { data: activities } =
       await supabase
-        .from("stock_movements")
-        .select(`
-id,
-reference_type,
-reference_id,
-movement_type,
-note,
-created_at
-`)
-        .order("created_at", {
-          ascending: false,
-        })
-        .limit(5);
+  .from("stock_movements")
+  .select(`
+    id,
+    reference_type,
+    reference_id,
+    movement_type,
+    note,
+    created_at
+  `)
+  .eq("business_id", businessId)
+  .order("created_at", {
+    ascending: false,
+  })
+  .limit(5);
 
     return {
   summary: {

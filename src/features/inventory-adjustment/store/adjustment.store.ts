@@ -12,9 +12,12 @@ type AdjustmentState = {
 
   loading: boolean;
 
-  fetchAdjustments: () => Promise<void>;
+  fetchAdjustments: (
+    businessId: string
+  ) => Promise<void>;
 
   createAdjustment: (
+    businessId: string,
     payload: AdjustmentPayload
   ) => Promise<void>;
 };
@@ -27,14 +30,18 @@ export const useAdjustmentStore =
       loading: false,
 
       fetchAdjustments:
-        async () => {
+        async (
+          businessId: string
+        ) => {
           set({
             loading: true,
           });
 
           try {
             const adjustments =
-              await adjustmentService.getAdjustments();
+              await adjustmentService.getAdjustments(
+                businessId
+              );
 
             set({
               adjustments,
@@ -47,17 +54,23 @@ export const useAdjustmentStore =
         },
 
       createAdjustment:
-        async (payload) => {
+        async (
+          businessId: string,
+          payload
+        ) => {
           set({
             loading: true,
           });
 
           try {
             await adjustmentService.createAdjustment(
+              businessId,
               payload
             );
 
-            await get().fetchAdjustments();
+            await get().fetchAdjustments(
+              businessId
+            );
           } finally {
             set({
               loading: false,

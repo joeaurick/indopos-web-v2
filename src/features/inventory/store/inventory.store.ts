@@ -16,9 +16,12 @@ type InventoryState = {
 
   selectedCategory: string | null;
 
-  fetchInventory: () => Promise<void>;
+  fetchInventory: (
+    businessId: string
+  ) => Promise<void>;
 
   adjustStock: (
+    businessId: string,
     payload: StockAdjustmentPayload
   ) => Promise<void>;
 
@@ -32,78 +35,87 @@ type InventoryState = {
 };
 
 export const useInventoryStore =
-create<InventoryState>((set, get) => ({
+  create<InventoryState>(
+    (set, get) => ({
+      items: [],
 
-  items: [],
+      loading: false,
 
-  loading: false,
+      search: "",
 
-  search: "",
+      selectedCategory:
+        null,
 
-  selectedCategory: null,
+      setSearch: (
+        value
+      ) => {
+        set({
+          search: value,
+        });
+      },
 
-  setSearch: (value) => {
-    set({
-      search: value,
-    });
-  },
+      setSelectedCategory: (
+        id
+      ) => {
+        set({
+          selectedCategory:
+            id,
+        });
+      },
 
-  setSelectedCategory: (id) => {
-    set({
-      selectedCategory: id,
-    });
-  },
+      fetchInventory:
+        async (
+          businessId
+        ) => {
+          set({
+            loading: true,
+          });
 
-  fetchInventory: async () => {
+          try {
+            const items =
+              await inventoryService.getInventory(
+                businessId
+              );
 
-    set({
-      loading: true,
-    });
+            set({
+              items,
+            });
+          } catch (
+            error
+          ) {
+            console.error(
+              error
+            );
+          } finally {
+            set({
+              loading: false,
+            });
+          }
+        },
 
-    try {
+      adjustStock:
+        async (
+          businessId,
+          payload
+        ) => {
+          set({
+            loading: true,
+          });
 
-      const items =
-        await inventoryService.getInventory();
+          try {
+            await inventoryService.adjustStock(
+              businessId,
+              payload
+            );
 
-      set({
-        items,
-        loading: false,
-      });
-
-    } catch (error) {
-
-      console.error(error);
-
-      set({
-        loading: false,
-      });
-
-    }
-
-  },
-
-  adjustStock: async (payload) => {
-
-    set({
-      loading: true,
-    });
-
-    try {
-
-      await inventoryService.adjustStock(
-        payload
-      );
-
-      await get().fetchInventory();
-
-    } finally {
-
-      set({
-        loading: false,
-      });
-
-    }
-
-  },
-
-}));
+            await get().fetchInventory(
+              businessId
+            );
+          } finally {
+            set({
+              loading: false,
+            });
+          }
+        },
+    })
+  );

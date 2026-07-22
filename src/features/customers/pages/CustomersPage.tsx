@@ -16,6 +16,8 @@ import { CustomerToolbar } from "../components/CustomerToolbar";
 import { CustomerTable } from "../components/CustomerTable";
 import { CustomerDialog } from "../components/CustomerDialog";
 import { CustomerForm } from "../components/CustomerForm";
+import { useBusinessId } from "@/hooks";
+
 
 export function CustomersPage() {
   const [search, setSearch] =
@@ -58,6 +60,8 @@ export function CustomersPage() {
       (state) => state.loading
     );
 
+    const businessId = useBusinessId();
+
   const fetchCustomers =
     useCustomerStore(
       (state) => state.fetchCustomers
@@ -69,8 +73,10 @@ export function CustomersPage() {
     );
 
   useEffect(() => {
-    fetchCustomers();
-  }, [fetchCustomers]);
+  if (!businessId) return;
+
+  fetchCustomers(businessId);
+}, [businessId, fetchCustomers]);
 
   const filteredCustomers =
     useMemo(() => {
@@ -124,9 +130,14 @@ export function CustomersPage() {
       );
 
     try {
-      await deleteCustomer(
-        selectedCustomer.id
-      );
+      if (!businessId) {
+  throw new Error("Business tidak ditemukan.");
+}
+
+await deleteCustomer(
+  businessId,
+  selectedCustomer.id
+);
 
       notify.dismiss(
         loadingToast
@@ -192,13 +203,12 @@ export function CustomersPage() {
         }
       >
         <CustomerForm
-          mode="create"
-          onSuccess={() =>
-            setOpenCreateDialog(
-              false
-            )
-          }
-        />
+  businessId={businessId!}
+  mode="create"
+  onSuccess={() =>
+    setOpenCreateDialog(false)
+  }
+/>
       </CustomerDialog>
 
       <CustomerDialog
@@ -215,20 +225,14 @@ export function CustomersPage() {
         }}
       >
         <CustomerForm
-          mode="edit"
-          customer={
-            selectedCustomer
-          }
-          onSuccess={() => {
-            setOpenEditDialog(
-              false
-            );
-
-            setSelectedCustomer(
-              null
-            );
-          }}
-        />
+  businessId={businessId!}
+  mode="edit"
+  customer={selectedCustomer}
+  onSuccess={() => {
+    setOpenEditDialog(false);
+    setSelectedCustomer(null);
+  }}
+/>
       </CustomerDialog>
 
       <ConfirmDialog

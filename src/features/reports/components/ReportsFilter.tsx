@@ -4,7 +4,13 @@ import { useState } from "react";
 
 import { useReportStore } from "../store/report.store";
 
-export function ReportsFilter() {
+type Props = {
+  businessId: string;
+};
+
+export function ReportsFilter({
+  businessId,
+}: Props) {
   const fetchReports =
     useReportStore(
       (state) => state.fetchReports
@@ -27,9 +33,12 @@ export function ReportsFilter() {
 
         <button
           onClick={() =>
-            fetchReports({
-              type: "all",
-            })
+            fetchReports(
+              businessId,
+              {
+                type: "all",
+              }
+            )
           }
           className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
             filter.type === "all"
@@ -42,9 +51,12 @@ export function ReportsFilter() {
 
         <button
           onClick={() =>
-            fetchReports({
-              type: "today",
-            })
+            fetchReports(
+              businessId,
+              {
+                type: "today",
+              }
+            )
           }
           className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
             filter.type === "today"
@@ -57,9 +69,12 @@ export function ReportsFilter() {
 
         <button
           onClick={() =>
-            fetchReports({
-              type: "week",
-            })
+            fetchReports(
+              businessId,
+              {
+                type: "week",
+              }
+            )
           }
           className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
             filter.type === "week"
@@ -72,9 +87,12 @@ export function ReportsFilter() {
 
         <button
           onClick={() =>
-            fetchReports({
-              type: "month",
-            })
+            fetchReports(
+              businessId,
+              {
+                type: "month",
+              }
+            )
           }
           className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
             filter.type === "month"
@@ -125,11 +143,14 @@ export function ReportsFilter() {
 
         <button
           onClick={() =>
-            fetchReports({
-              type: "custom",
-              startDate,
-              endDate,
-            })
+            fetchReports(
+              businessId,
+              {
+                type: "custom",
+                startDate,
+                endDate,
+              }
+            )
           }
           className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
         >

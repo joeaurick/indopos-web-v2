@@ -39,13 +39,17 @@ type SalesState = {
 
   search: string;
 
-  fetchSales: () => Promise<void>;
+  fetchSales: (
+    businessId: string
+  ) => Promise<void>;
 
   setSearch: (
     value: string
   ) => void;
 
-  refresh: () => Promise<void>;
+  refresh: (
+    businessId: string
+  ) => Promise<void>;
 };
 
 export const useSalesStore =
@@ -62,14 +66,18 @@ export const useSalesStore =
       });
     },
 
-    fetchSales: async () => {
+    fetchSales: async (
+      businessId
+    ) => {
       set({
         loading: true,
       });
 
       try {
         const sales =
-          await salesService.getSales();
+          await salesService.getSales(
+            businessId
+          );
 
         set({
           sales,
@@ -83,7 +91,11 @@ export const useSalesStore =
       }
     },
 
-    refresh: async () => {
-      await get().fetchSales();
+    refresh: async (
+      businessId
+    ) => {
+      await get().fetchSales(
+        businessId
+      );
     },
   }));

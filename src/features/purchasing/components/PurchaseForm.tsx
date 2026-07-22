@@ -25,10 +25,12 @@ import {
 } from "../hooks/usePurchaseItems";
 
 type Props = {
+  businessId: string;
   onSuccess?: () => void;
 };
 
 export function PurchaseForm({
+  businessId,
   onSuccess,
 }: Props) {
 
@@ -53,8 +55,8 @@ export function PurchaseForm({
     );
 
   useEffect(() => {
-    fetchSuppliers();
-  }, [fetchSuppliers]);
+  fetchSuppliers(businessId);
+}, [businessId, fetchSuppliers]);
 
   const {
     items,
@@ -154,7 +156,9 @@ export function PurchaseForm({
 
     try {
 
-      await createPurchase({
+      await createPurchase(
+  businessId,
+  {
 
         supplier_id:
           supplierId,
@@ -176,7 +180,7 @@ export function PurchaseForm({
         note:
           note.trim() || null,
 
-        items: items.map(
+                items: items.map(
           (
             item: PurchaseItem
           ) => ({
@@ -196,7 +200,8 @@ export function PurchaseForm({
           })
         ),
 
-      });
+      }
+);
 
       notify.dismiss(
         loadingToast
@@ -337,10 +342,11 @@ export function PurchaseForm({
       </div>
 
       <ProductSelector
-        onSelect={
-          handleSelectProduct
-        }
-      />
+  businessId={businessId}
+  onSelect={
+    handleSelectProduct
+  }
+/>
 
       <PurchaseItemTable
         items={items}

@@ -13,12 +13,14 @@ import { Category } from "../types";
 import { useCategoryStore } from "../store/category.store";
 
 type Props = {
+  businessId: string;
   mode: "create" | "edit";
   category?: Category | null;
   onSuccess?: () => void;
 };
 
 export function CategoryForm({
+  businessId,
   mode,
   category,
   onSuccess,
@@ -96,11 +98,13 @@ export function CategoryForm({
 
     try {
       if (mode === "create") {
-        await createCategory({
-          name: categoryName,
-          description:
-            categoryDescription || null,
-        });
+        await createCategory(
+  businessId,
+  {
+    name: categoryName,
+    description: categoryDescription || null,
+  }
+);
 
         notify.dismiss(
           loadingToast
@@ -121,14 +125,13 @@ export function CategoryForm({
         }
 
         await updateCategory(
-          category.id,
-          {
-            name: categoryName,
-            description:
-              categoryDescription ||
-              null,
-          }
-        );
+  businessId,
+  category.id,
+  {
+    name: categoryName,
+    description: categoryDescription || null,
+  }
+);
 
         notify.dismiss(
           loadingToast

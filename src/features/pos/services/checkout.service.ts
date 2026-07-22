@@ -1,4 +1,5 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
+const supabase = getSupabaseClient();
 import { CartItem } from "../types";
 
 function generateInvoice() {
@@ -15,6 +16,7 @@ function generateInvoice() {
 }
 
 type CheckoutPayload = {
+  businessId: string;
   items: CartItem[];
   paymentMethod: string;
   paymentAmount: number;
@@ -22,10 +24,11 @@ type CheckoutPayload = {
 
 export const checkoutService = {
   async checkout({
-    items,
-    paymentMethod,
-    paymentAmount,
-  }: CheckoutPayload) {
+  businessId,
+  items,
+  paymentMethod,
+  paymentAmount,
+}: CheckoutPayload) {
     const invoice = generateInvoice();
 
     const subtotal = items.reduce(
@@ -55,9 +58,11 @@ export const checkoutService = {
     } = await supabase
       .from("sales")
       .insert({
-        invoice,
+  business_id: businessId,
 
-        customer_id: null,
+  invoice,
+
+  customer_id: null,
 
         subtotal,
 
@@ -94,10 +99,12 @@ export const checkoutService = {
     // ==========================
 
     const saleItems = items.map(
-      (item) => ({
-        sale_id: sale.id,
+  (item) => ({
+    business_id: businessId,
 
-        product_id: item.id,
+    sale_id: sale.id,
+
+    product_id: item.id,
 
         quantity: item.qty,
 
@@ -130,7 +137,8 @@ export const checkoutService = {
         .from("products")
         .select("stock")
         .eq("id", item.id)
-        .single();
+.eq("business_id", businessId)
+.single();
 
       if (productError) {
         throw productError;
@@ -150,9 +158,10 @@ export const checkoutService = {
       } = await supabase
         .from("products")
         .update({
-          stock: after,
-        })
-        .eq("id", item.id);
+  stock: after,
+})
+.eq("id", item.id)
+.eq("business_id", businessId);
 
       if (updateError) {
         throw updateError;
@@ -167,7 +176,9 @@ export const checkoutService = {
       } = await supabase
         .from("stock_movements")
         .insert({
-          product_id: item.id,
+  business_id: businessId,
+
+  product_id: item.id,
 
           reference_type: "SALE",
 

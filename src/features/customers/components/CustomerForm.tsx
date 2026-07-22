@@ -12,12 +12,17 @@ import { Customer } from "../types";
 import { useCustomerStore } from "../store/customer.store";
 
 type Props = {
+  businessId: string;
+
   mode: "create" | "edit";
+
   customer?: Customer | null;
+
   onSuccess?: () => void;
 };
 
 export function CustomerForm({
+  businessId,
   mode,
   customer,
   onSuccess,
@@ -91,7 +96,10 @@ export function CustomerForm({
 
     try {
       if (mode === "create") {
-        await createCustomer(payload);
+        await createCustomer(
+  businessId,
+  payload
+);
 
         notify.dismiss(
           loadingToast
@@ -113,9 +121,10 @@ export function CustomerForm({
         }
 
         await updateCustomer(
-          customer.id,
-          payload
-        );
+  businessId,
+  customer.id,
+  payload
+);
 
         notify.dismiss(
           loadingToast

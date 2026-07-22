@@ -12,18 +12,23 @@ type CategoryState = {
   categories: Category[];
   loading: boolean;
 
-  fetchCategories: () => Promise<void>;
+  fetchCategories: (
+    businessId: string
+  ) => Promise<void>;
 
   createCategory: (
+    businessId: string,
     payload: CategoryPayload
   ) => Promise<void>;
 
   updateCategory: (
+    businessId: string,
     id: string,
     payload: CategoryPayload
   ) => Promise<void>;
 
   deleteCategory: (
+    businessId: string,
     id: string
   ) => Promise<void>;
 };
@@ -35,7 +40,9 @@ create<CategoryState>((set, get) => ({
 
   loading: false,
 
-  fetchCategories: async () => {
+  fetchCategories: async (
+    businessId
+  ) => {
 
     set({
       loading: true,
@@ -44,7 +51,9 @@ create<CategoryState>((set, get) => ({
     try {
 
       const categories =
-        await categoryService.getCategories();
+        await categoryService.getCategories(
+          businessId
+        );
 
       set({
         categories,
@@ -64,6 +73,7 @@ create<CategoryState>((set, get) => ({
   },
 
   createCategory: async (
+    businessId,
     payload
   ) => {
 
@@ -91,10 +101,13 @@ create<CategoryState>((set, get) => ({
       }
 
       await categoryService.createCategory(
+        businessId,
         payload
       );
 
-      await get().fetchCategories();
+      await get().fetchCategories(
+        businessId
+      );
 
     } finally {
 
@@ -107,6 +120,7 @@ create<CategoryState>((set, get) => ({
   },
 
   updateCategory: async (
+    businessId,
     id,
     payload
   ) => {
@@ -136,11 +150,14 @@ create<CategoryState>((set, get) => ({
       }
 
       await categoryService.updateCategory(
+        businessId,
         id,
         payload
       );
 
-      await get().fetchCategories();
+      await get().fetchCategories(
+        businessId
+      );
 
     } finally {
 
@@ -153,6 +170,7 @@ create<CategoryState>((set, get) => ({
   },
 
   deleteCategory: async (
+    businessId,
     id
   ) => {
 
@@ -163,10 +181,13 @@ create<CategoryState>((set, get) => ({
     try {
 
       await categoryService.deleteCategory(
+        businessId,
         id
       );
 
-      await get().fetchCategories();
+      await get().fetchCategories(
+        businessId
+      );
 
     } finally {
 

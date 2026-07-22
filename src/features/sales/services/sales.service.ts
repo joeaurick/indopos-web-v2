@@ -1,4 +1,4 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
 
 import {
   Sale,
@@ -6,11 +6,16 @@ import {
   SalePayload,
 } from "../types";
 
+const supabase = getSupabaseClient();
+
 export const salesService = {
-  async getSales(): Promise<Sale[]> {
+  async getSales(
+    businessId: string
+  ): Promise<Sale[]> {
     const { data, error } = await supabase
       .from("sales")
       .select("*")
+      .eq("business_id", businessId)
       .eq("is_active", true)
       .order("created_at", {
         ascending: false,
@@ -29,37 +34,38 @@ export const salesService = {
         customer_id:
           item.customer_id,
 
-        subtotal:
-          Number(item.subtotal ?? 0),
+        subtotal: Number(
+          item.subtotal ?? 0
+        ),
 
-        discount:
-          Number(item.discount ?? 0),
+        discount: Number(
+          item.discount ?? 0
+        ),
 
-        tax:
-          Number(item.tax ?? 0),
+        tax: Number(
+          item.tax ?? 0
+        ),
 
-        total:
-          Number(item.total ?? 0),
+        total: Number(
+          item.total ?? 0
+        ),
 
         payment_method:
           item.payment_method ??
           "CASH",
 
-        payment_amount:
-          Number(
-            item.payment_amount ?? 0
-          ),
+        payment_amount: Number(
+          item.payment_amount ?? 0
+        ),
 
-        change_amount:
-          Number(
-            item.change_amount ?? 0
-          ),
+        change_amount: Number(
+          item.change_amount ?? 0
+        ),
 
         status:
           item.status ?? "PAID",
 
-        note:
-          item.note,
+        note: item.note,
 
         is_active:
           item.is_active,
@@ -71,20 +77,24 @@ export const salesService = {
   },
 
   async getSaleDetail(
+    businessId: string,
     saleId: string
   ): Promise<SaleItem[]> {
-    const { data, error } =
-      await supabase
-        .from("sale_items")
-        .select(`
-          *,
-          product:products (
-            id,
-            name,
-            sku
-          )
-        `)
-        .eq("sale_id", saleId);
+    const { data, error } = await supabase
+      .from("sale_items")
+      .select(`
+        *,
+        sale:sales!inner (
+          business_id
+        ),
+        product:products (
+          id,
+          name,
+          sku
+        )
+      `)
+      .eq("sale_id", saleId)
+      .eq("sale.business_id", businessId);
 
     if (error) {
       throw error;
@@ -108,23 +118,23 @@ export const salesService = {
           item.product?.sku ??
           "-",
 
-        quantity:
-          Number(
-            item.quantity
-          ),
+        quantity: Number(
+          item.quantity
+        ),
 
-        price:
-          Number(item.price),
+        price: Number(
+          item.price
+        ),
 
-        subtotal:
-          Number(
-            item.subtotal
-          ),
+        subtotal: Number(
+          item.subtotal
+        ),
       })
     );
   },
 
   async createSale(
+    businessId: string,
     payload: SalePayload
   ) {
     const {
@@ -139,6 +149,9 @@ export const salesService = {
       .from("sales")
       .insert({
         ...header,
+
+        business_id:
+          businessId,
 
         status: "PAID",
 
@@ -155,6 +168,9 @@ export const salesService = {
       const detail =
         items.map((item) => ({
           sale_id: sale.id,
+
+          business_id:
+            businessId,
 
           product_id:
             item.product_id,
@@ -179,7 +195,6 @@ export const salesService = {
         throw detailError;
       }
 
-      // Kurangi stok
       for (const item of items) {
         const {
           data: product,
@@ -187,8 +202,10 @@ export const salesService = {
             productError,
         } = await supabase
           .from("products")
-          .select(
-            "stock"
+          .select("stock")
+          .eq(
+            "business_id",
+            businessId
           )
           .eq(
             "id",
@@ -196,16 +213,12 @@ export const salesService = {
           )
           .single();
 
-        if (
-          productError
-        ) {
+        if (productError) {
           throw productError;
         }
 
         const before =
-          Number(
-            product.stock
-          );
+          Number(product.stock);
 
         const after =
           before -
@@ -215,9 +228,7 @@ export const salesService = {
           error:
             updateError,
         } = await supabase
-          .from(
-            "products"
-          )
+          .from("products")
           .update({
             stock:
               after < 0
@@ -225,17 +236,18 @@ export const salesService = {
                 : after,
           })
           .eq(
+            "business_id",
+            businessId
+          )
+          .eq(
             "id",
             item.product_id
           );
 
-        if (
-          updateError
-        ) {
+        if (updateError) {
           throw updateError;
         }
 
-        // Stock movement
         const {
           error:
             movementError,
@@ -244,6 +256,9 @@ export const salesService = {
             "stock_movements"
           )
           .insert({
+            business_id:
+              businessId,
+
             product_id:
               item.product_id,
 
@@ -281,6 +296,7 @@ export const salesService = {
   },
 
   async deleteSale(
+    businessId: string,
     id: string
   ) {
     const { error } =
@@ -289,6 +305,10 @@ export const salesService = {
         .update({
           is_active: false,
         })
+        .eq(
+          "business_id",
+          businessId
+        )
         .eq("id", id);
 
     if (error) {

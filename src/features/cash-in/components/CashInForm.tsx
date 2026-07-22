@@ -20,6 +20,8 @@ import { CashIn } from "../types";
 import { useCashInStore } from "../store/cash-in.store";
 
 type Props = {
+  businessId: string;
+
   open: boolean;
 
   mode: "create" | "edit";
@@ -32,6 +34,7 @@ type Props = {
 };
 
 export function CashInForm({
+  businessId,
   open,
   mode,
   cashIn,
@@ -203,6 +206,7 @@ export function CashInForm({
         mode === "create"
       ) {
         await createCashIn(
+          businessId,
           payload
         );
 
@@ -221,6 +225,7 @@ export function CashInForm({
         }
 
         await updateCashIn(
+          businessId,
           cashIn.id,
           payload
         );
@@ -271,7 +276,6 @@ export function CashInForm({
         }
         className="space-y-5"
       >
-
         <FormGroup
           label="Judul Pemasukan"
           required
@@ -314,7 +318,6 @@ export function CashInForm({
         </FormGroup>
 
         <div className="grid grid-cols-2 gap-5">
-
           <FormGroup
             label="Nominal"
             required
@@ -344,11 +347,9 @@ export function CashInForm({
               }
             />
           </FormGroup>
-
         </div>
 
         <div className="grid grid-cols-2 gap-5">
-
           <FormGroup label="Metode Penerimaan">
             <Select
               value={paymentMethod}
@@ -381,7 +382,6 @@ export function CashInForm({
               <option>
                 E-Wallet
               </option>
-
             </Select>
           </FormGroup>
 
@@ -396,7 +396,6 @@ export function CashInForm({
               placeholder="Opsional"
             />
           </FormGroup>
-
         </div>
 
         <FormGroup label="Deskripsi">
@@ -412,7 +411,6 @@ export function CashInForm({
         </FormGroup>
 
         <div className="flex justify-end gap-3">
-
           <Button
             type="button"
             onClick={
@@ -443,9 +441,7 @@ export function CashInForm({
               ? "Simpan"
               : "Update"}
           </Button>
-
         </div>
-
       </form>
     </Modal>
   );

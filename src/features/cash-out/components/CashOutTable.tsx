@@ -13,12 +13,15 @@ import { Card } from "@/components/ui/Card";
 import { useCashOutStore } from "../store/cash-out.store";
 
 type Props = {
+  businessId: string;
+
   onEdit?: (id: string) => void;
 
   onDelete?: (id: string) => void;
 };
 
 export function CashOutTable({
+  businessId,
   onEdit,
   onDelete,
 }: Props) {
@@ -38,8 +41,13 @@ export function CashOutTable({
     );
 
   useEffect(() => {
-    fetchCashOut();
-  }, [fetchCashOut]);
+    fetchCashOut(
+      businessId
+    );
+  }, [
+    businessId,
+    fetchCashOut,
+  ]);
 
   return (
     <Card className="overflow-hidden">
@@ -154,9 +162,7 @@ export function CashOutTable({
                       {expense.description && (
 
                         <div className="text-sm text-slate-500">
-                          {
-                            expense.description
-                          }
+                          {expense.description}
                         </div>
 
                       )}
@@ -176,9 +182,7 @@ export function CashOutTable({
                     </td>
 
                     <td className="px-5 py-4 text-center">
-                      {
-                        expense.payment_method
-                      }
+                      {expense.payment_method}
                     </td>
 
                     <td className="px-5 py-4 text-center">

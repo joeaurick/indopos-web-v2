@@ -18,18 +18,23 @@ type ProductState = {
   search: string;
   selectedCategory: string | null;
 
-  fetchProducts: () => Promise<void>;
+  fetchProducts: (
+    businessId: string
+  ) => Promise<void>;
 
   createProduct: (
+    businessId: string,
     data: ProductInput
   ) => Promise<void>;
 
   updateProduct: (
+    businessId: string,
     id: string,
     data: ProductInput
   ) => Promise<void>;
 
   deleteProduct: (
+    businessId: string,
     id: string
   ) => Promise<void>;
 
@@ -44,7 +49,6 @@ type ProductState = {
 
 export const useProductStore =
   create<ProductState>((set, get) => ({
-
     products: [],
 
     loading: false,
@@ -65,110 +69,103 @@ export const useProductStore =
       });
     },
 
-    fetchProducts: async () => {
-
+    fetchProducts: async (
+      businessId
+    ) => {
       set({
         loading: true,
       });
 
       try {
-
         const products =
-          await productService.getProducts();
+          await productService.getProducts(
+            businessId
+          );
 
         set({
           products,
           loading: false,
         });
-
       } catch (error) {
-
         console.error(error);
 
         set({
           loading: false,
         });
-
       }
-
     },
 
-    createProduct: async (data) => {
-
+    createProduct: async (
+      businessId,
+      data
+    ) => {
       set({
         loading: true,
       });
 
       try {
-
         await productService.createProduct(
+          businessId,
           data
         );
 
-        await get().fetchProducts();
-
+        await get().fetchProducts(
+          businessId
+        );
       } finally {
-
         set({
           loading: false,
         });
-
       }
-
     },
 
     updateProduct: async (
+      businessId,
       id,
       data
     ) => {
-
       set({
         loading: true,
       });
 
       try {
-
         await productService.updateProduct(
+          businessId,
           id,
           data
         );
 
-        await get().fetchProducts();
-
+        await get().fetchProducts(
+          businessId
+        );
       } finally {
-
         set({
           loading: false,
         });
-
       }
-
     },
 
     deleteProduct: async (
+      businessId,
       id
     ) => {
-
       set({
         loading: true,
       });
 
       try {
-
         await productService.deleteProduct(
+          businessId,
           id
         );
 
-        await get().fetchProducts();
-
+        await get().fetchProducts(
+          businessId
+        );
       } finally {
-
         set({
           loading: false,
         });
-
       }
-
     },
-
   }));

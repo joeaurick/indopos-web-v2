@@ -17,7 +17,13 @@ import { CategoryTable } from "../components/CategoryTable";
 import { CategoryDialog } from "../components/CategoryDialog";
 import { CategoryForm } from "../components/CategoryForm";
 
-export function CategoriesPage() {
+type Props = {
+  businessId: string;
+};
+
+export function CategoriesPage({
+  businessId,
+}: Props) {
   const [search, setSearch] =
     useState("");
 
@@ -61,8 +67,8 @@ export function CategoriesPage() {
     );
 
   useEffect(() => {
-    fetchCategories();
-  }, [fetchCategories]);
+  fetchCategories(businessId);
+}, [businessId, fetchCategories]);
 
   const filteredCategories =
     useMemo(() => {
@@ -112,8 +118,9 @@ export function CategoriesPage() {
 
     try {
       await deleteCategory(
-        selectedCategory.id
-      );
+  businessId,
+  selectedCategory.id
+);
 
       notify.dismiss(
         loadingToast
@@ -170,11 +177,12 @@ export function CategoriesPage() {
         }
       >
         <CategoryForm
-          mode="create"
-          onSuccess={() =>
-            setOpenCreateDialog(false)
-          }
-        />
+  businessId={businessId}
+  mode="create"
+  onSuccess={() =>
+    setOpenCreateDialog(false)
+  }
+/>
       </CategoryDialog>
 
       <CategoryDialog
@@ -186,10 +194,9 @@ export function CategoriesPage() {
         }}
       >
         <CategoryForm
-          mode="edit"
-          category={
-            selectedCategory
-          }
+  businessId={businessId}
+  mode="edit"
+  category={selectedCategory}
           onSuccess={() => {
             setOpenEditDialog(false);
             setSelectedCategory(null);

@@ -4,7 +4,15 @@ import { Search, X } from "lucide-react";
 
 import { useProductStore } from "@/features/products";
 
-export function SearchBar() {
+type Props = {
+  businessId: string;
+};
+
+export function SearchBar({
+  businessId,
+}: Props) {
+  void businessId;
+
   const search = useProductStore((state) => state.search ?? "");
   const setSearch = useProductStore((state) => state.setSearch);
 
@@ -86,5 +94,5 @@ export function SearchBar() {
         Ctrl K
       </div>
     </div>
-);
+  );
 }

@@ -12,7 +12,13 @@ import { Card } from "@/components/ui/Card";
 
 import { useReportStore } from "../store/report.store";
 
-export function ReportsHistory() {
+type Props = {
+  businessId: string;
+};
+
+export function ReportsHistory({
+  businessId,
+}: Props) {
   const fetchReports =
     useReportStore(
       (state) => state.fetchReports
@@ -29,8 +35,16 @@ export function ReportsHistory() {
     );
 
   useEffect(() => {
-    fetchReports();
-  }, [fetchReports]);
+    fetchReports(
+      businessId,
+      {
+        type: "all",
+      }
+    );
+  }, [
+    businessId,
+    fetchReports,
+  ]);
 
   function getType(item: any) {
     switch (item.type) {

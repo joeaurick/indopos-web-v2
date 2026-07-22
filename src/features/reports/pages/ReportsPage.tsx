@@ -1,6 +1,12 @@
 "use client";
 
+import {
+  useEffect,
+} from "react";
+
 import { PageHeader } from "@/components/app/page-header/PageHeader";
+
+import { useReportStore } from "../store/report.store";
 
 import { ReportsFilter } from "../components/ReportsFilter";
 import { ReportsSummary } from "../components/ReportsSummary";
@@ -10,7 +16,30 @@ import { ExportPdfButton } from "../components/ExportPdfButton";
 import { PrintReportButton } from "../components/PrintReportButton";
 import { ReportsProductTable } from "../components/ReportsProductTable";
 
-export function ReportsPage() {
+type Props = {
+  businessId: string;
+};
+
+export function ReportsPage({
+  businessId,
+}: Props) {
+  const fetchReports =
+    useReportStore(
+      (state) => state.fetchReports
+    );
+
+  useEffect(() => {
+    fetchReports(
+      businessId,
+      {
+        type: "all",
+      }
+    );
+  }, [
+    businessId,
+    fetchReports,
+  ]);
+
   return (
     <>
       <PageHeader
@@ -20,7 +49,9 @@ export function ReportsPage() {
 
       <div className="flex flex-wrap items-center gap-3">
 
-        <ReportsFilter />
+        <ReportsFilter
+          businessId={businessId}
+        />
 
         <ExportExcelButton />
 
@@ -31,7 +62,7 @@ export function ReportsPage() {
       </div>
 
       <div className="mt-6">
-        <ReportsSummary />
+        <ReportsSummary businessId={businessId} />
       </div>
 
       <div className="mt-6">
@@ -39,8 +70,8 @@ export function ReportsPage() {
       </div>
 
       <div className="mt-6">
-  <ReportsProductTable />
-</div>
+        <ReportsProductTable businessId={businessId} />
+      </div>
     </>
   );
 }

@@ -6,7 +6,13 @@ import { Card } from "@/components/ui/Card";
 
 import { useReportStore } from "../store/report.store";
 
-export function ReportsProductTable() {
+type Props = {
+  businessId: string;
+};
+
+export function ReportsProductTable({
+  businessId,
+}: Props) {
   const fetchReports =
     useReportStore(
       (state) => state.fetchReports
@@ -23,8 +29,16 @@ export function ReportsProductTable() {
     );
 
   useEffect(() => {
-    fetchReports();
-  }, [fetchReports]);
+    fetchReports(
+      businessId,
+      {
+        type: "all",
+      }
+    );
+  }, [
+    businessId,
+    fetchReports,
+  ]);
 
   return (
     <Card className="overflow-hidden">
@@ -50,12 +64,12 @@ export function ReportsProductTable() {
             <tr>
 
               <th className="px-5 py-4 text-center">
-                 Rank
-                </th>
+                Rank
+              </th>
 
-            <th className="px-5 py-4 text-left">
-            Produk
-            </th>
+              <th className="px-5 py-4 text-left">
+                Produk
+              </th>
 
               <th className="px-5 py-4 text-right">
                 Qty
@@ -71,7 +85,7 @@ export function ReportsProductTable() {
 
               <th className="px-5 py-4 text-center">
                 %
-                </th>
+              </th>
 
             </tr>
 
@@ -114,17 +128,17 @@ export function ReportsProductTable() {
                   className="border-t hover:bg-slate-50"
                 >
 
-                    <td className="px-5 py-4 text-center font-bold">
+                  <td className="px-5 py-4 text-center font-bold">
 
                     {index === 0
-                        ? "🥇"
-                        : index === 1
-                        ? "🥈"
-                        : index === 2
-                        ? "🥉"
-                        : index + 1}
+                      ? "🥇"
+                      : index === 1
+                      ? "🥈"
+                      : index === 2
+                      ? "🥉"
+                      : index + 1}
 
-                            </td>
+                  </td>
 
                   <td className="px-5 py-4 font-medium">
                     {item.name}
@@ -150,7 +164,7 @@ export function ReportsProductTable() {
 
                   <td className="px-5 py-4 text-center font-semibold text-blue-600">
                     {item.percentage}%
-                    </td>
+                  </td>
 
                 </tr>
 

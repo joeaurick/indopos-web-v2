@@ -6,6 +6,7 @@ import {
   useState,
 } from "react";
 
+import { useBusinessStore } from "@/features/settings/store/business-store";
 import { notify } from "@/lib/notify";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 
@@ -58,6 +59,10 @@ export function SuppliersPage() {
       (state) => state.loading
     );
 
+    const businessId = useBusinessStore(
+  (state) => state.business?.id
+);
+
   const fetchSuppliers =
     useSupplierStore(
       (state) => state.fetchSuppliers
@@ -69,8 +74,10 @@ export function SuppliersPage() {
     );
 
   useEffect(() => {
-    fetchSuppliers();
-  }, [fetchSuppliers]);
+  if (!businessId) return;
+
+  fetchSuppliers(businessId);
+}, [businessId, fetchSuppliers]);
 
   const filteredSuppliers =
     useMemo(() => {
@@ -127,9 +134,14 @@ export function SuppliersPage() {
       );
 
     try {
-      await deleteSupplier(
-        selectedSupplier.id
-      );
+      if (!businessId) {
+  throw new Error("Business tidak ditemukan.");
+}
+
+await deleteSupplier(
+  businessId,
+  selectedSupplier.id
+);
 
       notify.dismiss(
         loadingToast
@@ -195,13 +207,12 @@ export function SuppliersPage() {
         }
       >
         <SupplierForm
-          mode="create"
-          onSuccess={() =>
-            setOpenCreateDialog(
-              false
-            )
-          }
-        />
+  businessId={businessId!}
+  mode="create"
+  onSuccess={() =>
+    setOpenCreateDialog(false)
+  }
+/>
       </SupplierDialog>
 
       <SupplierDialog
@@ -218,20 +229,14 @@ export function SuppliersPage() {
         }}
       >
         <SupplierForm
-          mode="edit"
-          supplier={
-            selectedSupplier
-          }
-          onSuccess={() => {
-            setOpenEditDialog(
-              false
-            );
-
-            setSelectedSupplier(
-              null
-            );
-          }}
-        />
+  businessId={businessId!}
+  mode="edit"
+  supplier={selectedSupplier}
+  onSuccess={() => {
+    setOpenEditDialog(false);
+    setSelectedSupplier(null);
+  }}
+/>
       </SupplierDialog>
 
       <ConfirmDialog

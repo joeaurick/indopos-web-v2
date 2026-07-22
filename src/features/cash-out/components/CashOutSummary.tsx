@@ -13,7 +13,13 @@ import { Card } from "@/components/ui/Card";
 
 import { useCashOutStore } from "../store/cash-out.store";
 
-export function CashOutSummary() {
+type Props = {
+  businessId: string;
+};
+
+export function CashOutSummary({
+  businessId,
+}: Props) {
   const fetchCashOut =
     useCashOutStore(
       (state) => state.fetchCashOut
@@ -30,8 +36,13 @@ export function CashOutSummary() {
     );
 
   useEffect(() => {
-    fetchCashOut();
-  }, [fetchCashOut]);
+    fetchCashOut(
+      businessId
+    );
+  }, [
+    businessId,
+    fetchCashOut,
+  ]);
 
   const cards = [
     {

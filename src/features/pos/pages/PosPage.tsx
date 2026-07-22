@@ -1,17 +1,23 @@
 "use client";
 
+import { useState } from "react";
+
 import { CartPanel } from "../components/CartPanel";
 import { CategoryTabs } from "../components/CategoryTabs";
 import { ProductGrid } from "../components/ProductGrid";
 import { SearchBar } from "../components/SearchBar";
-
-import { useState } from "react";
-
 import { FloatingCart } from "../components/FloatingCart";
 import { MobileCartSheet } from "../components/MobileCartSheet";
 
-export function PosPage() {
-  const [cartOpen, setCartOpen] = useState(false);
+type Props = {
+  businessId: string;
+};
+
+export function PosPage({
+  businessId,
+}: Props) {
+  const [cartOpen, setCartOpen] =
+    useState(false);
 
   return (
     <>
@@ -19,7 +25,7 @@ export function PosPage() {
           DESKTOP
       ======================== */}
 
-      <div className="hidden lg:flex h-[calc(100vh-120px)] gap-6">
+      <div className="hidden h-[calc(100vh-120px)] gap-6 lg:flex">
 
         {/* PRODUCT */}
 
@@ -37,7 +43,6 @@ export function PosPage() {
             shadow-sm
           "
         >
-
           <div
             className="
               shrink-0
@@ -46,12 +51,15 @@ export function PosPage() {
               p-6
             "
           >
-            <SearchBar />
+            <SearchBar
+              businessId={businessId}
+            />
 
             <div className="mt-5">
-              <CategoryTabs />
+              <CategoryTabs
+                businessId={businessId}
+              />
             </div>
-
           </div>
 
           <div
@@ -62,9 +70,10 @@ export function PosPage() {
               p-6
             "
           >
-            <ProductGrid />
+            <ProductGrid
+              businessId={businessId}
+            />
           </div>
-
         </section>
 
         {/* CART */}
@@ -75,9 +84,10 @@ export function PosPage() {
             shrink-0
           "
         >
-          <CartPanel />
+          <CartPanel
+            businessId={businessId}
+          />
         </aside>
-
       </div>
 
       {/* =======================
@@ -86,28 +96,32 @@ export function PosPage() {
 
       <div className="flex flex-col gap-4 lg:hidden">
 
-        {/* SEARCH */}
+        <SearchBar
+          businessId={businessId}
+        />
 
-        <SearchBar />
+        <CategoryTabs
+          businessId={businessId}
+        />
 
-        {/* CATEGORY */}
-
-        <CategoryTabs />
-
-        {/* PRODUCT */}
-
-        <ProductGrid />
-
+        <ProductGrid
+          businessId={businessId}
+        />
       </div>
 
       <FloatingCart
-  onOpen={() => setCartOpen(true)}
-/>
+        onOpen={() =>
+          setCartOpen(true)
+        }
+      />
 
-<MobileCartSheet
-  open={cartOpen}
-  onClose={() => setCartOpen(false)}
-/>
+      <MobileCartSheet
+        businessId={businessId}
+        open={cartOpen}
+        onClose={() =>
+          setCartOpen(false)
+        }
+      />
     </>
   );
 }

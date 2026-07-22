@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { PageHeader } from "@/components/app/page-header/PageHeader";
 
-import { Expense } from "../types";
+import { notify } from "@/lib/notify";
 
+import { Expense } from "../types";
 import { useCashOutStore } from "../store/cash-out.store";
 
 import { CashOutSummary } from "../components/CashOutSummary";
@@ -17,9 +18,19 @@ import { CashOutFilter } from "../components/CashOutFilter";
 import { CashOutTable } from "../components/CashOutTable";
 import { CashOutForm } from "../components/CashOutForm";
 
-export function CashOutPage() {
+type Props = {
+  businessId: string;
+};
+
+export function CashOutPage({
+  businessId,
+}: Props) {
   const expenses = useCashOutStore(
     (state) => state.data.expenses
+  );
+
+  const loading = useCashOutStore(
+    (state) => state.loading
   );
 
   const deleteExpense =
@@ -60,7 +71,9 @@ export function CashOutPage() {
     setFormOpen(true);
   }
 
-  function handleEdit(id: string) {
+  function handleEdit(
+    id: string
+  ) {
     const expense =
       expenses.find(
         (item) => item.id === id
@@ -82,12 +95,37 @@ export function CashOutPage() {
   }
 
   async function confirmDelete() {
+    const toast =
+      notify.loading(
+        "Menghapus pengeluaran..."
+      );
+
     try {
-      await deleteExpense(deleteId);
+      await deleteExpense(
+        businessId,
+        deleteId
+      );
+
+      notify.dismiss(
+        toast
+      );
+
+      notify.success(
+        "Pengeluaran berhasil dihapus."
+      );
 
       setDeleteOpen(false);
-    } catch (error) {
-      console.error(error);
+
+      setDeleteId("");
+    } catch (error: any) {
+      notify.dismiss(
+        toast
+      );
+
+      notify.error(
+        error?.message ??
+          "Gagal menghapus pengeluaran."
+      );
     }
   }
 
@@ -109,20 +147,26 @@ export function CashOutPage() {
         }
       />
 
-      <CashOutSummary />
+      <CashOutSummary
+        businessId={businessId}
+      />
 
       <div className="mt-6">
-        <CashOutFilter />
+        <CashOutFilter
+          businessId={businessId}
+        />
       </div>
 
       <div className="mt-6">
         <CashOutTable
+          businessId={businessId}
           onEdit={handleEdit}
           onDelete={handleDelete}
         />
       </div>
 
       <CashOutForm
+        businessId={businessId}
         open={formOpen}
         mode={mode}
         expense={selectedExpense}
@@ -136,6 +180,7 @@ export function CashOutPage() {
 
       <ConfirmDialog
         open={deleteOpen}
+        loading={loading}
         title="Hapus Pengeluaran"
         description="Apakah Anda yakin ingin menghapus data pengeluaran ini?"
         confirmText="Hapus"

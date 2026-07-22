@@ -1,6 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import Link from "next/link";
 
 import {
@@ -10,7 +14,13 @@ import {
 
 import { useCashOutStore } from "../store/cash-out.store";
 
-export function CashOutFilter() {
+type Props = {
+  businessId: string;
+};
+
+export function CashOutFilter({
+  businessId,
+}: Props) {
   const {
     filter,
     setFilter,
@@ -21,19 +31,31 @@ export function CashOutFilter() {
   const [search, setSearch] =
     useState(filter.search);
 
+  useEffect(() => {
+    fetchCashOut(
+      businessId
+    );
+  }, [
+    businessId,
+    fetchCashOut,
+  ]);
+
   return (
     <div className="mb-6 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
 
       <div className="mb-5 flex items-center justify-between">
 
         <div>
+
           <h3 className="text-lg font-semibold">
             Filter Pengeluaran
           </h3>
 
           <p className="text-sm text-slate-500">
-            Cari transaksi berdasarkan kategori, tanggal, atau kata kunci.
+            Cari transaksi berdasarkan kategori,
+            tanggal, atau kata kunci.
           </p>
+
         </div>
 
         <Link
@@ -58,7 +80,9 @@ export function CashOutFilter() {
           <input
             value={search}
             onChange={(e) =>
-              setSearch(e.target.value)
+              setSearch(
+                e.target.value
+              )
             }
             placeholder="Cari pengeluaran..."
             className="w-full rounded-xl border border-slate-200 py-3 pl-10 pr-3 outline-none focus:border-blue-500"
@@ -76,6 +100,7 @@ export function CashOutFilter() {
           }
           className="rounded-xl border border-slate-200 px-3"
         >
+
           <option value="">
             Semua Kategori
           </option>
@@ -90,6 +115,7 @@ export function CashOutFilter() {
               </option>
             )
           )}
+
         </select>
 
         <input
@@ -126,7 +152,9 @@ export function CashOutFilter() {
               search,
             });
 
-            fetchCashOut();
+            fetchCashOut(
+              businessId
+            );
           }}
           className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
         >
@@ -144,7 +172,9 @@ export function CashOutFilter() {
               endDate: "",
             });
 
-            fetchCashOut();
+            fetchCashOut(
+              businessId
+            );
           }}
           className="rounded-xl border border-slate-300 px-6 py-3 hover:bg-slate-100"
         >

@@ -1,4 +1,4 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
 
 import {
   PurchaseOrder,
@@ -6,8 +6,12 @@ import {
   PurchaseOrderPayload,
 } from "../types";
 
+const supabase = getSupabaseClient();
+
 export const purchaseService = {
-  async getPurchases(): Promise<PurchaseOrder[]> {
+  async getPurchases(
+    businessId: string
+  ): Promise<PurchaseOrder[]> {
     const { data, error } = await supabase
       .from("purchase_orders")
       .select(`
@@ -16,35 +20,68 @@ export const purchaseService = {
           name
         )
       `)
+      .eq("business_id", businessId)
       .eq("is_active", true)
       .order("created_at", {
         ascending: false,
       });
 
-    if (error) throw error;
+    if (error) {
+      throw error;
+    }
 
-    return (data ?? []).map((item: any) => ({
-      id: item.id,
-      supplier_id: item.supplier_id,
-      supplier_name: item.suppliers?.name ?? "-",
-      invoice_number: item.invoice_number,
-      order_date: item.order_date,
-      status: item.status,
-      subtotal: Number(item.subtotal),
-      discount: Number(item.discount),
-      tax: Number(item.tax),
-      total: Number(item.total),
-      note: item.note,
-      is_active: item.is_active,
-      created_at: item.created_at,
-    }));
+    return (data ?? []).map(
+      (item: any) => ({
+        id: item.id,
+
+        supplier_id: item.supplier_id,
+
+        supplier_name:
+          item.suppliers?.name ?? "-",
+
+        invoice_number:
+          item.invoice_number,
+
+        order_date:
+          item.order_date,
+
+        status: item.status,
+
+        subtotal: Number(
+          item.subtotal ?? 0
+        ),
+
+        discount: Number(
+          item.discount ?? 0
+        ),
+
+        tax: Number(
+          item.tax ?? 0
+        ),
+
+        total: Number(
+          item.total ?? 0
+        ),
+
+        note: item.note,
+
+        is_active:
+          item.is_active,
+
+        created_at:
+          item.created_at,
+      })
+    );
   },
 
   async createPurchase(
+    businessId: string,
     payload: PurchaseOrderPayload
   ) {
-    const { items, ...header } =
-      payload;
+    const {
+      items,
+      ...header
+    } = payload;
 
     const {
       data: purchase,
@@ -53,7 +90,12 @@ export const purchaseService = {
       .from("purchase_orders")
       .insert({
         ...header,
+
+        business_id:
+          businessId,
+
         status: "DRAFT",
+
         is_active: true,
       })
       .select()
@@ -68,13 +110,20 @@ export const purchaseService = {
         (
           item: PurchaseOrderItem
         ) => ({
+          business_id:
+            businessId,
+
           purchase_order_id:
             purchase.id,
+
           product_id:
             item.product_id,
+
           qty: item.qty,
+
           cost_price:
             item.cost_price,
+
           subtotal:
             item.subtotal,
         })
@@ -97,6 +146,7 @@ export const purchaseService = {
   },
 
   async deletePurchase(
+    businessId: string,
     id: string
   ) {
     const { error } =
@@ -105,6 +155,10 @@ export const purchaseService = {
         .update({
           is_active: false,
         })
+        .eq(
+          "business_id",
+          businessId
+        )
         .eq("id", id);
 
     if (error) {
@@ -113,6 +167,7 @@ export const purchaseService = {
   },
 
   async receivePurchase(
+    businessId: string,
     id: string
   ) {
     const {
@@ -126,6 +181,10 @@ export const purchaseService = {
         product_id,
         qty
       `)
+      .eq(
+        "business_id",
+        businessId
+      )
       .eq(
         "purchase_order_id",
         id
@@ -145,6 +204,10 @@ export const purchaseService = {
           id,
           stock
         `)
+        .eq(
+          "business_id",
+          businessId
+        )
         .eq(
           "id",
           item.product_id
@@ -170,6 +233,10 @@ export const purchaseService = {
           stock: stockAfter,
         })
         .eq(
+          "business_id",
+          businessId
+        )
+        .eq(
           "id",
           item.product_id
         );
@@ -185,6 +252,9 @@ export const purchaseService = {
           "stock_movements"
         )
         .insert({
+          business_id:
+            businessId,
+
           product_id:
             item.product_id,
 
@@ -220,6 +290,10 @@ export const purchaseService = {
       .update({
         status: "RECEIVED",
       })
+      .eq(
+        "business_id",
+        businessId
+      )
       .eq("id", id);
 
     if (statusError) {

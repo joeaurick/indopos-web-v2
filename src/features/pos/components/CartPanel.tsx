@@ -20,7 +20,13 @@ import { checkoutService } from "@/features/pos/services/checkout.service";
 import { PaymentDialog } from "./PaymentDialog";
 import { PaymentSuccessDialog } from "./PaymentSuccessDialog";
 
-export function CartPanel() {
+type Props = {
+  businessId: string;
+};
+
+export function CartPanel({
+  businessId,
+}: Props) {
   const [paymentOpen, setPaymentOpen] =
     useState(false);
 
@@ -75,13 +81,14 @@ export function CartPanel() {
     paymentAmount: number
   ) => {
     const sale =
-      await checkoutService.checkout({
-        items,
-        paymentMethod,
-        paymentAmount,
-      });
+  await checkoutService.checkout({
+    businessId,
+    items,
+    paymentMethod,
+    paymentAmount,
+  });
 
-    await fetchProducts();
+await fetchProducts(businessId);
 
     setSaleId(sale.id);
     setInvoice(sale.invoice);

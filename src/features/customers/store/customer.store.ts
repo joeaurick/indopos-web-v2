@@ -12,18 +12,23 @@ type CustomerState = {
 
   loading: boolean;
 
-  fetchCustomers: () => Promise<void>;
+  fetchCustomers: (
+    businessId: string
+  ) => Promise<void>;
 
   createCustomer: (
+    businessId: string,
     payload: CustomerPayload
   ) => Promise<void>;
 
   updateCustomer: (
+    businessId: string,
     id: string,
     payload: CustomerPayload
   ) => Promise<void>;
 
   deleteCustomer: (
+    businessId: string,
     id: string
   ) => Promise<void>;
 };
@@ -35,7 +40,9 @@ create<CustomerState>((set, get) => ({
 
   loading: false,
 
-  fetchCustomers: async () => {
+  fetchCustomers: async (
+    businessId
+  ) => {
 
     set({
       loading: true,
@@ -44,7 +51,9 @@ create<CustomerState>((set, get) => ({
     try {
 
       const customers =
-        await customerService.getCustomers();
+        await customerService.getCustomers(
+          businessId
+        );
 
       set({
         customers,
@@ -64,6 +73,7 @@ create<CustomerState>((set, get) => ({
   },
 
   createCustomer: async (
+    businessId,
     payload
   ) => {
 
@@ -74,10 +84,13 @@ create<CustomerState>((set, get) => ({
     try {
 
       await customerService.createCustomer(
+        businessId,
         payload
       );
 
-      await get().fetchCustomers();
+      await get().fetchCustomers(
+        businessId
+      );
 
     } finally {
 
@@ -90,6 +103,7 @@ create<CustomerState>((set, get) => ({
   },
 
   updateCustomer: async (
+    businessId,
     id,
     payload
   ) => {
@@ -101,11 +115,14 @@ create<CustomerState>((set, get) => ({
     try {
 
       await customerService.updateCustomer(
+        businessId,
         id,
         payload
       );
 
-      await get().fetchCustomers();
+      await get().fetchCustomers(
+        businessId
+      );
 
     } finally {
 
@@ -118,6 +135,7 @@ create<CustomerState>((set, get) => ({
   },
 
   deleteCustomer: async (
+    businessId,
     id
   ) => {
 
@@ -128,10 +146,13 @@ create<CustomerState>((set, get) => ({
     try {
 
       await customerService.deleteCustomer(
+        businessId,
         id
       );
 
-      await get().fetchCustomers();
+      await get().fetchCustomers(
+        businessId
+      );
 
     } finally {
 

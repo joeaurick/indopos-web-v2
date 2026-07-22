@@ -23,10 +23,6 @@ export function DashboardInventoryAlert() {
         state.data.lowStockProducts
     );
 
-  useEffect(() => {
-    fetchDashboard();
-  }, [fetchDashboard]);
-
   return (
     <AppCard className="p-6">
 

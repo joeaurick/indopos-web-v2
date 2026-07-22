@@ -10,28 +10,31 @@ import {
 export function LoginHero() {
   return (
     <section
-      className="
-        hidden
-        flex-col
-        justify-between
-        bg-gradient-to-br
-        from-teal-700
-        via-teal-800
-        to-slate-900
-        p-12
-        text-white
+  className="
+    bg-gradient-to-br
+    from-teal-700
+    via-teal-800
+    to-slate-900
 
-        lg:flex
-      "
-    >
+    p-6
+    text-white
+
+    lg:flex
+    lg:flex-col
+    lg:justify-between
+    lg:p-12
+  "
+>
       {/* TOP */}
 
       <div>
         <div
-          className="
-            flex
-            h-20
-            w-20
+  className="
+    flex
+    h-14
+    w-14
+    lg:h-20
+    lg:w-20
             items-center
             justify-center
             rounded-3xl
@@ -42,11 +45,11 @@ export function LoginHero() {
           <ShieldCheck size={40} />
         </div>
 
-        <h1 className="mt-8 text-5xl font-bold tracking-tight">
+        <h1 className="mt-6 text-3xl font-bold tracking-tight lg:text-5xl">
           IndoPOS
         </h1>
 
-        <p className="mt-5 max-w-md text-lg leading-8 text-teal-100">
+        <p className="mt-3 max-w-md text-sm leading-6 text-teal-100 lg:mt-5 lg:text-lg lg:leading-8">
           Enterprise Point of Sale modern
           untuk Restaurant, Cafe, Coffee Shop,
           Bakery dan UMKM Indonesia.
@@ -55,7 +58,7 @@ export function LoginHero() {
 
       {/* FEATURES */}
 
-      <div className="space-y-6">
+      <div className="mt-8 hidden space-y-6 lg:block">
 
         <Feature
           icon={<ShoppingCart size={20} />}
@@ -86,15 +89,18 @@ export function LoginHero() {
       {/* FOOTER */}
 
       <div
-        className="
-          rounded-3xl
-          border
-          border-white/10
-          bg-white/10
-          p-5
-          backdrop-blur
-        "
-      >
+  className="
+    mt-8
+    hidden
+    rounded-3xl
+    border
+    border-white/10
+    bg-white/10
+    p-5
+    backdrop-blur
+    lg:block
+  "
+>
         <div className="flex items-center gap-3">
 
           <CheckCircle2

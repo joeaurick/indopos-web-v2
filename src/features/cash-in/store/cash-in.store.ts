@@ -19,9 +19,12 @@ type CashInState = {
     filter: Partial<CashInFilter>
   ) => void;
 
-  fetchCashIn: () => Promise<void>;
+  fetchCashIn: (
+    businessId: string
+  ) => Promise<void>;
 
   createCashIn: (
+    businessId: string,
     data: {
       category_id: string | null;
       title: string;
@@ -35,11 +38,13 @@ type CashInState = {
   ) => Promise<void>;
 
   updateCashIn: (
+    businessId: string,
     id: string,
     data: Partial<CashIn>
   ) => Promise<void>;
 
   deleteCashIn: (
+    businessId: string,
     id: string
   ) => Promise<void>;
 };
@@ -47,11 +52,8 @@ type CashInState = {
 const initialData: CashInData = {
   summary: {
     totalIncome: 0,
-
     totalTransaction: 0,
-
     todayIncome: 0,
-
     monthIncome: 0,
   },
 
@@ -66,11 +68,8 @@ export const useCashInStore =
 
     filter: {
       search: "",
-
       categoryId: "",
-
       startDate: "",
-
       endDate: "",
     },
 
@@ -84,7 +83,9 @@ export const useCashInStore =
         },
       }),
 
-    fetchCashIn: async () => {
+    fetchCashIn: async (
+      businessId
+    ) => {
       set({
         loading: true,
       });
@@ -92,17 +93,16 @@ export const useCashInStore =
       try {
         const data =
           await cashInService.getCashIn(
+            businessId,
             get().filter
           );
 
         set({
           data,
-
-          loading: false,
         });
       } catch (error) {
         console.error(error);
-
+      } finally {
         set({
           loading: false,
         });
@@ -110,6 +110,7 @@ export const useCashInStore =
     },
 
     createCashIn: async (
+      businessId,
       payload
     ) => {
       set({
@@ -118,29 +119,28 @@ export const useCashInStore =
 
       try {
         await cashInService.createCashIn(
+          businessId,
           payload
         );
 
         const data =
           await cashInService.getCashIn(
+            businessId,
             get().filter
           );
 
         set({
           data,
-
-          loading: false,
         });
-      } catch (error) {
+      } finally {
         set({
           loading: false,
         });
-
-        throw error;
       }
     },
 
     updateCashIn: async (
+      businessId,
       id,
       payload
     ) => {
@@ -150,30 +150,29 @@ export const useCashInStore =
 
       try {
         await cashInService.updateCashIn(
+          businessId,
           id,
           payload
         );
 
         const data =
           await cashInService.getCashIn(
+            businessId,
             get().filter
           );
 
         set({
           data,
-
-          loading: false,
         });
-      } catch (error) {
+      } finally {
         set({
           loading: false,
         });
-
-        throw error;
       }
     },
 
     deleteCashIn: async (
+      businessId,
       id
     ) => {
       set({
@@ -182,25 +181,23 @@ export const useCashInStore =
 
       try {
         await cashInService.deleteCashIn(
+          businessId,
           id
         );
 
         const data =
           await cashInService.getCashIn(
+            businessId,
             get().filter
           );
 
         set({
           data,
-
-          loading: false,
         });
-      } catch (error) {
+      } finally {
         set({
           loading: false,
         });
-
-        throw error;
       }
     },
   }));

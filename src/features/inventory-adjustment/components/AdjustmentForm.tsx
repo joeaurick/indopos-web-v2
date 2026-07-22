@@ -12,10 +12,12 @@ import { useProductStore } from "@/features/products/store/product.store";
 import { useAdjustmentStore } from "../store/adjustment.store";
 
 type Props = {
+  businessId: string;
   onSuccess?: () => void;
 };
 
 export function AdjustmentForm({
+  businessId,
   onSuccess,
 }: Props) {
   const products =
@@ -57,8 +59,11 @@ export function AdjustmentForm({
     useState("");
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    fetchProducts(businessId);
+  }, [
+    businessId,
+    fetchProducts,
+  ]);
 
   async function handleSubmit(
     e: React.FormEvent
@@ -85,13 +90,16 @@ export function AdjustmentForm({
       );
 
     try {
-      await createAdjustment({
-        product_id: productId,
-        qty,
-        type,
-        note:
-          note.trim() || null,
-      });
+      await createAdjustment(
+        businessId,
+        {
+          product_id: productId,
+          qty,
+          type,
+          note:
+            note.trim() || null,
+        }
+      );
 
       notify.dismiss(
         loadingToast
@@ -127,7 +135,6 @@ export function AdjustmentForm({
       className="space-y-5"
     >
       <div>
-
         <label className="mb-2 block text-sm font-medium">
           Produk
         </label>
@@ -155,23 +162,19 @@ export function AdjustmentForm({
                   product.id
                 }
               >
-                {product.name} (
-                Stock:
+                {product.name}
                 {" "}
-                {
-                  product.stock
-                }
+                (Stock:
+                {" "}
+                {product.stock}
                 )
               </option>
             )
           )}
-
         </select>
-
       </div>
 
       <div>
-
         <label className="mb-2 block text-sm font-medium">
           Jenis
         </label>
@@ -181,7 +184,10 @@ export function AdjustmentForm({
           onChange={(e) =>
             setType(
               e.target
-                .value as any
+                .value as
+                | "IN"
+                | "OUT"
+                | "ADJUSTMENT"
             )
           }
           className="w-full rounded-xl border px-4 py-3"
@@ -197,21 +203,18 @@ export function AdjustmentForm({
           <option value="ADJUSTMENT">
             Set Stock
           </option>
-
         </select>
-
       </div>
 
       <div>
-
         <label className="mb-2 block text-sm font-medium">
           Qty
         </label>
 
         <input
           type="number"
-          value={qty}
           min={1}
+          value={qty}
           onChange={(e) =>
             setQty(
               Number(
@@ -221,11 +224,9 @@ export function AdjustmentForm({
           }
           className="w-full rounded-xl border px-4 py-3"
         />
-
       </div>
 
       <div>
-
         <label className="mb-2 block text-sm font-medium">
           Catatan
         </label>
@@ -240,7 +241,6 @@ export function AdjustmentForm({
           }
           className="w-full rounded-xl border px-4 py-3"
         />
-
       </div>
 
       <button
@@ -252,7 +252,6 @@ export function AdjustmentForm({
           ? "Menyimpan..."
           : "Simpan Adjustment"}
       </button>
-
     </form>
   );
 }

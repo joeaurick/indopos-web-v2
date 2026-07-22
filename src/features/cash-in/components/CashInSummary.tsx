@@ -13,7 +13,13 @@ import { Card } from "@/components/ui/Card";
 
 import { useCashInStore } from "../store/cash-in.store";
 
-export function CashInSummary() {
+type Props = {
+  businessId: string;
+};
+
+export function CashInSummary({
+  businessId,
+}: Props) {
   const fetchCashIn =
     useCashInStore(
       (state) => state.fetchCashIn
@@ -30,8 +36,11 @@ export function CashInSummary() {
     );
 
   useEffect(() => {
-    fetchCashIn();
-  }, [fetchCashIn]);
+    fetchCashIn(businessId);
+  }, [
+    businessId,
+    fetchCashIn,
+  ]);
 
   const cards = [
     {

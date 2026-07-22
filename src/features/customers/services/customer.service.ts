@@ -1,15 +1,20 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
 
 import {
   Customer,
   CustomerPayload,
 } from "../types";
 
+const supabase = getSupabaseClient();
+
 export const customerService = {
-  async getCustomers(): Promise<Customer[]> {
+  async getCustomers(
+    businessId: string
+  ): Promise<Customer[]> {
     const { data, error } = await supabase
       .from("customers")
       .select("*")
+      .eq("business_id", businessId)
       .eq("is_active", true)
       .order("name", {
         ascending: true,
@@ -23,12 +28,14 @@ export const customerService = {
   },
 
   async createCustomer(
+    businessId: string,
     payload: CustomerPayload
   ) {
     const { data, error } = await supabase
       .from("customers")
       .insert({
         ...payload,
+        business_id: businessId,
         is_active: true,
       })
       .select()
@@ -42,6 +49,7 @@ export const customerService = {
   },
 
   async updateCustomer(
+    businessId: string,
     id: string,
     payload: CustomerPayload
   ) {
@@ -49,6 +57,7 @@ export const customerService = {
       .from("customers")
       .update(payload)
       .eq("id", id)
+      .eq("business_id", businessId)
       .select()
       .single();
 
@@ -60,6 +69,7 @@ export const customerService = {
   },
 
   async deleteCustomer(
+    businessId: string,
     id: string
   ) {
     const { error } = await supabase
@@ -67,7 +77,8 @@ export const customerService = {
       .update({
         is_active: false,
       })
-      .eq("id", id);
+      .eq("id", id)
+      .eq("business_id", businessId);
 
     if (error) {
       throw error;

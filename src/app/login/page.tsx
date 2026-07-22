@@ -8,18 +8,22 @@ export default function LoginPage() {
       <div
         className="
           relative
-          grid
           w-full
           max-w-6xl
-          overflow-hidden
-          rounded-[36px]
-          border
-          border-white/50
-          bg-white/70
-          shadow-2xl
-          backdrop-blur-xl
 
+          lg:grid
           lg:grid-cols-2
+
+          overflow-hidden
+
+          bg-white
+
+          lg:rounded-[36px]
+          lg:border
+          lg:border-white/50
+          lg:bg-white/70
+          lg:shadow-2xl
+          lg:backdrop-blur-xl
         "
       >
         <LoginHero />

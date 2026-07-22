@@ -4,7 +4,13 @@ import { useState } from "react";
 
 import { useFinanceStore } from "../store/finance.store";
 
-export function FinanceFilter() {
+type Props = {
+  businessId: string;
+};
+
+export function FinanceFilter({
+  businessId,
+}: Props) {
   const fetchFinance =
     useFinanceStore(
       (state) => state.fetchFinance
@@ -28,9 +34,12 @@ export function FinanceFilter() {
 
         <button
           onClick={() =>
-            fetchFinance({
-              type: "all",
-            })
+            fetchFinance(
+              businessId,
+              {
+                type: "all",
+              }
+            )
           }
           className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
             filter.type === "all"
@@ -43,9 +52,12 @@ export function FinanceFilter() {
 
         <button
           onClick={() =>
-            fetchFinance({
-              type: "today",
-            })
+            fetchFinance(
+              businessId,
+              {
+                type: "today",
+              }
+            )
           }
           className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
             filter.type === "today"
@@ -58,9 +70,12 @@ export function FinanceFilter() {
 
         <button
           onClick={() =>
-            fetchFinance({
-              type: "week",
-            })
+            fetchFinance(
+              businessId,
+              {
+                type: "week",
+              }
+            )
           }
           className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
             filter.type === "week"
@@ -73,9 +88,12 @@ export function FinanceFilter() {
 
         <button
           onClick={() =>
-            fetchFinance({
-              type: "month",
-            })
+            fetchFinance(
+              businessId,
+              {
+                type: "month",
+              }
+            )
           }
           className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
             filter.type === "month"
@@ -130,11 +148,14 @@ export function FinanceFilter() {
 
         <button
           onClick={() =>
-            fetchFinance({
-              type: "custom",
-              startDate,
-              endDate,
-            })
+            fetchFinance(
+              businessId,
+              {
+                type: "custom",
+                startDate,
+                endDate,
+              }
+            )
           }
           className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
         >

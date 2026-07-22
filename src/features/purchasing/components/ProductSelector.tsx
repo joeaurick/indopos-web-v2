@@ -6,10 +6,12 @@ import { useProductStore } from "@/features/products/store/product.store";
 import { Product } from "@/features/products";
 
 type Props = {
+  businessId: string;
   onSelect: (product: Product) => void;
 };
 
 export function ProductSelector({
+  businessId,
   onSelect,
 }: Props) {
   const products = useProductStore(
@@ -22,8 +24,11 @@ export function ProductSelector({
     );
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    fetchProducts(businessId);
+  }, [
+    businessId,
+    fetchProducts,
+  ]);
 
   return (
     <div>

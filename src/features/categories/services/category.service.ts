@@ -1,5 +1,8 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
+
 import { Category } from "../types";
+
+const supabase = getSupabaseClient();
 
 type CategoryPayload = {
   name: string;
@@ -7,17 +10,15 @@ type CategoryPayload = {
 };
 
 export const categoryService = {
-  async getCategories(): Promise<Category[]> {
+  async getCategories(
+    businessId: string
+  ): Promise<Category[]> {
     const { data, error } = await supabase
       .from("categories")
       .select("*")
+      .eq("business_id", businessId)
       .eq("is_active", true)
       .order("name");
-
-    console.group("CATEGORY SERVICE");
-    console.log("Data :", data);
-    console.log("Error :", error);
-    console.groupEnd();
 
     if (error) {
       throw error;
@@ -27,21 +28,16 @@ export const categoryService = {
   },
 
   async createCategory(
+    businessId: string,
     payload: CategoryPayload
   ): Promise<void> {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("categories")
       .insert({
         ...payload,
+        business_id: businessId,
         is_active: true,
-      })
-      .select();
-
-    console.group("CREATE CATEGORY");
-    console.log("Payload :", payload);
-    console.log("Data :", data);
-    console.log("Error :", error);
-    console.groupEnd();
+      });
 
     if (error) {
       throw error;
@@ -49,21 +45,15 @@ export const categoryService = {
   },
 
   async updateCategory(
+    businessId: string,
     id: string,
     payload: CategoryPayload
   ): Promise<void> {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("categories")
       .update(payload)
       .eq("id", id)
-      .select();
-
-    console.group("UPDATE CATEGORY");
-    console.log("ID :", id);
-    console.log("Payload :", payload);
-    console.log("Data :", data);
-    console.log("Error :", error);
-    console.groupEnd();
+      .eq("business_id", businessId);
 
     if (error) {
       throw error;
@@ -71,21 +61,16 @@ export const categoryService = {
   },
 
   async deleteCategory(
+    businessId: string,
     id: string
   ): Promise<void> {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from("categories")
       .update({
         is_active: false,
       })
       .eq("id", id)
-      .select();
-
-    console.group("DELETE CATEGORY");
-    console.log("ID :", id);
-    console.log("Data :", data);
-    console.log("Error :", error);
-    console.groupEnd();
+      .eq("business_id", businessId);
 
     if (error) {
       throw error;

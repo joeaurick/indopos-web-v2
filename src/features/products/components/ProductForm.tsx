@@ -13,12 +13,17 @@ import { useProductStore } from "../store/product.store";
 import { useCategoryStore } from "@/features/categories/store/category.store";
 
 type Props = {
+  businessId: string;
+
   mode: "create" | "edit";
+
   product?: Product | null;
+
   onSuccess?: () => void;
 };
 
 export function ProductForm({
+  businessId,
   mode,
   product,
   onSuccess,
@@ -55,8 +60,10 @@ export function ProductForm({
     useState("");
 
   useEffect(() => {
-    fetchCategories();
-  }, [fetchCategories]);
+  if (!businessId) return;
+
+  fetchCategories(businessId);
+}, [businessId, fetchCategories]);
 
   useEffect(() => {
     if (mode === "edit" && product) {
@@ -113,7 +120,10 @@ export function ProductForm({
 
     try {
       if (mode === "create") {
-        await createProduct(payload);
+        await createProduct(
+  businessId,
+  payload
+);
 
         notify.dismiss(
           loadingToast
@@ -136,9 +146,10 @@ export function ProductForm({
         }
 
         await updateProduct(
-          product.id,
-          payload
-        );
+  businessId,
+  product.id,
+  payload
+);
 
         notify.dismiss(
           loadingToast

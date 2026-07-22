@@ -12,18 +12,23 @@ type SupplierState = {
 
   loading: boolean;
 
-  fetchSuppliers: () => Promise<void>;
+  fetchSuppliers: (
+    businessId: string
+  ) => Promise<void>;
 
   createSupplier: (
+    businessId: string,
     payload: SupplierPayload
   ) => Promise<void>;
 
   updateSupplier: (
+    businessId: string,
     id: string,
     payload: SupplierPayload
   ) => Promise<void>;
 
   deleteSupplier: (
+    businessId: string,
     id: string
   ) => Promise<void>;
 };
@@ -35,7 +40,9 @@ create<SupplierState>((set, get) => ({
 
   loading: false,
 
-  fetchSuppliers: async () => {
+  fetchSuppliers: async (
+    businessId
+  ) => {
 
     set({
       loading: true,
@@ -44,7 +51,9 @@ create<SupplierState>((set, get) => ({
     try {
 
       const suppliers =
-        await supplierService.getSuppliers();
+        await supplierService.getSuppliers(
+          businessId
+        );
 
       set({
         suppliers,
@@ -64,6 +73,7 @@ create<SupplierState>((set, get) => ({
   },
 
   createSupplier: async (
+    businessId,
     payload
   ) => {
 
@@ -74,10 +84,13 @@ create<SupplierState>((set, get) => ({
     try {
 
       await supplierService.createSupplier(
+        businessId,
         payload
       );
 
-      await get().fetchSuppliers();
+      await get().fetchSuppliers(
+        businessId
+      );
 
     } finally {
 
@@ -90,6 +103,7 @@ create<SupplierState>((set, get) => ({
   },
 
   updateSupplier: async (
+    businessId,
     id,
     payload
   ) => {
@@ -101,11 +115,14 @@ create<SupplierState>((set, get) => ({
     try {
 
       await supplierService.updateSupplier(
+        businessId,
         id,
         payload
       );
 
-      await get().fetchSuppliers();
+      await get().fetchSuppliers(
+        businessId
+      );
 
     } finally {
 
@@ -118,6 +135,7 @@ create<SupplierState>((set, get) => ({
   },
 
   deleteSupplier: async (
+    businessId,
     id
   ) => {
 
@@ -128,10 +146,13 @@ create<SupplierState>((set, get) => ({
     try {
 
       await supplierService.deleteSupplier(
+        businessId,
         id
       );
 
-      await get().fetchSuppliers();
+      await get().fetchSuppliers(
+        businessId
+      );
 
     } finally {
 

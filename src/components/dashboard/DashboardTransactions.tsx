@@ -29,10 +29,6 @@ export function DashboardTransactions() {
       (state) => state.loading
     );
 
-  useEffect(() => {
-    fetchDashboard();
-  }, [fetchDashboard]);
-
   function getType(type?: string) {
     switch (type) {
       case "SALE":

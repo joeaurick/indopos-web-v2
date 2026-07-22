@@ -1,14 +1,39 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
 import { Business } from "../types";
+
+const supabase = getSupabaseClient();
+
+async function getCurrentBusinessId() {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("User belum login");
+  }
+
+  const { data, error } = await supabase
+    .from("business_users")
+    .select("business_id")
+    .eq("user_id", user.id)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data.business_id as string;
+}
 
 export const businessService = {
   async getBusiness(): Promise<Business | null> {
+    const businessId = await getCurrentBusinessId();
+
     const { data, error } = await supabase
       .from("businesses")
       .select("*")
-      .eq("is_active", true)
-      .limit(1)
-      .maybeSingle();
+      .eq("id", businessId)
+      .single();
 
     if (error) {
       throw error;
@@ -19,9 +44,8 @@ export const businessService = {
 
   async saveBusiness(
     business: Partial<Business>
-  ) {
-    const current =
-      await this.getBusiness();
+  ): Promise<void> {
+    const businessId = await getCurrentBusinessId();
 
     const payload = {
       name: business.name ?? "",
@@ -30,8 +54,7 @@ export const businessService = {
       email: business.email ?? "",
       phone: business.phone ?? "",
       address: business.address ?? "",
-      website:
-        business.website ?? "",
+      website: business.website ?? "",
       tax_number:
         business.tax_number ?? "",
       receipt_footer:
@@ -39,55 +62,49 @@ export const businessService = {
         "Terima kasih telah berbelanja.",
       logo_url:
         business.logo_url ?? "",
-      is_active: true,
       updated_at:
         new Date().toISOString(),
     };
 
-    if (!current) {
-      const { error } =
-        await supabase
-          .from("businesses")
-          .insert({
-            ...payload,
-            created_at:
-              new Date().toISOString(),
-          });
-
-      if (error) {
-        throw error;
-      }
-
-      return;
-    }
-
-    const { error } =
-      await supabase
-        .from("businesses")
-        .update(payload)
-        .eq("id", current.id);
+    const { error } = await supabase
+      .from("businesses")
+      .update(payload)
+      .eq("id", businessId);
 
     if (error) {
       throw error;
     }
   },
 
-  async deleteLogo() {
-    const current =
-      await this.getBusiness();
+  async deleteLogo(): Promise<void> {
+    const businessId =
+      await getCurrentBusinessId();
 
-    if (!current?.logo_url) return;
+    const { data: business, error } =
+      await supabase
+        .from("businesses")
+        .select("logo_url")
+        .eq("id", businessId)
+        .single();
 
-    const path =
-      current.logo_url.split("/logos/")[1];
-
-    if (path) {
-      await supabase.storage
-        .from("logos")
-        .remove([path]);
+    if (error) {
+      throw error;
     }
 
-    const { error } =
+    if (business.logo_url) {
+      const path =
+        business.logo_url.split(
+          "/logos/"
+        )[1];
+
+      if (path) {
+        await supabase.storage
+          .from("logos")
+          .remove([path]);
+      }
+    }
+
+    const { error: updateError } =
       await supabase
         .from("businesses")
         .update({
@@ -95,10 +112,10 @@ export const businessService = {
           updated_at:
             new Date().toISOString(),
         })
-        .eq("id", current.id);
+        .eq("id", businessId);
 
-    if (error) {
-      throw error;
+    if (updateError) {
+      throw updateError;
     }
   },
 };

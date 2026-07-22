@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  Pencil,
-  Trash2,
-} from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 
 type Props = {
   onEdit: () => void;
@@ -15,34 +12,44 @@ export function CategoryActions({
   onDelete,
 }: Props) {
   return (
-    <div className="flex items-center justify-center gap-2">
+    <div className="flex justify-center gap-2">
+
       <button
         onClick={onEdit}
-        title="Edit"
         className="
+          flex
+          h-9
+          w-9
+          items-center
+          justify-center
           rounded-lg
-          p-2
+          bg-amber-100
           text-amber-600
           transition
-          hover:bg-amber-100
+          hover:bg-amber-200
         "
       >
-        <Pencil size={18} />
+        <Pencil size={16} />
       </button>
 
       <button
         onClick={onDelete}
-        title="Arsipkan"
         className="
+          flex
+          h-9
+          w-9
+          items-center
+          justify-center
           rounded-lg
-          p-2
+          bg-red-100
           text-red-600
           transition
-          hover:bg-red-100
+          hover:bg-red-200
         "
       >
-        <Trash2 size={18} />
+        <Trash2 size={16} />
       </button>
+
     </div>
   );
 }

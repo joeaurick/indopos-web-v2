@@ -1,17 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
-
 import { Card } from "@/components/ui/Card";
 
 import { useReportStore } from "../store/report.store";
 
 export function ReportsTable() {
-  const fetchReports =
-    useReportStore(
-      (state) => state.fetchReports
-    );
-
   const loading =
     useReportStore(
       (state) => state.loading
@@ -21,10 +14,6 @@ export function ReportsTable() {
     useReportStore(
       (state) => state.data.history
     );
-
-  useEffect(() => {
-    fetchReports();
-  }, [fetchReports]);
 
   function getBadge(type: string) {
     switch (type) {

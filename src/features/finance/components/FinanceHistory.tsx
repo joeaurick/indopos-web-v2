@@ -6,14 +6,19 @@ import {
   ArrowUpCircle,
   ArrowDownCircle,
   Wallet,
-  Landmark,
 } from "lucide-react";
 
 import { Card } from "@/components/ui/Card";
 
 import { useFinanceStore } from "../store/finance.store";
 
-export function FinanceHistory() {
+type Props = {
+  businessId: string;
+};
+
+export function FinanceHistory({
+  businessId,
+}: Props) {
   const fetchFinance =
     useFinanceStore(
       (state) => state.fetchFinance
@@ -29,9 +34,21 @@ export function FinanceHistory() {
       (state) => state.data.history
     );
 
+  const filter =
+    useFinanceStore(
+      (state) => state.filter
+    );
+
   useEffect(() => {
-    fetchFinance();
-  }, [fetchFinance]);
+    fetchFinance(
+      businessId,
+      filter
+    );
+  }, [
+    businessId,
+    filter,
+    fetchFinance,
+  ]);
 
   function getType(item: any) {
     switch (item.type) {
@@ -51,14 +68,19 @@ export function FinanceHistory() {
         };
 
       case "CASH_IN":
-  return {
-    label: "Cash In",
-    icon: <ArrowUpCircle size={18} />,
-    color: "text-cyan-600",
-    badge: "bg-cyan-100 text-cyan-700",
-    amountColor: "text-cyan-600",
-    prefix: "+",
-  };
+        return {
+          label: "Cash In",
+          icon: (
+            <ArrowUpCircle
+              size={18}
+            />
+          ),
+          badge:
+            "bg-cyan-100 text-cyan-700",
+          amount:
+            "text-cyan-600",
+          prefix: "+",
+        };
 
       case "PURCHASE":
         return {

@@ -1,4 +1,4 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
 
 import {
   CashOutData,
@@ -6,8 +6,11 @@ import {
   Expense,
 } from "../types";
 
+const supabase = getSupabaseClient();
+
 export const cashOutService = {
   async getCashOut(
+    businessId: string,
     filter?: Partial<CashOutFilter>
   ): Promise<CashOutData> {
     // ==========================
@@ -20,6 +23,7 @@ export const cashOutService = {
     } = await supabase
       .from("expense_categories")
       .select("*")
+      .eq("business_id", businessId)
       .eq("is_active", true)
       .order("name");
 
@@ -43,6 +47,7 @@ export const cashOutService = {
           is_active
         )
       `)
+      .eq("business_id", businessId)
       .eq("is_active", true)
       .order("expense_date", {
         ascending: false,
@@ -136,7 +141,8 @@ export const cashOutService = {
       rows
         .filter(
           (item) =>
-            item.expense_date === today
+            item.expense_date ===
+            today
         )
         .reduce(
           (sum, item) =>
@@ -169,12 +175,9 @@ export const cashOutService = {
     return {
       summary: {
         totalExpense,
-
         totalTransaction:
           rows.length,
-
         todayExpense,
-
         monthExpense,
       },
 
@@ -272,23 +275,17 @@ export const cashOutService = {
   // ==========================
 
   async createExpense(
+    businessId: string,
     data: {
       category_id:
         | string
         | null;
-
       title: string;
-
       description?: string;
-
       amount: number;
-
       payment_method: string;
-
       expense_date: string;
-
       receipt_number?: string;
-
       attachment_url?:
         | string
         | null;
@@ -296,10 +293,12 @@ export const cashOutService = {
   ) {
     const { error } =
       await supabase
-        .from(
-          "expenses"
-        )
-        .insert(data);
+        .from("expenses")
+        .insert({
+          ...data,
+          business_id:
+            businessId,
+        });
 
     if (error) {
       throw error;
@@ -311,15 +310,18 @@ export const cashOutService = {
   // ==========================
 
   async updateExpense(
+    businessId: string,
     id: string,
     data: Partial<Expense>
   ) {
     const { error } =
       await supabase
-        .from(
-          "expenses"
-        )
+        .from("expenses")
         .update(data)
+        .eq(
+          "business_id",
+          businessId
+        )
         .eq("id", id);
 
     if (error) {
@@ -332,16 +334,19 @@ export const cashOutService = {
   // ==========================
 
   async deleteExpense(
+    businessId: string,
     id: string
   ) {
     const { error } =
       await supabase
-        .from(
-          "expenses"
-        )
+        .from("expenses")
         .update({
           is_active: false,
         })
+        .eq(
+          "business_id",
+          businessId
+        )
         .eq("id", id);
 
     if (error) {

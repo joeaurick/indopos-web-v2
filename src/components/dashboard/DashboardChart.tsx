@@ -27,10 +27,6 @@ export function DashboardChart() {
       (state) => state.data.dailySales
     );
 
-  useEffect(() => {
-    fetchDashboard();
-  }, [fetchDashboard]);
-
   return (
     <Card className="rounded-3xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
 

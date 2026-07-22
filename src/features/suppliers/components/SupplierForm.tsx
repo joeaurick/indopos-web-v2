@@ -12,12 +12,17 @@ import { Supplier } from "../types";
 import { useSupplierStore } from "../store/supplier.store";
 
 type Props = {
+  businessId: string;
+
   mode: "create" | "edit";
+
   supplier?: Supplier | null;
+
   onSuccess?: () => void;
 };
 
 export function SupplierForm({
+  businessId,
   mode,
   supplier,
   onSuccess,
@@ -106,7 +111,10 @@ export function SupplierForm({
 
     try {
       if (mode === "create") {
-        await createSupplier(payload);
+        await createSupplier(
+  businessId,
+  payload
+);
 
         notify.dismiss(
           loadingToast
@@ -129,9 +137,10 @@ export function SupplierForm({
         }
 
         await updateSupplier(
-          supplier.id,
-          payload
-        );
+  businessId,
+  supplier.id,
+  payload
+);
 
         notify.dismiss(
           loadingToast

@@ -12,6 +12,8 @@ import { DashboardPaymentMethod } from "@/components/dashboard/DashboardPaymentM
 import { DashboardInventoryAlert } from "@/components/dashboard/DashboardInventoryAlert";
 import { DashboardHeroStats } from "@/components/dashboard/DashboardHeroStats";
 import { DashboardActions } from "@/components/dashboard/DashboardActions";
+import { DashboardLoader } from "@/components/dashboard/DashboardLoader";
+import { getCurrentBusinessId } from "@/lib/business/get-current-business";
 
 import {
   CalendarDays,
@@ -22,6 +24,11 @@ import {
 
 export default async function DashboardPage() {
   const supabase = await createClient();
+  const businessId = await getCurrentBusinessId();
+
+if (!businessId) {
+  redirect("/login");
+}
 
   const {
     data: { user },
@@ -33,7 +40,10 @@ export default async function DashboardPage() {
 
   return (
     <AppLayout>
-      {/* HERO */}
+
+  <DashboardLoader businessId={businessId} />
+
+  {/* HERO */}
 
       <div
   className="

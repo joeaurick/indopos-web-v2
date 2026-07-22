@@ -13,7 +13,13 @@ import { AdjustmentTable } from "../components/AdjustmentTable";
 import { AdjustmentDialog } from "../components/AdjustmentDialog";
 import { AdjustmentForm } from "../components/AdjustmentForm";
 
-export function InventoryAdjustmentPage() {
+type Props = {
+  businessId: string;
+};
+
+export function InventoryAdjustmentPage({
+  businessId,
+}: Props) {
   const [search, setSearch] =
     useState("");
 
@@ -41,8 +47,13 @@ export function InventoryAdjustmentPage() {
     );
 
   useEffect(() => {
-    fetchAdjustments();
-  }, [fetchAdjustments]);
+    fetchAdjustments(
+      businessId
+    );
+  }, [
+    businessId,
+    fetchAdjustments,
+  ]);
 
   const filtered =
     useMemo(() => {
@@ -68,7 +79,6 @@ export function InventoryAdjustmentPage() {
   return (
     <>
       <div className="space-y-6">
-
         <AdjustmentToolbar
           search={search}
           onSearch={setSearch}
@@ -81,7 +91,6 @@ export function InventoryAdjustmentPage() {
           adjustments={filtered}
           loading={loading}
         />
-
       </div>
 
       <AdjustmentDialog
@@ -92,6 +101,7 @@ export function InventoryAdjustmentPage() {
         }
       >
         <AdjustmentForm
+          businessId={businessId}
           onSuccess={() =>
             setOpenDialog(false)
           }

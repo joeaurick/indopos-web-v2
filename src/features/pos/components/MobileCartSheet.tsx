@@ -5,11 +5,13 @@ import { X } from "lucide-react";
 import { CartPanel } from "./CartPanel";
 
 type Props = {
+  businessId: string;
   open: boolean;
   onClose: () => void;
 };
 
 export function MobileCartSheet({
+  businessId,
   open,
   onClose,
 }: Props) {
@@ -122,7 +124,9 @@ export function MobileCartSheet({
 
         <div className="h-[calc(85vh-84px)]">
 
-          <CartPanel />
+          <CartPanel
+  businessId={businessId}
+/>
 
         </div>
 

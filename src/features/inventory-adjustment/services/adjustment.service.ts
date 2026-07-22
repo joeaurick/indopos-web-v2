@@ -1,4 +1,6 @@
-import { supabase } from "@/services/supabase/client";
+import { getSupabaseClient } from "@/services/supabase/client";
+
+const supabase = getSupabaseClient();
 
 import {
   Adjustment,
@@ -6,7 +8,9 @@ import {
 } from "../types";
 
 export const adjustmentService = {
-  async getAdjustments(): Promise<Adjustment[]> {
+  async getAdjustments(
+    businessId: string
+  ): Promise<Adjustment[]> {
     const { data, error } = await supabase
       .from("stock_movements")
       .select(`
@@ -16,6 +20,7 @@ export const adjustmentService = {
           sku
         )
       `)
+      .eq("business_id", businessId)
       .order("created_at", {
         ascending: false,
       });
@@ -56,15 +61,16 @@ export const adjustmentService = {
   },
 
   async createAdjustment(
+    businessId: string,
     payload: AdjustmentPayload
   ) {
-    // Ambil stok sekarang
     const {
       data: product,
       error: productError,
     } = await supabase
       .from("products")
       .select("stock")
+      .eq("business_id", businessId)
       .eq("id", payload.product_id)
       .single();
 
@@ -72,8 +78,7 @@ export const adjustmentService = {
       throw productError;
     }
 
-    const before =
-      Number(product.stock);
+    const before = Number(product.stock);
 
     let after = before;
 
@@ -95,50 +100,44 @@ export const adjustmentService = {
       after = 0;
     }
 
-    // Update stok produk
-    const {
-      error: updateError,
-    } = await supabase
-      .from("products")
-      .update({
-        stock: after,
-      })
-      .eq("id", payload.product_id);
+    const { error: updateError } =
+      await supabase
+        .from("products")
+        .update({
+          stock: after,
+        })
+        .eq("business_id", businessId)
+        .eq("id", payload.product_id);
 
     if (updateError) {
       throw updateError;
     }
 
-    // Simpan histori stock movement
-    const {
-      error: movementError,
-    } = await supabase
-      .from("stock_movements")
-      .insert({
-        product_id:
-          payload.product_id,
+    const { error: movementError } =
+      await supabase
+        .from("stock_movements")
+        .insert({
+          business_id: businessId,
 
-        reference_type:
-          "ADJUSTMENT",
+          product_id:
+            payload.product_id,
 
-        reference_id:
-          null,
+          reference_type:
+            "ADJUSTMENT",
 
-        movement_type:
-          payload.type,
+          reference_id: null,
 
-        qty:
-          payload.qty,
+          movement_type:
+            payload.type,
 
-        stock_before:
-          before,
+          qty: payload.qty,
 
-        stock_after:
-          after,
+          stock_before: before,
 
-        note:
-          payload.note,
-      });
+          stock_after: after,
+
+          note: payload.note,
+        });
 
     if (movementError) {
       throw movementError;

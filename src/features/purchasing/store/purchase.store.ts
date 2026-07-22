@@ -12,17 +12,22 @@ type PurchaseState = {
 
   loading: boolean;
 
-  fetchPurchases: () => Promise<void>;
+  fetchPurchases: (
+    businessId: string
+  ) => Promise<void>;
 
   createPurchase: (
+    businessId: string,
     payload: PurchaseOrderPayload
   ) => Promise<void>;
 
   deletePurchase: (
+    businessId: string,
     id: string
   ) => Promise<void>;
 
   receivePurchase: (
+    businessId: string,
     id: string
   ) => Promise<void>;
 };
@@ -33,18 +38,24 @@ export const usePurchaseStore =
 
     loading: false,
 
-    fetchPurchases: async () => {
+    fetchPurchases: async (
+      businessId
+    ) => {
       set({
         loading: true,
       });
 
       try {
         const purchases =
-          await purchaseService.getPurchases();
+          await purchaseService.getPurchases(
+            businessId
+          );
 
         set({
           purchases,
         });
+      } catch (error) {
+        console.error(error);
       } finally {
         set({
           loading: false,
@@ -53,6 +64,7 @@ export const usePurchaseStore =
     },
 
     createPurchase: async (
+      businessId,
       payload
     ) => {
       set({
@@ -61,10 +73,15 @@ export const usePurchaseStore =
 
       try {
         await purchaseService.createPurchase(
+          businessId,
           payload
         );
 
-        await get().fetchPurchases();
+        await get().fetchPurchases(
+          businessId
+        );
+      } catch (error) {
+        console.error(error);
       } finally {
         set({
           loading: false,
@@ -73,6 +90,7 @@ export const usePurchaseStore =
     },
 
     deletePurchase: async (
+      businessId,
       id
     ) => {
       set({
@@ -81,10 +99,15 @@ export const usePurchaseStore =
 
       try {
         await purchaseService.deletePurchase(
+          businessId,
           id
         );
 
-        await get().fetchPurchases();
+        await get().fetchPurchases(
+          businessId
+        );
+      } catch (error) {
+        console.error(error);
       } finally {
         set({
           loading: false,
@@ -93,6 +116,7 @@ export const usePurchaseStore =
     },
 
     receivePurchase: async (
+      businessId,
       id
     ) => {
       set({
@@ -101,10 +125,15 @@ export const usePurchaseStore =
 
       try {
         await purchaseService.receivePurchase(
+          businessId,
           id
         );
 
-        await get().fetchPurchases();
+        await get().fetchPurchases(
+          businessId
+        );
+      } catch (error) {
+        console.error(error);
       } finally {
         set({
           loading: false,

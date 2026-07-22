@@ -17,14 +17,22 @@ import { ProductTable } from "../components/ProductTable";
 import { ProductDialog } from "../components/ProductDialog";
 import { ProductForm } from "../components/ProductForm";
 
-export function ProductsPage() {
+type Props = {
+  businessId: string;
+};
+
+export function ProductsPage({
+  businessId,
+}: Props) {
   const [search, setSearch] =
     useState("");
 
   const [
     selectedCategory,
     setSelectedCategory,
-  ] = useState<string | null>(null);
+  ] = useState<string | null>(
+    null
+  );
 
   const [
     openCreateDialog,
@@ -44,39 +52,54 @@ export function ProductsPage() {
   const [
     selectedProduct,
     setSelectedProduct,
-  ] = useState<Product | null>(null);
+  ] = useState<Product | null>(
+    null
+  );
 
   const [
     deleting,
     setDeleting,
   ] = useState(false);
 
-  const products = useProductStore(
-    (state) => state.products
-  );
+  const products =
+    useProductStore(
+      (state) =>
+        state.products
+    );
 
-  const loading = useProductStore(
-    (state) => state.loading
-  );
+  const loading =
+    useProductStore(
+      (state) =>
+        state.loading
+    );
 
   const fetchProducts =
     useProductStore(
-      (state) => state.fetchProducts
+      (state) =>
+        state.fetchProducts
     );
 
   const deleteProduct =
     useProductStore(
-      (state) => state.deleteProduct
+      (state) =>
+        state.deleteProduct
     );
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    fetchProducts(
+      businessId
+    );
+  }, [
+    businessId,
+    fetchProducts,
+  ]);
 
   const filteredProducts =
     useMemo(() => {
       const keyword =
-        search.trim().toLowerCase();
+        search
+          .trim()
+          .toLowerCase();
 
       return products.filter(
         (product) => {
@@ -84,10 +107,14 @@ export function ProductsPage() {
             keyword === "" ||
             product.name
               .toLowerCase()
-              .includes(keyword) ||
+              .includes(
+                keyword
+              ) ||
             product.sku
               .toLowerCase()
-              .includes(keyword);
+              .includes(
+                keyword
+              );
 
           const matchCategory =
             !selectedCategory ||
@@ -109,19 +136,33 @@ export function ProductsPage() {
   function handleEdit(
     product: Product
   ) {
-    setSelectedProduct(product);
-    setOpenEditDialog(true);
+    setSelectedProduct(
+      product
+    );
+
+    setOpenEditDialog(
+      true
+    );
   }
 
   function handleDelete(
     product: Product
   ) {
-    setSelectedProduct(product);
-    setOpenDeleteDialog(true);
+    setSelectedProduct(
+      product
+    );
+
+    setOpenDeleteDialog(
+      true
+    );
   }
 
   async function confirmDelete() {
-    if (!selectedProduct) return;
+    if (
+      !selectedProduct
+    ) {
+      return;
+    }
 
     setDeleting(true);
 
@@ -132,103 +173,171 @@ export function ProductsPage() {
 
     try {
       await deleteProduct(
+        businessId,
         selectedProduct.id
       );
 
-      notify.dismiss(loadingToast);
+      notify.dismiss(
+        loadingToast
+      );
 
       notify.success(
         "Produk berhasil dihapus."
       );
 
-      setOpenDeleteDialog(false);
-      setSelectedProduct(null);
-    } catch (error: any) {
-      console.error(error);
+      setOpenDeleteDialog(
+        false
+      );
 
-      notify.dismiss(loadingToast);
+      setSelectedProduct(
+        null
+      );
+    } catch (
+      error: any
+    ) {
+      console.error(
+        error
+      );
+
+      notify.dismiss(
+        loadingToast
+      );
 
       notify.error(
         error?.message ??
           "Gagal menghapus produk."
       );
     } finally {
-      setDeleting(false);
+      setDeleting(
+        false
+      );
     }
   }
 
   return (
     <>
       <div
-  className="
-    space-y-6
-    pb-32
-    md:pb-0
-  "
->
+        className="
+          space-y-6
+          pb-32
+          md:pb-0
+        "
+      >
+        <ProductToolbar
+          businessId={
+            businessId
+          }
+          search={search}
+          onSearch={
+            setSearch
+          }
+          selectedCategory={
+            selectedCategory
+          }
+          onSelectCategory={
+            setSelectedCategory
+          }
+          onAdd={() =>
+            setOpenCreateDialog(
+              true
+            )
+          }
+        />
 
-  <ProductToolbar
-    search={search}
-    onSearch={setSearch}
-    selectedCategory={selectedCategory}
-    onSelectCategory={setSelectedCategory}
-    onAdd={() => setOpenCreateDialog(true)}
-  />
-
-  <ProductTable
-    products={filteredProducts}
-    loading={loading}
-    onEdit={handleEdit}
-    onDelete={handleDelete}
-  />
-
-</div>
+        <ProductTable
+          products={
+            filteredProducts
+          }
+          loading={loading}
+          onEdit={
+            handleEdit
+          }
+          onDelete={
+            handleDelete
+          }
+        />
+      </div>
 
       <ProductDialog
-        open={openCreateDialog}
+        open={
+          openCreateDialog
+        }
         title="Tambah Produk"
         onClose={() =>
-          setOpenCreateDialog(false)
+          setOpenCreateDialog(
+            false
+          )
         }
       >
         <ProductForm
+          businessId={
+            businessId
+          }
           mode="create"
           onSuccess={() =>
-            setOpenCreateDialog(false)
+            setOpenCreateDialog(
+              false
+            )
           }
         />
       </ProductDialog>
 
       <ProductDialog
-        open={openEditDialog}
+        open={
+          openEditDialog
+        }
         title="Edit Produk"
         onClose={() => {
-          setOpenEditDialog(false);
-          setSelectedProduct(null);
+          setOpenEditDialog(
+            false
+          );
+
+          setSelectedProduct(
+            null
+          );
         }}
       >
         <ProductForm
+          businessId={
+            businessId
+          }
           mode="edit"
-          product={selectedProduct}
+          product={
+            selectedProduct
+          }
           onSuccess={() => {
-            setOpenEditDialog(false);
-            setSelectedProduct(null);
+            setOpenEditDialog(
+              false
+            );
+
+            setSelectedProduct(
+              null
+            );
           }}
         />
       </ProductDialog>
 
       <ConfirmDialog
-        open={openDeleteDialog}
+        open={
+          openDeleteDialog
+        }
         title="Hapus Produk"
         description={`Yakin ingin menghapus "${selectedProduct?.name}"? Tindakan ini tidak dapat dibatalkan.`}
         loading={deleting}
         confirmText="Hapus"
         cancelText="Batal"
         onCancel={() => {
-          setOpenDeleteDialog(false);
-          setSelectedProduct(null);
+          setOpenDeleteDialog(
+            false
+          );
+
+          setSelectedProduct(
+            null
+          );
         }}
-        onConfirm={confirmDelete}
+        onConfirm={
+          confirmDelete
+        }
       />
     </>
   );

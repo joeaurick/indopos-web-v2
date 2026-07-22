@@ -11,7 +11,13 @@ import { useStockMovementStore } from "@/features/inventory/store/stockMovement.
 import { StockCardToolbar } from "../components/StockCardToolbar";
 import { StockCardTable } from "../components/StockCardTable";
 
-export function StockCardPage() {
+type Props = {
+  businessId: string;
+};
+
+export function StockCardPage({
+  businessId,
+}: Props) {
   const [search, setSearch] =
     useState("");
 
@@ -31,8 +37,13 @@ export function StockCardPage() {
     );
 
   useEffect(() => {
-    fetchMovements();
-  }, [fetchMovements]);
+    fetchMovements(
+      businessId
+    );
+  }, [
+    businessId,
+    fetchMovements,
+  ]);
 
   const filtered =
     useMemo(() => {

@@ -9,7 +9,13 @@ import {
 import { useProductStore } from "@/features/products";
 import { useCartStore } from "@/features/pos/store/cart-store";
 
-export function ProductGrid() {
+type Props = {
+  businessId: string;
+};
+
+export function ProductGrid({
+  businessId,
+}: Props) {
   const loading = useProductStore(
     (state) => state.loading
   );
@@ -35,8 +41,8 @@ export function ProductGrid() {
   );
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    fetchProducts(businessId);
+  }, [businessId, fetchProducts]);
 
   const filteredProducts = useMemo(() => {
     const keyword = String(search)
@@ -122,8 +128,6 @@ export function ProductGrid() {
             hover:shadow-xl
           "
         >
-          {/* Image */}
-
           <div
             className="
               relative
@@ -164,8 +168,6 @@ export function ProductGrid() {
             </div>
           </div>
 
-          {/* Content */}
-
           <div className="p-5">
 
             <h3 className="line-clamp-2 min-h-[52px] text-lg font-bold text-[var(--foreground)]">
@@ -179,18 +181,14 @@ export function ProductGrid() {
             <div className="mt-6 flex items-end justify-between">
 
               <div>
-
                 <p className="text-xs text-[var(--text-muted)]">
                   Harga
                 </p>
 
                 <h2 className="mt-1 text-2xl font-bold text-[var(--primary)]">
                   Rp{" "}
-                  {Number(
-                    product.price
-                  ).toLocaleString("id-ID")}
+                  {Number(product.price).toLocaleString("id-ID")}
                 </h2>
-
               </div>
 
               <div

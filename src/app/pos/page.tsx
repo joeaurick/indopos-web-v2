@@ -1,10 +1,18 @@
 import { AppLayout } from "@/components/layout/AppLayout";
+
 import { PosPage } from "@/features/pos/pages/PosPage";
 
-export default function Page() {
+import { getCurrentBusinessId } from "@/lib/business/get-current-business";
+
+export default async function Page() {
+  const businessId =
+    await getCurrentBusinessId();
+
   return (
     <AppLayout>
-      <PosPage />
+      <PosPage
+        businessId={businessId}
+      />
     </AppLayout>
   );
 }

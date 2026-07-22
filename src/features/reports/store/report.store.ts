@@ -15,6 +15,7 @@ type ReportState = {
   data: ReportData;
 
   fetchReports: (
+    businessId: string,
     filter?: ReportFilter
   ) => Promise<void>;
 };
@@ -56,6 +57,7 @@ export const useReportStore =
     data: initialData,
 
     fetchReports: async (
+      businessId,
       filter = {
         type: "all",
       }
@@ -68,6 +70,7 @@ export const useReportStore =
       try {
         const data =
           await reportService.getReports(
+            businessId,
             filter
           );
 

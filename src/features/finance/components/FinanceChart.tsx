@@ -17,7 +17,13 @@ import { Card } from "@/components/ui/Card";
 
 import { useFinanceStore } from "../store/finance.store";
 
-export function FinanceChart() {
+type Props = {
+  businessId: string;
+};
+
+export function FinanceChart({
+  businessId,
+}: Props) {
   const fetchFinance =
     useFinanceStore(
       (state) => state.fetchFinance
@@ -34,14 +40,15 @@ export function FinanceChart() {
     );
 
   useEffect(() => {
-    fetchFinance();
-  }, [fetchFinance]);
+    fetchFinance(businessId);
+  }, [
+    businessId,
+    fetchFinance,
+  ]);
 
   return (
     <Card className="overflow-hidden">
-
       <div className="border-b border-slate-200 p-6">
-
         <h2 className="text-xl font-semibold">
           Grafik Keuangan
         </h2>
@@ -50,30 +57,22 @@ export function FinanceChart() {
           Perkembangan Income, Expense,
           Gross Profit dan Net Profit.
         </p>
-
       </div>
 
       <div className="h-[430px] p-6">
-
         {loading ? (
-
           <div className="flex h-full items-center justify-center text-slate-400">
             Loading...
           </div>
-
         ) : chart.length === 0 ? (
-
           <div className="flex h-full items-center justify-center text-slate-400">
             Belum ada data grafik.
           </div>
-
         ) : (
-
           <ResponsiveContainer
             width="100%"
             height="100%"
           >
-
             <LineChart
               data={chart}
               margin={{
@@ -83,7 +82,6 @@ export function FinanceChart() {
                 bottom: 10,
               }}
             >
-
               <CartesianGrid
                 strokeDasharray="4 4"
               />
@@ -157,15 +155,10 @@ export function FinanceChart() {
                   r: 6,
                 }}
               />
-
             </LineChart>
-
           </ResponsiveContainer>
-
         )}
-
       </div>
-
     </Card>
   );
 }

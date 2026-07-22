@@ -14,6 +14,10 @@ import { Card } from "@/components/ui/Card";
 
 import { useReportStore } from "../store/report.store";
 
+type Props = {
+  businessId: string;
+};
+
 type SummaryCardProps = {
   title: string;
   value: number;
@@ -54,7 +58,9 @@ function SummaryCard({
   );
 }
 
-export function ReportsSummary() {
+export function ReportsSummary({
+  businessId,
+}: Props) {
   const fetchReports =
     useReportStore(
       (state) => state.fetchReports
@@ -71,8 +77,16 @@ export function ReportsSummary() {
     );
 
   useEffect(() => {
-    fetchReports();
-  }, [fetchReports]);
+    fetchReports(
+      businessId,
+      {
+        type: "all",
+      }
+    );
+  }, [
+    businessId,
+    fetchReports,
+  ]);
 
   const cards = [
     {

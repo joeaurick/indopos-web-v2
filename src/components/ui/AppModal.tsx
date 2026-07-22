@@ -26,26 +26,24 @@ export function AppModal({
         z-50
 
         flex
-        items-end
+        items-center
+        justify-center
 
         bg-black/40
         backdrop-blur-sm
 
-        p-3
-
-        md:items-center
-        md:p-6
+        p-4
       "
     >
       <div
         className="
           w-full
+          max-w-xl
 
-          max-h-[92vh]
+          max-h-[90vh]
           overflow-y-auto
 
-          rounded-t-3xl
-          md:rounded-3xl
+          rounded-3xl
 
           border
           border-[var(--border)]
@@ -54,8 +52,9 @@ export function AppModal({
 
           shadow-2xl
 
-          md:max-w-2xl
-          md:mx-auto
+          animate-in
+          fade-in
+          zoom-in-95
         "
       >
         <div
@@ -67,19 +66,23 @@ export function AppModal({
             items-center
             justify-between
 
+            rounded-t-3xl
+
             border-b
             border-[var(--border)]
 
             bg-[var(--card)]
 
-            p-5
+            px-6
+            py-5
           "
         >
-          <h2 className="text-lg md:text-xl font-bold">
+          <h2 className="text-xl font-bold">
             {title}
           </h2>
 
           <button
+            type="button"
             onClick={onClose}
             className="
               rounded-xl
@@ -92,7 +95,7 @@ export function AppModal({
           </button>
         </div>
 
-        <div className="p-5 md:p-6">
+        <div className="p-6">
           {children}
         </div>
       </div>
