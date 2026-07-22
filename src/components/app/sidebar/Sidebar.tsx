@@ -18,20 +18,17 @@ import { SidebarGroup } from "./SidebarGroup";
 import { SidebarSearch } from "./SidebarSearch";
 
 export function Sidebar() {
-  const collapsed =
-    useSidebarStore(
-      (state) => state.collapsed
-    );
+  const collapsed = useSidebarStore(
+    (state) => state.collapsed
+  );
 
-  const toggle =
-    useSidebarStore(
-      (state) => state.toggle
-    );
+  const toggle = useSidebarStore(
+    (state) => state.toggle
+  );
 
-  const hydrate =
-    useSidebarGroupStore(
-      (state) => state.hydrate
-    );
+  const hydrate = useSidebarGroupStore(
+    (state) => state.hydrate
+  );
 
   const keyword =
     useSidebarSearchStore(
@@ -70,17 +67,20 @@ export function Sidebar() {
         shrink-0
         flex-col
         border-r
-        border-slate-200
+        border-slate-200/70
         bg-gradient-to-b
-        from-white
-        to-slate-50
+        from-[#F8FAFC]
+        via-white
+        to-[#F3F7FB]
+        backdrop-blur-xl
+        shadow-[8px_0_40px_rgba(15,23,42,0.05)]
         transition-all
         duration-300
 
         ${
           collapsed
-            ? "w-[82px]"
-            : "w-[290px]"
+            ? "w-[84px]"
+            : "w-[300px]"
         }
       `}
     >
@@ -94,9 +94,10 @@ export function Sidebar() {
           items-center
           justify-between
           border-b
-          border-slate-200
-          px-4
-          bg-white
+          border-slate-200/70
+          bg-white/70
+          px-5
+          backdrop-blur-xl
         "
       >
         {!collapsed && <Logo />}
@@ -105,15 +106,22 @@ export function Sidebar() {
           onClick={toggle}
           className="
             flex
-            h-10
-            w-10
+            h-11
+            w-11
             items-center
             justify-center
-            rounded-xl
+            rounded-2xl
+            border
+            border-slate-200
+            bg-white
             text-slate-500
+            shadow-sm
             transition-all
-            hover:bg-slate-100
+            duration-200
+            hover:-translate-y-0.5
+            hover:border-[var(--primary)]
             hover:text-[var(--primary)]
+            hover:shadow-md
           "
         >
           {collapsed ? (
@@ -128,10 +136,12 @@ export function Sidebar() {
 
       <div
         className="
-          shrink-0
           border-b
-          border-slate-200
-          bg-white
+          border-slate-200/70
+          bg-white/70
+          px-3
+          py-3
+          backdrop-blur-xl
         "
       >
         <SidebarSearch
@@ -144,10 +154,10 @@ export function Sidebar() {
       <nav
         className="
           flex-1
+          space-y-8
           overflow-y-auto
-          px-3
-          py-5
-          space-y-7
+          px-4
+          py-6
         "
       >
         {filteredNavigation.map(
@@ -164,85 +174,95 @@ export function Sidebar() {
 
       {/* FOOTER */}
 
-<div
-  className="
-    border-t
-    border-slate-200
-    bg-white
-    p-4
-  "
->
-  <div
-    className={`
-      flex
-      items-center
+      <div
+        className="
+          border-t
+          border-slate-200/70
+          bg-white/70
+          p-5
+          backdrop-blur-xl
+        "
+      >
+        <div
+          className={`
+            flex
+            items-center
 
-      ${
-        collapsed
-          ? "justify-center"
-          : "gap-3"
-      }
-    `}
-  >
-    <div
-      className="
-        flex
-        h-12
-        w-12
-        items-center
-        justify-center
-        overflow-hidden
-        rounded-2xl
-        border
-        border-slate-200
-        bg-white
-        shadow-sm
-      "
-    >
-      <img
-        src="/favicon.png"
-        alt="IndoPOS"
-        className="h-8 w-8 object-contain"
-      />
-    </div>
-
-    {!collapsed && (
-      <div className="min-w-0">
-
-        <h4
-          className="
-            truncate
-            font-semibold
-            text-slate-800
-          "
+            ${
+              collapsed
+                ? "justify-center"
+                : "gap-4"
+            }
+          `}
         >
-          IndoPOS
-        </h4>
+          <div
+            className="
+              flex
+              h-14
+              w-14
+              items-center
+              justify-center
+              overflow-hidden
+              rounded-2xl
+              bg-gradient-to-br
+              from-teal-500
+              to-cyan-600
+              shadow-lg
+            "
+          >
+            <img
+              src="/favicon.png"
+              alt="IndoPOS"
+              className="h-9 w-9"
+            />
+          </div>
 
-        <p
-          className="
-            truncate
-            text-sm
-            text-slate-500
-          "
-        >
-          Business Management Platform
-        </p>
+          {!collapsed && (
+            <div className="min-w-0">
 
-        <p
-          className="
-            mt-0.5
-            text-xs
-            text-slate-400
-          "
-        >
-          Version 1.0.0
-        </p>
+              <h4
+                className="
+                  truncate
+                  text-[15px]
+                  font-bold
+                  tracking-tight
+                  text-slate-800
+                "
+              >
+                IndoPOS
+              </h4>
 
+              <p
+                className="
+                  mt-1
+                  truncate
+                  text-xs
+                  text-slate-500
+                "
+              >
+                Business Management Platform
+              </p>
+
+              <p
+                className="
+                  mt-2
+                  inline-flex
+                  rounded-full
+                  bg-emerald-100
+                  px-2
+                  py-1
+                  text-[11px]
+                  font-medium
+                  text-emerald-700
+                "
+              >
+                Version 1.0.0
+              </p>
+
+            </div>
+          )}
+        </div>
       </div>
-    )}
-  </div>
-</div>
     </aside>
   );
 }

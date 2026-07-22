@@ -33,21 +33,22 @@ export function SidebarItem({
         relative
         flex
         items-center
-        rounded-xl
+        overflow-hidden
+        rounded-2xl
         transition-all
-        duration-200
+        duration-300
 
         ${
           collapsed
             ? `
               mx-auto
-              h-12
-              w-12
+              h-14
+              w-14
               justify-center
             `
             : `
-              h-12
-              gap-3
+              h-14
+              gap-4
               px-4
             `
         }
@@ -55,65 +56,111 @@ export function SidebarItem({
         ${
           active
             ? `
-              bg-white
-              text-slate-900
-              shadow-md
-              font-semibold
+              bg-gradient-to-r
+              from-[var(--primary)]
+              via-[var(--primary)]
+              to-emerald-500
+              text-white
+              shadow-lg
+              shadow-emerald-200/60
+              scale-[1.02]
             `
             : `
               text-slate-600
-              hover:bg-slate-100
+              hover:bg-white
               hover:text-slate-900
+              hover:shadow-md
+              hover:scale-[1.01]
             `
         }
       `}
     >
-      {/* Garis hijau menu aktif */}
+      {/* Glow */}
+
       {active && (
-        <span
+        <div
           className="
             absolute
-            left-0
-            top-2
-            bottom-2
-            w-1
-            rounded-r-full
-            bg-[var(--primary)]
+            inset-0
+            bg-white/10
           "
         />
       )}
 
-      <Icon
-        size={20}
+      {/* Icon */}
+
+      <div
         className={`
-          shrink-0
+          relative
+          flex
+          h-10
+          w-10
+          items-center
+          justify-center
+          rounded-xl
           transition-all
-          duration-200
+          duration-300
 
           ${
             active
-              ? "text-[var(--primary)]"
-              : "group-hover:text-[var(--primary)]"
+              ? `
+                bg-white/20
+                backdrop-blur-sm
+              `
+              : `
+                bg-slate-100
+                group-hover:bg-[var(--primary)]
+              `
           }
         `}
-      />
+      >
+        <Icon
+          size={20}
+          className={`
+            transition-all
+            duration-300
+
+            ${
+              active
+                ? "text-white"
+                : "text-slate-500 group-hover:text-white"
+            }
+          `}
+        />
+      </div>
 
       {!collapsed && (
         <span
           className={`
+            relative
             flex-1
             truncate
-            text-sm
+            text-[14px]
 
             ${
               active
-                ? "font-semibold"
+                ? "font-semibold text-white"
                 : "font-medium"
             }
           `}
         >
           {title}
         </span>
+      )}
+
+      {/* Active Dot */}
+
+      {!collapsed && active && (
+        <span
+          className="
+            relative
+            h-2.5
+            w-2.5
+            rounded-full
+            bg-white
+            shadow
+          "
+        />
       )}
     </Link>
   );

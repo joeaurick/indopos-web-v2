@@ -35,8 +35,17 @@ export function SidebarGroup({
   );
 
   return (
-    <div className="space-y-2">
-
+    <section
+      className="
+        overflow-hidden
+        rounded-3xl
+        border
+        border-slate-200/70
+        bg-white/80
+        shadow-sm
+        backdrop-blur-xl
+      "
+    >
       {!collapsed && (
         <button
           type="button"
@@ -46,11 +55,12 @@ export function SidebarGroup({
             w-full
             items-center
             justify-between
-            px-3
-            py-2
-            rounded-lg
-            transition
-            hover:bg-slate-100
+            rounded-3xl
+            px-5
+            py-4
+            transition-all
+            duration-200
+            hover:bg-slate-50
           "
         >
           <span
@@ -58,24 +68,36 @@ export function SidebarGroup({
               text-[11px]
               font-bold
               uppercase
-              tracking-[0.22em]
-              text-slate-400
+              tracking-[0.25em]
+              text-slate-500
             "
           >
             {title}
           </span>
 
-          {opened ? (
-            <ChevronDown
-              size={15}
-              className="text-slate-400"
-            />
-          ) : (
-            <ChevronRight
-              size={15}
-              className="text-slate-400"
-            />
-          )}
+          <div
+            className="
+              flex
+              h-8
+              w-8
+              items-center
+              justify-center
+              rounded-xl
+              bg-slate-100
+            "
+          >
+            {opened ? (
+              <ChevronDown
+                size={16}
+                className="text-slate-500"
+              />
+            ) : (
+              <ChevronRight
+                size={16}
+                className="text-slate-500"
+              />
+            )}
+          </div>
         </button>
       )}
 
@@ -92,7 +114,13 @@ export function SidebarGroup({
           }
         `}
       >
-        <div className="space-y-2">
+        <div
+          className="
+            space-y-2
+            px-3
+            pb-3
+          "
+        >
           {items.map((item) => (
             <SidebarItem
               key={item.href}
@@ -102,7 +130,6 @@ export function SidebarGroup({
           ))}
         </div>
       </div>
-
-    </div>
+    </section>
   );
 }
