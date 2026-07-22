@@ -164,73 +164,85 @@ export function Sidebar() {
 
       {/* FOOTER */}
 
-      <div
-        className="
-          border-t
-          border-slate-200
-          bg-white
-          p-4
-        "
-      >
-        <div
-          className={`
-            flex
-            items-center
+<div
+  className="
+    border-t
+    border-slate-200
+    bg-white
+    p-4
+  "
+>
+  <div
+    className={`
+      flex
+      items-center
 
-            ${
-              collapsed
-                ? "justify-center"
-                : "gap-3"
-            }
-          `}
+      ${
+        collapsed
+          ? "justify-center"
+          : "gap-3"
+      }
+    `}
+  >
+    <div
+      className="
+        flex
+        h-12
+        w-12
+        items-center
+        justify-center
+        overflow-hidden
+        rounded-2xl
+        border
+        border-slate-200
+        bg-white
+        shadow-sm
+      "
+    >
+      <img
+        src="/favicon.png"
+        alt="IndoPOS"
+        className="h-8 w-8 object-contain"
+      />
+    </div>
+
+    {!collapsed && (
+      <div className="min-w-0">
+
+        <h4
+          className="
+            truncate
+            font-semibold
+            text-slate-800
+          "
         >
-          <div
-            className="
-              flex
-              h-12
-              w-12
-              items-center
-              justify-center
-              rounded-full
-              bg-gradient-to-br
-              from-teal-500
-              to-emerald-600
-              text-lg
-              font-bold
-              text-white
-              shadow-lg
-            "
-          >
-            A
-          </div>
+          IndoPOS
+        </h4>
 
-          {!collapsed && (
-            <div className="min-w-0">
+        <p
+          className="
+            truncate
+            text-sm
+            text-slate-500
+          "
+        >
+          Business Management Platform
+        </p>
 
-              <h4
-                className="
-                  truncate
-                  font-semibold
-                  text-slate-800
-                "
-              >
-                Administrator
-              </h4>
+        <p
+          className="
+            mt-0.5
+            text-xs
+            text-slate-400
+          "
+        >
+          Version 1.0.0
+        </p>
 
-              <p
-                className="
-                  truncate
-                  text-sm
-                  text-slate-500
-                "
-              >
-                Super Admin
-              </p>
-
-            </div>
-          )}
-        </div>
       </div>
+    )}
+  </div>
+</div>
     </aside>
   );
 }
