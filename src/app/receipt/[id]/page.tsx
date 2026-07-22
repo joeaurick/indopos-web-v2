@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
 
 import { getSupabaseClient } from "@/services/supabase/client";
-
-const supabase = getSupabaseClient();
+import { getCurrentBusinessId } from "@/lib/business/get-current-business";
 
 import { ReceiptPrint } from "@/features/pos/components/ReceiptPrint";
+
+const supabase = getSupabaseClient();
 
 type Props = {
   params: Promise<{
@@ -17,39 +18,72 @@ export default async function ReceiptPage({
 }: Props) {
   const { id } = await params;
 
-  const { data: sale, error: saleError } =
-    await supabase
-      .from("sales")
-      .select("*")
-      .eq("id", id)
-      .single();
+  // ==========================
+  // Business aktif dari Server
+  // ==========================
+
+  const businessId =
+    await getCurrentBusinessId();
+
+  // ==========================
+  // Sale
+  // ==========================
+
+  const {
+    data: sale,
+    error: saleError,
+  } = await supabase
+    .from("sales")
+    .select("*")
+    .eq("id", id)
+    .eq("business_id", businessId)
+    .single();
 
   if (saleError || !sale) {
     notFound();
   }
 
-  const { data: business } =
-    await supabase
-      .from("businesses")
-      .select("*")
-      .eq("is_active", true)
-      .limit(1)
-      .single();
+  // ==========================
+  // Business
+  // ==========================
 
-  const { data: items } =
-    await supabase
-      .from("sale_items")
-      .select(`
-        quantity,
-        price,
-        subtotal,
-        products (
-          id,
-          name,
-          sku
-        )
-      `)
-      .eq("sale_id", id);
+  const {
+    data: business,
+    error: businessError,
+  } = await supabase
+    .from("businesses")
+    .select("*")
+    .eq("id", businessId)
+    .single();
+
+  if (businessError || !business) {
+    notFound();
+  }
+
+  // ==========================
+  // Sale Items
+  // ==========================
+
+  const {
+    data: items,
+    error: itemsError,
+  } = await supabase
+    .from("sale_items")
+    .select(`
+      quantity,
+      price,
+      subtotal,
+      products (
+        id,
+        name,
+        sku
+      )
+    `)
+    .eq("sale_id", id);
+
+  if (itemsError) {
+    notFound();
+  }
 
   const receiptItems =
     items?.map((item: any) => ({
@@ -70,13 +104,13 @@ export default async function ReceiptPage({
       paymentAmount={Number(sale.payment_amount)}
       changeAmount={Number(sale.change_amount)}
       business={{
-        name: business?.name ?? "IndoPOS",
-        address: business?.address ?? "",
-        phone: business?.phone ?? "",
-        logo_url: business?.logo_url ?? null,
+        name: business.name,
+        address: business.address ?? "",
+        phone: business.phone ?? "",
+        logo_url: business.logo_url ?? null,
         receipt_footer:
-          business?.receipt_footer ??
-          "Terima kasih telah berbelanja",
+          business.receipt_footer ??
+          "Terima kasih telah berbelanja.",
       }}
       items={receiptItems}
     />
