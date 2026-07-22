@@ -62,6 +62,11 @@ const menus = [
     icon: Wallet,
   },
   {
+    title: "Purchasing",
+    href: "/purchasing",
+    icon: Package,
+  },
+  {
     title: "Reports",
     href: "/reports",
     icon: BarChart3,

@@ -106,25 +106,76 @@ export function TopbarMobile() {
 
         {/* RIGHT */}
 
+{/* RIGHT */}
+
 <div
   className="
+    relative
     flex
     h-12
     w-12
     items-center
     justify-center
+    overflow-hidden
     rounded-2xl
-    border
-    border-[var(--border)]
-    bg-white
-    shadow-sm
+    shadow-lg
   "
 >
-  <img
-    src="/favicon.png"
-    alt="IndoPOS"
-    className="h-7 w-7 object-contain"
+  <div
+    className="
+      absolute
+      inset-0
+      bg-gradient-to-br
+      from-emerald-400
+      via-teal-500
+      to-cyan-500
+    "
   />
+
+  <div
+    className="
+      absolute
+      -top-4
+      -right-4
+      h-10
+      w-10
+      rounded-full
+      bg-white/30
+      blur-xl
+    "
+  />
+
+  <div
+    className="
+      absolute
+      -bottom-4
+      -left-4
+      h-8
+      w-8
+      rounded-full
+      bg-lime-300/40
+      blur-xl
+    "
+  />
+
+  <div
+    className="
+      relative
+      flex
+      h-10
+      w-10
+      items-center
+      justify-center
+      rounded-xl
+      bg-white/90
+      backdrop-blur-md
+    "
+  >
+    <img
+      src="/favicon.png"
+      className="h-6 w-6"
+    />
+  </div>
 </div>
 
       </div>
