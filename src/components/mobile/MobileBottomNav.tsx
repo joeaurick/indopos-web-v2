@@ -47,20 +47,28 @@ export function MobileBottomNav() {
       <div
   className="
     fixed
-    inset-x-0
-    bottom-0
+    left-4
+    right-4
+    bottom-4
     z-50
-    h-24
+    h-20
     md:hidden
+
+    rounded-full
+
+    border
+    border-white/70
+
+    bg-white/85
+
+    backdrop-blur-2xl
+
+    shadow-[0_18px_40px_rgba(15,23,42,.16)]
+
     pb-[env(safe-area-inset-bottom)]
-    border-t
-    border-[var(--border)]
-    bg-[var(--card)]/95
-    backdrop-blur-xl
-    shadow-[0_-8px_30px_rgba(0,0,0,.08)]
   "
 >
-        <div className="grid h-full grid-cols-5">
+        <div className="grid h-full grid-cols-5 items-center px-2">
 
           {menus.map((item) => {
 
@@ -73,21 +81,30 @@ export function MobileBottomNav() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="
-  flex
-  h-full
-  flex-col
-  items-center
-  justify-center
-  gap-1
-"
+                className={`
+flex
+h-14
+flex-col
+items-center
+justify-center
+rounded-2xl
+transition-all
+duration-200
+active:scale-95
+
+${
+active
+? "bg-teal-50 text-[var(--primary)]"
+: "hover:bg-slate-100"
+}
+`}
               >
                 <Icon
-                  size={20}
+                  size={22}
                   className={
                     active
-                      ? "text-[var(--primary)]"
-                      : "text-slate-400"
+? "text-[var(--primary)]"
+: "text-slate-500"
                   }
                 />
 
@@ -109,12 +126,15 @@ export function MobileBottomNav() {
           <button
             onClick={() => setOpen(true)}
             className="
-  flex
-  h-full
-  flex-col
-  items-center
-  justify-center
-  gap-1
+flex
+h-14
+flex-col
+items-center
+justify-center
+rounded-2xl
+transition
+hover:bg-slate-100
+active:scale-95
 "
           >
             <Menu
