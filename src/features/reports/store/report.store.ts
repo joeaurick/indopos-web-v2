@@ -21,6 +21,23 @@ type ReportState = {
 };
 
 const initialData: ReportData = {
+  business: {
+    id: "",
+
+    name: "",
+
+    address: "",
+
+    phone: "",
+
+    email: "",
+
+    logo_url: null,
+
+    receipt_footer:
+      "Terima kasih telah berbelanja.",
+  },
+
   summary: {
     totalSales: 0,
 

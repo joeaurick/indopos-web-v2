@@ -51,14 +51,6 @@ export type ReportHistoryItem = {
   created_at: string;
 };
 
-export type ReportData = {
-  summary: ReportSummary;
-
-  history: ReportHistoryItem[];
-
-  products: ReportProductItem[];
-};
-
 export type ReportProductItem = {
   id: string;
 
@@ -71,4 +63,30 @@ export type ReportProductItem = {
   profit: number;
 
   percentage: number;
+};
+
+export type ReportBusiness = {
+  id: string;
+
+  name: string;
+
+  address: string;
+
+  phone: string;
+
+  email: string;
+
+  logo_url: string | null;
+
+  receipt_footer: string;
+};
+
+export type ReportData = {
+  business: ReportBusiness;
+
+  summary: ReportSummary;
+
+  history: ReportHistoryItem[];
+
+  products: ReportProductItem[];
 };

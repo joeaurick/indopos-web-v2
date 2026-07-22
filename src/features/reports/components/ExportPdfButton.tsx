@@ -14,6 +14,10 @@ export function ExportPdfButton() {
     (state) => state.data.summary
   );
 
+  const business = useReportStore(
+    (state) => state.data.business
+  );
+
   function exportPdf() {
     if (history.length === 0) {
       alert("Belum ada data.");
@@ -23,13 +27,44 @@ export function ExportPdfButton() {
     const doc = new jsPDF();
 
     doc.setFontSize(18);
-    doc.text("DONARA DONAT", 14, 18);
+    doc.text(
+      business.name || "IndoPOS",
+      14,
+      18
+    );
+
+    doc.setFontSize(10);
+
+    if (business.address) {
+      doc.text(
+        business.address,
+        14,
+        24
+      );
+    }
+
+    if (business.phone) {
+      doc.text(
+        `Telp : ${business.phone}`,
+        14,
+        30
+      );
+    }
+
+    if (business.email) {
+      doc.text(
+        business.email,
+        14,
+        36
+      );
+    }
 
     doc.setFontSize(12);
+
     doc.text(
       "Laporan Transaksi",
       14,
-      26
+      46
     );
 
     doc.setFontSize(10);
@@ -39,7 +74,7 @@ export function ExportPdfButton() {
         "id-ID"
       )}`,
       14,
-      34
+      54
     );
 
     doc.text(
@@ -47,7 +82,7 @@ export function ExportPdfButton() {
         "id-ID"
       )}`,
       14,
-      44
+      64
     );
 
     doc.text(
@@ -55,7 +90,7 @@ export function ExportPdfButton() {
         "id-ID"
       )}`,
       14,
-      50
+      70
     );
 
     doc.text(
@@ -63,7 +98,7 @@ export function ExportPdfButton() {
         "id-ID"
       )}`,
       14,
-      56
+      76
     );
 
     doc.text(
@@ -71,11 +106,11 @@ export function ExportPdfButton() {
         "id-ID"
       )}`,
       14,
-      62
+      82
     );
 
     autoTable(doc, {
-      startY: 72,
+      startY: 90,
 
       head: [[
         "Tanggal",

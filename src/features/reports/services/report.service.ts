@@ -12,6 +12,26 @@ export const reportService = {
     businessId: string,
     filter?: ReportFilter
   ): Promise<ReportData> {
+  const {
+  data: business,
+  error: businessError,
+} = await supabase
+  .from("businesses")
+  .select(`
+    id,
+    name,
+    address,
+    phone,
+    email,
+    logo_url,
+    receipt_footer
+  `)
+  .eq("id", businessId)
+  .single();
+
+if (businessError) {
+  throw businessError;
+}  
     let salesQuery = supabase
       .from("sales")
       .select(`
@@ -441,6 +461,18 @@ products.forEach((item) => {
 });
 
     return {
+  business: {
+    id: business.id,
+    name: business.name,
+    address: business.address ?? "",
+    phone: business.phone ?? "",
+    email: business.email ?? "",
+    logo_url: business.logo_url,
+    receipt_footer:
+      business.receipt_footer ??
+      "Terima kasih telah berbelanja.",
+  },
+
   summary: {
     totalSales,
 
