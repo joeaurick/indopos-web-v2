@@ -15,7 +15,8 @@ export function FinancePage({
   businessId,
 }: Props) {
   return (
-    <>
+    <div className="space-y-6 lg:space-y-8">
+
       <PageHeader
         title="Finance"
         subtitle="Ringkasan keuangan, pemasukan, pengeluaran, dan riwayat transaksi."
@@ -29,17 +30,14 @@ export function FinancePage({
         businessId={businessId}
       />
 
-      <div className="mt-6">
-        <FinanceChart
-          businessId={businessId}
-        />
-      </div>
+      <FinanceChart
+        businessId={businessId}
+      />
 
-      <div className="mt-6">
-        <FinanceHistory
-          businessId={businessId}
-        />
-      </div>
-    </>
+      <FinanceHistory
+        businessId={businessId}
+      />
+
+    </div>
   );
 }

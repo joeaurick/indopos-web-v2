@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
-
 import {
-  DollarSign,
-  Wallet,
-  TrendingUp,
-  Receipt,
+  HandCoins,
+  WalletCards,
+  BadgeDollarSign,
+  ClipboardList,
 } from "lucide-react";
 
 import { StatCard } from "./StatCard";
@@ -14,26 +12,26 @@ import { StatCard } from "./StatCard";
 import { useDashboardStore } from "@/features/dashboard/store/dashboard-store";
 
 export function DashboardStats() {
-  const fetchDashboard =
-    useDashboardStore(
-      (state) => state.fetchDashboard
-    );
-
   const summary =
     useDashboardStore(
       (state) => state.data.summary
     );
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
 
       <StatCard
         title="Income Hari Ini"
         value={`Rp ${Number(
           summary.todayIncome ?? 0
         ).toLocaleString("id-ID")}`}
-        icon={<DollarSign size={22} />}
-        color="#0F766E"
+        icon={
+          <HandCoins
+            size={24}
+            strokeWidth={2}
+          />
+        }
+        color="#059669"
       />
 
       <StatCard
@@ -41,8 +39,13 @@ export function DashboardStats() {
         value={`Rp ${Number(
           summary.todayExpense ?? 0
         ).toLocaleString("id-ID")}`}
-        icon={<Wallet size={22} />}
-        color="#EA580C"
+        icon={
+          <WalletCards
+            size={24}
+            strokeWidth={2}
+          />
+        }
+        color="#DC2626"
       />
 
       <StatCard
@@ -50,7 +53,12 @@ export function DashboardStats() {
         value={`Rp ${Number(
           summary.todayProfit ?? 0
         ).toLocaleString("id-ID")}`}
-        icon={<TrendingUp size={22} />}
+        icon={
+          <BadgeDollarSign
+            size={24}
+            strokeWidth={2}
+          />
+        }
         color="#2563EB"
       />
 
@@ -59,7 +67,12 @@ export function DashboardStats() {
         value={Number(
           summary.todayTransactions ?? 0
         ).toLocaleString("id-ID")}
-        icon={<Receipt size={22} />}
+        icon={
+          <ClipboardList
+            size={24}
+            strokeWidth={2}
+          />
+        }
         color="#7C3AED"
       />
 

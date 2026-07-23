@@ -12,6 +12,7 @@ import { useCartStore } from "@/features/pos/store/cart-store";
 import { notify } from "@/lib/notify";
 
 import { AppButton } from "@/components/ui";
+import { CurrencyInput } from "@/components/ui/CurrencyInput";
 
 type Props = {
   open: boolean;
@@ -232,17 +233,28 @@ export function PaymentDialog({
                 Nominal Pembayaran
               </label>
 
-              <input
-                type="number"
-                value={cash}
-                onChange={(e) =>
-                  setCash(
-                    e.target.value
-                  )
-                }
-                className="w-full rounded-2xl border border-[var(--border)] px-5 py-4 text-xl font-semibold outline-none focus:border-blue-500"
-                placeholder="Masukkan nominal"
-              />
+              <CurrencyInput
+  value={cash}
+  onChange={setCash}
+  placeholder="Masukkan nominal"
+  className="
+    w-full
+    rounded-2xl
+    border
+    border-[var(--border)]
+    bg-white
+    px-5
+    py-4
+    text-2xl
+    font-bold
+    tracking-wide
+    outline-none
+    transition-all
+    focus:border-[var(--primary)]
+    focus:ring-4
+    focus:ring-emerald-100
+  "
+/>
 
             </div>
 
@@ -253,10 +265,8 @@ export function PaymentDialog({
                   key={value}
                   type="button"
                   onClick={() =>
-                    setCash(
-                      value.toString()
-                    )
-                  }
+  setCash(String(value))
+}
                   className="rounded-xl border border-[var(--border)] bg-[var(--hover)] py-3 text-sm font-semibold transition hover:border-blue-500"
                 >
                   {value === subtotal

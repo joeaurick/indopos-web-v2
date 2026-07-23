@@ -1,7 +1,4 @@
 import { ReactNode } from "react";
-import {
-  ArrowUpRight,
-} from "lucide-react";
 
 type Props = {
   title: string;
@@ -34,8 +31,6 @@ export function StatCard({
         hover:shadow-xl
       "
     >
-      {/* TOP ACCENT */}
-
       <div
         className="absolute inset-x-0 top-0 h-1"
         style={{
@@ -43,19 +38,8 @@ export function StatCard({
         }}
       />
 
-      {/* GLOW */}
-
       <div
-        className="
-          absolute
-          -right-14
-          -top-14
-          h-44
-          w-44
-          rounded-full
-          blur-[90px]
-          opacity-10
-        "
+        className="absolute -right-16 -top-16 h-48 w-48 rounded-full blur-[90px] opacity-10"
         style={{
           background: color,
         }}
@@ -65,15 +49,20 @@ export function StatCard({
 
         <div className="flex-1">
 
-          <p className="text-sm font-medium text-slate-500">
+          <span
+            className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-slate-500"
+          >
             {title}
-          </p>
+          </span>
 
-          <h2 className="mt-4 text-[34px] font-bold tracking-tight text-slate-900">
+          <h2 className="mt-5 break-words text-3xl font-bold leading-tight text-slate-900 md:text-[34px]">
             {value}
           </h2>
 
-          
+          <div className="mt-6 flex items-center gap-2 text-sm font-medium text-emerald-600">
+            <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
+            Update Real-time
+          </div>
 
         </div>
 
@@ -82,6 +71,7 @@ export function StatCard({
             flex
             h-16
             w-16
+            shrink-0
             items-center
             justify-center
             rounded-2xl
@@ -99,7 +89,6 @@ export function StatCard({
         </div>
 
       </div>
-
     </div>
   );
 }

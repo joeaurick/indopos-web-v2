@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { FormGroup } from "@/components/ui/FormGroup";
+import { CurrencyInput } from "@/components/ui/CurrencyInput";
 
 import {
   Expense,
@@ -375,19 +376,25 @@ notify.success(
         <div className="grid grid-cols-2 gap-5">
 
           <FormGroup
-            label="Nominal"
-            required
-          >
-            <Input
-              type="number"
-              value={amount}
-              onChange={(e) =>
-                setAmount(
-                  e.target.value
-                )
-              }
-            />
-          </FormGroup>
+  label="Nominal"
+  required
+>
+  <CurrencyInput
+    value={amount}
+    onChange={setAmount}
+    placeholder="Masukkan nominal"
+    className="
+      w-full
+      rounded-xl
+      border
+      border-slate-300
+      px-4
+      py-3
+      outline-none
+      focus:border-teal-500
+    "
+  />
+</FormGroup>
 
           <FormGroup
             label="Tanggal"

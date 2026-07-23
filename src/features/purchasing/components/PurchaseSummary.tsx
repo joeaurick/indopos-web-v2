@@ -21,7 +21,7 @@ export function PurchaseSummary({
 
   return (
 
-    <div className="rounded-xl border bg-slate-50 p-5">
+    <div className="rounded-xl border bg-slate-50 p-5 lg:sticky lg:top-24">
 
       <div className="flex justify-between py-1">
 

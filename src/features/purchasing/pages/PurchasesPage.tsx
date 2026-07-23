@@ -158,7 +158,7 @@ export function PurchasesPage({
     purchase: PurchaseOrder
   ) {
     notify.info(
-      "Fitur Edit Purchase akan kita kerjakan pada batch berikutnya."
+      "Fitur ini masih dalam tahap pengembangan Mr. Aurick Joe"
     );
 
     console.log(

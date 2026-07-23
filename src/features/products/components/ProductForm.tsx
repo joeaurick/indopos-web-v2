@@ -11,6 +11,8 @@ import { notify } from "@/lib/notify";
 import { Product } from "../types";
 import { useProductStore } from "../store/product.store";
 import { useCategoryStore } from "@/features/categories/store/category.store";
+import { CurrencyInput } from "@/components/ui/CurrencyInput";
+
 
 type Props = {
   businessId: string;
@@ -245,16 +247,12 @@ export function ProductForm({
             Harga
           </label>
 
-          <input
-            type="number"
-            value={price}
-            onChange={(e) =>
-              setPrice(
-                e.target.value
-              )
-            }
-            className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-teal-500"
-          />
+          <CurrencyInput
+  value={price}
+  onChange={setPrice}
+  placeholder="Masukkan harga"
+  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-teal-500"
+/>
         </div>
 
         <div>

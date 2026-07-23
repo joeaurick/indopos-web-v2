@@ -18,6 +18,7 @@ import { usePurchaseStore } from "../store/purchase.store";
 import { ProductSelector } from "./ProductSelector";
 import { PurchaseItemTable } from "./PurchaseItemTable";
 import { PurchaseSummary } from "./PurchaseSummary";
+import { CurrencyInput } from "@/components/ui/CurrencyInput";
 
 import {
   PurchaseItem,
@@ -250,10 +251,10 @@ export function PurchaseForm({
 
     <form
       onSubmit={handleSubmit}
-      className="space-y-6"
+      className="space-y-6 pb-24 lg:pb-0"
     >
 
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
 
         <div>
 
@@ -268,7 +269,7 @@ export function PurchaseForm({
                 e.target.value
               )
             }
-            className="w-full rounded-xl border px-4 py-3"
+            className="w-full rounded-xl border px-4 py-3 text-sm lg:text-base"
           >
 
             <option value="">
@@ -361,7 +362,7 @@ export function PurchaseForm({
         }
       />
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
 
         <div className="space-y-4">
 
@@ -371,19 +372,13 @@ export function PurchaseForm({
               Diskon
             </label>
 
-            <input
-              type="number"
-              value={discount}
-              onChange={(e) =>
-                setDiscount(
-                  Number(
-                    e.target
-                      .value
-                  )
-                )
-              }
-              className="w-full rounded-xl border px-4 py-3"
-            />
+            <CurrencyInput
+  value={String(discount)}
+  onChange={(value) =>
+    setDiscount(Number(value))
+  }
+  className="w-full rounded-xl border px-4 py-3"
+/>
 
           </div>
 
@@ -393,19 +388,13 @@ export function PurchaseForm({
               Pajak
             </label>
 
-            <input
-              type="number"
-              value={tax}
-              onChange={(e) =>
-                setTax(
-                  Number(
-                    e.target
-                      .value
-                  )
-                )
-              }
-              className="w-full rounded-xl border px-4 py-3"
-            />
+            <CurrencyInput
+  value={String(tax)}
+  onChange={(value) =>
+    setTax(Number(value))
+  }
+  className="w-full rounded-xl border px-4 py-3"
+/>
 
           </div>
 
@@ -443,14 +432,14 @@ export function PurchaseForm({
 
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-stretch lg:justify-end">
 
         <button
           type="submit"
           disabled={
             loading
           }
-          className="rounded-xl bg-teal-600 px-8 py-3 font-semibold text-white hover:bg-teal-700 disabled:opacity-50"
+          className="w-full rounded-xl bg-teal-600 px-8 py-3 font-semibold text-white hover:bg-teal-700 disabled:opacity-50 lg:w-auto"
         >
 
           {loading

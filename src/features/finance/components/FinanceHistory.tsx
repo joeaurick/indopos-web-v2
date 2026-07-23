@@ -6,6 +6,7 @@ import {
   ArrowUpCircle,
   ArrowDownCircle,
   Wallet,
+  Receipt,
 } from "lucide-react";
 
 import { Card } from "@/components/ui/Card";
@@ -19,6 +20,7 @@ type Props = {
 export function FinanceHistory({
   businessId,
 }: Props) {
+
   const fetchFinance =
     useFinanceStore(
       (state) => state.fetchFinance
@@ -51,7 +53,9 @@ export function FinanceHistory({
   ]);
 
   function getType(item: any) {
+
     switch (item.type) {
+
       case "SALE":
         return {
           label: "Sales",
@@ -115,132 +119,311 @@ export function FinanceHistory({
       default:
         return {
           label: item.type,
-          icon: null,
+          icon: <Receipt size={18} />,
           badge:
             "bg-slate-100 text-slate-700",
           amount:
             "text-slate-600",
           prefix: "",
         };
+
     }
+
   }
 
   return (
-    <Card className="overflow-hidden">
-      <div className="border-b border-slate-200 p-6">
-        <h2 className="text-xl font-semibold">
+
+    <Card
+      className="
+      overflow-hidden
+      rounded-3xl
+      border
+      border-slate-200
+      bg-white
+      shadow-sm
+    "
+    >
+
+      <div
+        className="
+        border-b
+        border-slate-100
+        p-5
+        lg:p-6
+      "
+      >
+
+        <h2 className="text-xl font-bold">
           Riwayat Keuangan
         </h2>
 
         <p className="mt-1 text-sm text-slate-500">
-          Seluruh transaksi Sales,
-          Cash In, Purchase dan
-          Cash Out.
+          Semua transaksi Sales,
+          Purchase,
+          Cash In,
+          dan Cash Out.
         </p>
+
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full">
-          <thead className="bg-slate-100">
-            <tr>
-              <th className="px-5 py-4 text-left text-sm font-semibold">
-                Jenis
-              </th>
+      {loading ? (
 
-              <th className="px-5 py-4 text-left text-sm font-semibold">
-                Invoice / Receipt
-              </th>
+        <div className="p-10 text-center text-slate-400">
+          Loading...
+        </div>
 
-              <th className="px-5 py-4 text-left text-sm font-semibold">
-                Tanggal
-              </th>
+      ) : history.length === 0 ? (
 
-              <th className="px-5 py-4 text-center text-sm font-semibold">
-                Status
-              </th>
+        <div className="p-10 text-center text-slate-400">
+          Belum ada transaksi.
+        </div>
 
-              <th className="px-5 py-4 text-right text-sm font-semibold">
-                Nominal
-              </th>
-            </tr>
-          </thead>
+      ) : (
 
-          <tbody>
-            {loading ? (
-              <tr>
-                <td
-                  colSpan={5}
-                  className="p-8 text-center text-slate-400"
-                >
-                  Loading...
-                </td>
-              </tr>
-            ) : history.length === 0 ? (
-              <tr>
-                <td
-                  colSpan={5}
-                  className="p-8 text-center text-slate-400"
-                >
-                  Belum ada transaksi.
-                </td>
-              </tr>
-            ) : (
-              history.map((item) => {
+        <>
+
+          {/* ===========================
+               Desktop Table
+          =========================== */}
+
+          <div className="hidden overflow-x-auto lg:block">
+
+            <table className="min-w-full">
+
+              <thead className="bg-slate-50">
+
+                <tr>
+
+                  <th className="px-6 py-4 text-left">
+                    Jenis
+                  </th>
+
+                  <th className="px-6 py-4 text-left">
+                    Invoice
+                  </th>
+
+                  <th className="px-6 py-4 text-left">
+                    Tanggal
+                  </th>
+
+                  <th className="px-6 py-4 text-center">
+                    Status
+                  </th>
+
+                  <th className="px-6 py-4 text-right">
+                    Nominal
+                  </th>
+
+                </tr>
+
+              </thead>
+
+              <tbody>
+
+                {history.map(
+                  (item) => {
+
+                    const type =
+                      getType(item);
+
+                    return (
+
+                      <tr
+                        key={`${item.type}-${item.id}`}
+                        className="border-t hover:bg-slate-50"
+                      >
+
+                        <td className="px-6 py-4">
+
+                          <span
+                            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium ${type.badge}`}
+                          >
+                            {type.icon}
+                            {type.label}
+                          </span>
+
+                        </td>
+
+                        <td className="px-6 py-4 font-medium">
+                          {item.invoice}
+                        </td>
+
+                        <td className="px-6 py-4">
+                          {new Date(
+                            item.created_at
+                          ).toLocaleDateString(
+                            "id-ID",
+                            {
+                              day: "2-digit",
+                              month: "long",
+                              year: "numeric",
+                            }
+                          )}
+                        </td>
+
+                        <td className="px-6 py-4 text-center">
+
+                          <span
+                            className="
+                            rounded-full
+                            bg-slate-100
+                            px-3
+                            py-1
+                            text-xs
+                            font-semibold
+                          "
+                          >
+                            {item.status}
+                          </span>
+
+                        </td>
+
+                        <td
+                          className={`px-6 py-4 text-right text-lg font-bold ${type.amount}`}
+                        >
+
+                          {type.prefix} Rp{" "}
+                          {item.total.toLocaleString(
+                            "id-ID"
+                          )}
+
+                        </td>
+
+                      </tr>
+
+                    );
+
+                  }
+                )}
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+          {/* ===========================
+                 Mobile Card
+          =========================== */}
+
+          <div className="space-y-4 p-4 lg:hidden">
+
+            {history.map(
+              (item) => {
+
                 const type =
                   getType(item);
 
                 return (
-                  <tr
+
+                  <div
                     key={`${item.type}-${item.id}`}
-                    className="border-t hover:bg-slate-50"
+                    className="
+                    rounded-2xl
+                    border
+                    border-slate-200
+                    bg-white
+                    p-4
+                    shadow-sm
+                  "
                   >
-                    <td className="px-5 py-4">
+
+                    <div className="flex items-start justify-between">
+
                       <span
-                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-medium ${type.badge}`}
+                        className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${type.badge}`}
                       >
                         {type.icon}
                         {type.label}
                       </span>
-                    </td>
 
-                    <td className="px-5 py-4 font-medium">
-                      {item.invoice}
-                    </td>
-
-                    <td className="px-5 py-4">
-                      {new Date(
-                        item.created_at
-                      ).toLocaleDateString(
-                        "id-ID",
-                        {
-                          day: "2-digit",
-                          month: "long",
-                          year: "numeric",
-                        }
-                      )}
-                    </td>
-
-                    <td className="px-5 py-4 text-center">
-                      <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
+                      <span
+                        className="
+                        rounded-full
+                        bg-slate-100
+                        px-3
+                        py-1
+                        text-xs
+                      "
+                      >
                         {item.status}
                       </span>
-                    </td>
 
-                    <td
-                      className={`px-5 py-4 text-right text-lg font-bold ${type.amount}`}
-                    >
-                      {type.prefix} Rp{" "}
-                      {item.total.toLocaleString(
-                        "id-ID"
-                      )}
-                    </td>
-                  </tr>
+                    </div>
+
+                    <div className="mt-4">
+
+                      <div className="text-sm text-slate-500">
+                        Invoice
+                      </div>
+
+                      <div className="font-semibold break-all">
+                        {item.invoice}
+                      </div>
+
+                    </div>
+
+                    <div className="mt-3 flex justify-between">
+
+                      <div>
+
+                        <div className="text-xs text-slate-400">
+                          Tanggal
+                        </div>
+
+                        <div className="text-sm font-medium">
+
+                          {new Date(
+                            item.created_at
+                          ).toLocaleDateString(
+                            "id-ID",
+                            {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            }
+                          )}
+
+                        </div>
+
+                      </div>
+
+                      <div className="text-right">
+
+                        <div className="text-xs text-slate-400">
+                          Nominal
+                        </div>
+
+                        <div
+                          className={`font-bold ${type.amount}`}
+                        >
+
+                          {type.prefix} Rp{" "}
+                          {item.total.toLocaleString(
+                            "id-ID"
+                          )}
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
                 );
-              })
+
+              }
             )}
-          </tbody>
-        </table>
-      </div>
+
+          </div>
+
+        </>
+
+      )}
+
     </Card>
+
   );
+
 }

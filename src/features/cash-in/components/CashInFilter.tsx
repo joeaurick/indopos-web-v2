@@ -57,7 +57,7 @@ export function CashInFilter({
         </div>
 
         <Link
-          href="/cash-in-categories"
+          href="#"
           className="inline-flex items-center gap-2 rounded-xl border border-slate-300 px-4 py-3 text-sm font-medium hover:bg-slate-100"
         >
           <Settings size={18} />

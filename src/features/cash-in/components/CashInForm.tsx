@@ -18,6 +18,7 @@ import { FormGroup } from "@/components/ui/FormGroup";
 import { CashIn } from "../types";
 
 import { useCashInStore } from "../store/cash-in.store";
+import { CurrencyInput } from "@/components/ui/CurrencyInput";
 
 type Props = {
   businessId: string;
@@ -319,19 +320,25 @@ export function CashInForm({
 
         <div className="grid grid-cols-2 gap-5">
           <FormGroup
-            label="Nominal"
-            required
-          >
-            <Input
-              type="number"
-              value={amount}
-              onChange={(e) =>
-                setAmount(
-                  e.target.value
-                )
-              }
-            />
-          </FormGroup>
+  label="Nominal"
+  required
+>
+  <CurrencyInput
+    value={amount}
+    onChange={setAmount}
+    placeholder="Masukkan nominal"
+    className="
+      w-full
+      rounded-xl
+      border
+      border-slate-300
+      px-4
+      py-3
+      outline-none
+      focus:border-teal-500
+    "
+  />
+</FormGroup>
 
           <FormGroup
             label="Tanggal"
