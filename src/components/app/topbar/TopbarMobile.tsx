@@ -74,41 +74,6 @@ export function TopbarMobile() {
 
         {/* Header */}
 
-        <div className="relative flex items-center justify-between">
-
-          <div className="flex items-center gap-2">
-
-            <Circle
-              size={10}
-              fill="currentColor"
-              className="animate-pulse text-emerald-500"
-            />
-
-            <span
-              className="
-                text-[11px]
-                font-bold
-                uppercase
-                tracking-[0.25em]
-                text-emerald-600
-              "
-            >
-              LIVE
-            </span>
-
-          </div>
-
-          <span
-            className="
-              text-sm
-              font-semibold
-              text-slate-400
-            "
-          >
-            {time}
-          </span>
-
-        </div>
 
         {/* Business */}
 
@@ -225,7 +190,7 @@ export function TopbarMobile() {
                 text-slate-800
               "
             >
-              Premium Business
+              Business Management
             </p>
 
           </div>
