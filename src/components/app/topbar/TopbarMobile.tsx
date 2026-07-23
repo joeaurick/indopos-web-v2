@@ -1,27 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
-import { Bell } from "lucide-react";
+
+import {
+  ChevronRight,
+  Circle,
+} from "lucide-react";
 
 import { useBusinessStore } from "@/features/settings";
-
-function getGreeting() {
-  const hour = new Date().getHours();
-
-  if (hour < 11) {
-    return "☀️ Selamat Pagi";
-  }
-
-  if (hour < 15) {
-    return "🌤️ Selamat Siang";
-  }
-
-  if (hour < 18) {
-    return "🌇 Selamat Sore";
-  }
-
-  return "🌙 Selamat Malam";
-}
 
 export function TopbarMobile() {
   const {
@@ -33,119 +19,226 @@ export function TopbarMobile() {
     fetchBusiness();
   }, [fetchBusiness]);
 
+  const time = new Date().toLocaleTimeString(
+    "id-ID",
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+    }
+  );
+
   return (
     <header
       className="
         sticky
         top-0
         z-40
-        border-b
-        border-[var(--border)]
-        bg-white/95
-        backdrop-blur-xl
+        bg-gradient-to-b
+        from-slate-50
+        to-white
+        px-4
+        pt-4
+        pb-2
         md:hidden
       "
     >
-      <div className="flex items-center justify-between px-4 py-4">
+      <div
+        className="
+          relative
+          overflow-hidden
+          rounded-[28px]
+          border
+          border-slate-200
+          bg-white
+          p-5
+          shadow-xl
+          shadow-slate-200/60
+        "
+      >
+        {/* Glow */}
 
-        {/* LEFT */}
+        <div
+          className="
+            absolute
+            -right-16
+            -top-16
+            h-48
+            w-48
+            rounded-full
+            bg-gradient-to-br
+            from-teal-400/15
+            to-cyan-400/10
+            blur-3xl
+          "
+        />
 
-        <div className="flex min-w-0 items-center gap-3">
+        {/* Header */}
+
+        <div className="relative flex items-center justify-between">
+
+          <div className="flex items-center gap-2">
+
+            <Circle
+              size={10}
+              fill="currentColor"
+              className="animate-pulse text-emerald-500"
+            />
+
+            <span
+              className="
+                text-[11px]
+                font-bold
+                uppercase
+                tracking-[0.25em]
+                text-emerald-600
+              "
+            >
+              LIVE
+            </span>
+
+          </div>
+
+          <span
+            className="
+              text-sm
+              font-semibold
+              text-slate-400
+            "
+          >
+            {time}
+          </span>
+
+        </div>
+
+        {/* Business */}
+
+        <div className="relative mt-6 flex items-center gap-4">
 
           {business?.logo_url ? (
+
             <img
               src={business.logo_url}
               alt="Logo"
               className="
-                h-12
-                w-12
-                rounded-2xl
+                h-16
+                w-16
+                rounded-3xl
                 border
+                border-slate-200
                 object-cover
-                shadow-sm
+                shadow-md
               "
             />
+
           ) : (
+
             <div
               className="
                 flex
-                h-12
-                w-12
+                h-16
+                w-16
                 items-center
                 justify-center
-                rounded-2xl
+                rounded-3xl
                 bg-gradient-to-br
                 from-teal-500
-                to-emerald-600
-                text-lg
+                via-emerald-500
+                to-cyan-500
+                text-2xl
                 font-bold
                 text-white
+                shadow-lg
               "
             >
               {(business?.name?.charAt(0) ?? "I").toUpperCase()}
             </div>
+
           )}
 
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1">
 
-            <p className="text-xs font-medium text-teal-600">
-              {getGreeting()}
-            </p>
+            <h1
+              className="
+                truncate
+                text-xl
+                font-bold
+                tracking-tight
+                text-slate-900
+              "
+            >
+              {business?.name ?? "IndoPOS"}
+            </h1>
 
-            <h2 className="truncate text-lg font-bold text-slate-900">
-              {business?.name || "IndoPOS"}
-            </h2>
-
-            <p className="truncate text-xs text-slate-500">
-              {business?.business_type || "Business"}
+            <p
+              className="
+                mt-1
+                truncate
+                text-sm
+                text-slate-500
+              "
+            >
+              {business?.business_type ??
+                "Business"}
             </p>
 
           </div>
 
         </div>
 
-        {/* RIGHT */}
+        {/* Footer */}
 
-{/* RIGHT */}
+        <button
+          className="
+            relative
+            mt-6
+            flex
+            w-full
+            items-center
+            justify-between
+            rounded-2xl
+            border
+            border-slate-200
+            bg-slate-50
+            px-4
+            py-3
+            transition
+            hover:bg-slate-100
+          "
+        >
+          <div>
 
-<div
-  className="
-    relative
-    flex
-    h-12
-    w-12
-    items-center
-    justify-center
-    rounded-2xl
-    bg-gradient-to-br
-    from-teal-500
-    via-emerald-500
-    to-cyan-500
-    p-[2px]
-    shadow-lg
-    shadow-teal-500/20
-  "
->
-  <div
-    className="
-      flex
-      h-full
-      w-full
-      items-center
-      justify-center
-      rounded-[14px]
-      bg-white
-    "
-  >
-    <img
-      src="/favicon.png"
-      alt="IndoPOS"
-      className="h-7 w-7 object-contain"
-    />
-  </div>
-</div>
+            <p
+              className="
+                text-xs
+                uppercase
+                tracking-widest
+                text-slate-400
+              "
+            >
+              Workspace
+            </p>
+
+            <p
+              className="
+                mt-1
+                font-semibold
+                text-slate-800
+              "
+            >
+              Premium Business
+            </p>
+
+          </div>
+
+          <ChevronRight
+            size={20}
+            className="text-slate-400"
+          />
+
+        </button>
 
       </div>
+
     </header>
   );
 }
