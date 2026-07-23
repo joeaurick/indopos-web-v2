@@ -8,6 +8,12 @@ import {
   Eye,
   EyeOff,
   Mail,
+  LockKeyhole,
+  User,
+  Store,
+  Phone,
+  Building2,
+  ArrowRight,
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -198,118 +204,566 @@ export function RegisterForm() {
   className="space-y-5"
 >
 
-          <Input
-  label="Nama Pemilik"
-  placeholder="John Doe"
-  value={ownerName}
-  onChange={setOwnerName}
-/>
-
-          <Input
-  label="Nama Bisnis"
-  placeholder="Coffee ABC"
-  value={businessName}
-  onChange={setBusinessName}
-/>
+          {/* ======================= */}
+{/* NAMA PEMILIK */}
+{/* ======================= */}
 
 <div>
-  <label className="mb-2 block text-sm font-medium">
-    Jenis Bisnis
+
+  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    Nama Pemilik
   </label>
 
-  <select
-    value={businessType}
-    onChange={(e) =>
-      setBusinessType(e.target.value)
-    }
+  <div
     className="
+      group
+      flex
       h-14
-      w-full
+      items-center
+      gap-4
       rounded-2xl
       border
       border-slate-200
       bg-white
       px-5
-      outline-none
-      transition
-      focus:border-[var(--primary)]
-      focus:ring-4
-      focus:ring-teal-100
+      transition-all
+      duration-300
+      focus-within:border-teal-500
+      focus-within:ring-4
+      focus-within:ring-teal-100
     "
   >
-    {BUSINESS_TYPES.map((item) => (
-      <option
-        key={item.value}
-        value={item.value}
-      >
-        {item.label}
-      </option>
-    ))}
-  </select>
+
+    <User
+      size={20}
+      className="
+        text-slate-400
+        transition
+        group-focus-within:text-teal-600
+      "
+    />
+
+    <input
+      type="text"
+      value={ownerName}
+      onChange={(e) =>
+        setOwnerName(e.target.value)
+      }
+      placeholder="Nama lengkap pemilik bisnis"
+      className="
+        h-full
+        flex-1
+        bg-transparent
+        text-[15px]
+        outline-none
+        placeholder:text-slate-400
+      "
+    />
+
+  </div>
+
 </div>
 
-          <Input
-  label="Nomor WhatsApp"
-  placeholder="08123456789"
-  value={phone}
-  onChange={setPhone}
-/>
+{/* ======================= */}
+{/* NAMA BISNIS */}
+{/* ======================= */}
 
-          <Input
-  label="Email"
-  placeholder="email@gmail.com"
-  value={email}
-  onChange={setEmail}
-/>
+<div>
 
-          <PasswordInput
-  label="Password"
-  value={password}
-  onChange={setPassword}
-  show={showPassword}
-  toggle={() =>
-    setShowPassword(!showPassword)
-  }
-/>
+  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    Nama Bisnis
+  </label>
 
-          <PasswordInput
-  label="Konfirmasi Password"
-  value={confirmPassword}
-  onChange={setConfirmPassword}
-  show={showConfirmPassword}
-  toggle={() =>
-    setShowConfirmPassword(
-      !showConfirmPassword
-    )
-  }
-/>
+  <div
+    className="
+      group
+      flex
+      h-14
+      items-center
+      gap-4
+      rounded-2xl
+      border
+      border-slate-200
+      bg-white
+      px-5
+      transition-all
+      duration-300
+      focus-within:border-teal-500
+      focus-within:ring-4
+      focus-within:ring-teal-100
+    "
+  >
+
+    <Store
+      size={20}
+      className="
+        text-slate-400
+        transition
+        group-focus-within:text-teal-600
+      "
+    />
+
+    <input
+      type="text"
+      value={businessName}
+      onChange={(e) =>
+        setBusinessName(e.target.value)
+      }
+      placeholder="Contoh : Coffee ABC"
+      className="
+        h-full
+        flex-1
+        bg-transparent
+        text-[15px]
+        outline-none
+        placeholder:text-slate-400
+      "
+    />
+
+  </div>
+
+</div>
+
+{/* ======================= */}
+{/* JENIS BISNIS */}
+{/* ======================= */}
+
+<div>
+
+  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    Jenis Bisnis
+  </label>
+
+  <div
+    className="
+      group
+      flex
+      h-14
+      items-center
+      gap-4
+      rounded-2xl
+      border
+      border-slate-200
+      bg-white
+      px-5
+      transition-all
+      duration-300
+      focus-within:border-teal-500
+      focus-within:ring-4
+      focus-within:ring-teal-100
+    "
+  >
+
+    <Building2
+      size={20}
+      className="
+        text-slate-400
+        transition
+        group-focus-within:text-teal-600
+      "
+    />
+
+    <select
+      value={businessType}
+      onChange={(e) =>
+        setBusinessType(e.target.value)
+      }
+      className="
+        h-full
+        flex-1
+        cursor-pointer
+        bg-transparent
+        outline-none
+      "
+    >
+
+      {BUSINESS_TYPES.map((item) => (
+
+        <option
+          key={item.value}
+          value={item.value}
+        >
+          {item.label}
+        </option>
+
+      ))}
+
+    </select>
+
+  </div>
+
+</div>
+
+{/* ======================= */}
+{/* WHATSAPP */}
+{/* ======================= */}
+
+<div>
+
+  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    Nomor WhatsApp
+  </label>
+
+  <div
+    className="
+      group
+      flex
+      h-14
+      items-center
+      gap-4
+      rounded-2xl
+      border
+      border-slate-200
+      bg-white
+      px-5
+      transition-all
+      duration-300
+      focus-within:border-teal-500
+      focus-within:ring-4
+      focus-within:ring-teal-100
+    "
+  >
+
+    <Phone
+      size={20}
+      className="
+        text-slate-400
+        transition
+        group-focus-within:text-teal-600
+      "
+    />
+
+    <input
+      type="tel"
+      value={phone}
+      onChange={(e) =>
+        setPhone(e.target.value)
+      }
+      placeholder="08xxxxxxxxxx"
+      className="
+        h-full
+        flex-1
+        bg-transparent
+        text-[15px]
+        outline-none
+        placeholder:text-slate-400
+      "
+    />
+
+  </div>
+
+</div>
+
+{/* ======================= */}
+{/* EMAIL */}
+{/* ======================= */}
+
+<div>
+
+  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    Email
+  </label>
+
+  <div
+    className="
+      group
+      flex
+      h-14
+      items-center
+      gap-4
+      rounded-2xl
+      border
+      border-slate-200
+      bg-white
+      px-5
+      transition-all
+      duration-300
+      focus-within:border-teal-500
+      focus-within:ring-4
+      focus-within:ring-teal-100
+    "
+  >
+
+    <Mail
+      size={20}
+      className="
+        text-slate-400
+        transition
+        group-focus-within:text-teal-600
+      "
+    />
+
+    <input
+      type="email"
+      value={email}
+      onChange={(e) =>
+        setEmail(e.target.value)
+      }
+      placeholder="email@domain.com"
+      className="
+        h-full
+        flex-1
+        bg-transparent
+        text-[15px]
+        outline-none
+        placeholder:text-slate-400
+      "
+    />
+
+  </div>
+
+</div>
+
+          {/* PASSWORD */}
+
+<div>
+
+  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    Password
+  </label>
+
+  <div
+    className="
+      group
+      flex
+      h-14
+      items-center
+      gap-4
+      rounded-2xl
+      border
+      border-slate-200
+      bg-white
+      px-5
+      transition-all
+      duration-300
+      focus-within:border-teal-500
+      focus-within:ring-4
+      focus-within:ring-teal-100
+    "
+  >
+
+    <LockKeyhole
+      size={20}
+      className="
+        text-slate-400
+        transition
+        group-focus-within:text-teal-600
+      "
+    />
+
+    <input
+      type={showPassword ? "text" : "password"}
+      value={password}
+      onChange={(e) =>
+        setPassword(e.target.value)
+      }
+      placeholder="Minimal 6 karakter"
+      className="
+        h-full
+        flex-1
+        bg-transparent
+        text-[15px]
+        outline-none
+        placeholder:text-slate-400
+      "
+    />
+
+    <button
+      type="button"
+      onClick={() =>
+        setShowPassword(!showPassword)
+      }
+      className="
+        rounded-xl
+        p-2
+        text-slate-400
+        transition
+        hover:bg-slate-100
+        hover:text-teal-600
+      "
+    >
+      {showPassword ? (
+        <EyeOff size={20} />
+      ) : (
+        <Eye size={20} />
+      )}
+    </button>
+
+  </div>
+
+</div>
+
+{/* KONFIRMASI PASSWORD */}
+
+<div>
+
+  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    Konfirmasi Password
+  </label>
+
+  <div
+    className="
+      group
+      flex
+      h-14
+      items-center
+      gap-4
+      rounded-2xl
+      border
+      border-slate-200
+      bg-white
+      px-5
+      transition-all
+      duration-300
+      focus-within:border-teal-500
+      focus-within:ring-4
+      focus-within:ring-teal-100
+    "
+  >
+
+    <LockKeyhole
+      size={20}
+      className="
+        text-slate-400
+        transition
+        group-focus-within:text-teal-600
+      "
+    />
+
+    <input
+      type={
+        showConfirmPassword
+          ? "text"
+          : "password"
+      }
+      value={confirmPassword}
+      onChange={(e) =>
+        setConfirmPassword(
+          e.target.value
+        )
+      }
+      placeholder="Ulangi password"
+      className="
+        h-full
+        flex-1
+        bg-transparent
+        text-[15px]
+        outline-none
+        placeholder:text-slate-400
+      "
+    />
+
+    <button
+      type="button"
+      onClick={() =>
+        setShowConfirmPassword(
+          !showConfirmPassword
+        )
+      }
+      className="
+        rounded-xl
+        p-2
+        text-slate-400
+        transition
+        hover:bg-slate-100
+        hover:text-teal-600
+      "
+    >
+      {showConfirmPassword ? (
+        <EyeOff size={20} />
+      ) : (
+        <Eye size={20} />
+      )}
+    </button>
+
+  </div>
+
+</div>
 
           <AppButton
   type="submit"
   loading={loading}
-  className="h-14 w-full rounded-2xl"
+  className="
+    group
+    h-14
+    w-full
+    rounded-2xl
+
+    bg-gradient-to-r
+    from-teal-600
+    via-emerald-600
+    to-cyan-600
+
+    text-base
+    font-semibold
+
+    shadow-lg
+    shadow-teal-600/25
+
+    transition-all
+    duration-300
+
+    hover:scale-[1.02]
+    hover:shadow-2xl
+    hover:shadow-teal-600/30
+
+    active:scale-[0.99]
+  "
 >
-            Daftar Gratis
-          </AppButton>
+
+  <span className="flex items-center justify-center gap-2">
+
+    Buat Akun Gratis
+
+    <ArrowRight
+      size={18}
+      className="
+        transition-transform
+        duration-300
+        group-hover:translate-x-1
+      "
+    />
+
+  </span>
+
+</AppButton>
 
           <div className="text-center">
 
-            <span className="text-sm text-slate-500">
-              Sudah punya akun?
-            </span>
+  <p className="text-sm text-slate-500">
+    Sudah memiliki akun?
+  </p>
 
-            <Link
-              href="/login"
-              className="
-                ml-2
-                font-semibold
-                text-[var(--primary)]
-              "
-            >
-              Login
-            </Link>
+  <Link
+    href="/login"
+    className="
+      mt-2
+      inline-flex
+      items-center
+      gap-2
 
-          </div>
+      font-semibold
+      text-teal-600
+
+      transition
+      hover:text-teal-700
+    "
+  >
+
+    Login ke Dashboard
+
+    <ArrowRight
+      size={16}
+      className="
+        transition-transform
+        duration-300
+        hover:translate-x-1
+      "
+    />
+
+  </Link>
+
+</div>
 
         </form>
 
@@ -426,105 +880,3 @@ const BUSINESS_TYPES = [
     label: "🏬 UMKM / Lainnya",
   },
 ];
-
-function Input({
-  label,
-  placeholder,
-  value,
-  onChange,
-}: {
-  label: string;
-  placeholder: string;
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div>
-      <label className="mb-2 block text-sm font-medium">
-        {label}
-      </label>
-
-      <input
-        value={value}
-        onChange={(e) =>
-          onChange(e.target.value)
-        }
-        placeholder={placeholder}
-        className="
-          h-14
-          w-full
-          rounded-2xl
-          border
-          border-slate-200
-          px-5
-          outline-none
-          focus:border-[var(--primary)]
-          focus:ring-4
-          focus:ring-teal-100
-        "
-      />
-    </div>
-  );
-}
-
-function PasswordInput({
-  label,
-  show,
-  toggle,
-  value,
-  onChange,
-}: {
-  label: string;
-  show: boolean;
-  toggle: () => void;
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div>
-      <label className="mb-2 block text-sm font-medium">
-        {label}
-      </label>
-
-      <div className="relative">
-        <input
-          type={show ? "text" : "password"}
-          value={value}
-          onChange={(e) =>
-            onChange(e.target.value)
-          }
-          className="
-            h-14
-            w-full
-            rounded-2xl
-            border
-            border-slate-200
-            px-5
-            pr-14
-            outline-none
-            focus:border-[var(--primary)]
-            focus:ring-4
-            focus:ring-teal-100
-          "
-        />
-
-        <button
-          type="button"
-          onClick={toggle}
-          className="
-            absolute
-            right-5
-            top-1/2
-            -translate-y-1/2
-          "
-        >
-          {show ? (
-            <EyeOff size={20} />
-          ) : (
-            <Eye size={20} />
-          )}
-        </button>
-      </div>
-    </div>
-  );
-}
