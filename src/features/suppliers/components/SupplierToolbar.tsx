@@ -70,7 +70,7 @@ export function SupplierToolbar({
           onChange={(e) =>
             onSearch(e.target.value)
           }
-          placeholder="Cari supplier..."
+          placeholder=""
           className="
             w-full
             rounded-xl

@@ -18,16 +18,13 @@ export function SearchBar({
 
   return (
     <div className="relative">
-      <Search
-        size={20}
-        className="absolute left-5 top-1/2 -translate-y-1/2 text-[var(--text-muted)]"
-      />
+      
 
       <input
         type="text"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder=""
+        placeholder="Cari Produk di sini..."
         className="
           h-14
           w-full

@@ -68,7 +68,7 @@ export const navigation = [
       {
         title: "Adjustment",
         href: "/inventory-adjustment",
-        icon: Boxes,
+        icon: Package,
       },
       {
         title: "Stock Card",

@@ -51,7 +51,7 @@ export function ProductToolbar({
           <SearchToolbar
             value={search}
             onChange={onSearch}
-            placeholder="Cari nama atau SKU..."
+            placeholder=""
           />
         </div>
 

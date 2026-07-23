@@ -256,7 +256,7 @@ export function Sidebar() {
                   text-emerald-700
                 "
               >
-                Version 1.0.0
+                Version 2.0.0
               </p>
 
             </div>

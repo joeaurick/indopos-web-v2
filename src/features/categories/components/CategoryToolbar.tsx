@@ -36,7 +36,7 @@ export function CategoryToolbar({
       <SearchToolbar
         value={search}
         onChange={onSearch}
-        placeholder="Cari kategori..."
+        placeholder=""
       />
 
     </div>

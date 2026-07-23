@@ -34,7 +34,7 @@ export function CustomerToolbar({
           onChange={(e) =>
             onSearch(e.target.value)
           }
-          placeholder="Cari customer..."
+          placeholder=""
           className="w-full rounded-xl border border-slate-300 bg-white py-3 pl-11 pr-4 outline-none focus:border-teal-500"
         />
 

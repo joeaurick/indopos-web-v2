@@ -16,7 +16,7 @@ export function StockCardToolbar({
         onChange={(e) =>
           onSearch(e.target.value)
         }
-        placeholder=""
+        placeholder="Cari di sini..."
         className="w-full rounded-xl border border-slate-300 px-4 py-3"
       />
     </div>

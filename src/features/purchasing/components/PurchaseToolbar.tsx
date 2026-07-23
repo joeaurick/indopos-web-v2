@@ -18,17 +18,14 @@ export function PurchaseToolbar({
 
       <div className="relative flex-1">
 
-        <Search
-          size={18}
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-        />
+      
 
         <input
           value={search}
           onChange={(e) =>
             onSearch(e.target.value)
           }
-          placeholder=""
+          placeholder="Cari di sini..."
           className="w-full rounded-xl border border-slate-200 bg-white py-3 pl-11 pr-4 outline-none focus:border-teal-500"
         />
 
