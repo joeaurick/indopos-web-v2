@@ -1,26 +1,40 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+
 import {
   ChevronDown,
-  User,
-  Building2,
-  Settings,
   LogOut,
+  ShieldCheck,
+  Building2,
+  Sparkles,
+  CircleCheckBig,
 } from "lucide-react";
 
 import { logout } from "@/lib/auth/logout";
+import { useBusinessStore } from "@/features/settings";
 
 export function TopbarProfile() {
   const [open, setOpen] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null);
 
+  const {
+    business,
+    fetchBusiness,
+  } = useBusinessStore();
+
+  useEffect(() => {
+    fetchBusiness();
+  }, [fetchBusiness]);
+
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (
         ref.current &&
-        !ref.current.contains(e.target as Node)
+        !ref.current.contains(
+          e.target as Node
+        )
       ) {
         setOpen(false);
       }
@@ -43,9 +57,14 @@ export function TopbarProfile() {
       ref={ref}
       className="relative"
     >
+      {/* BUTTON */}
+
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() =>
+          setOpen(!open)
+        }
         className="
+          group
           flex
           items-center
           gap-3
@@ -57,8 +76,9 @@ export function TopbarProfile() {
           py-2
           shadow-sm
           transition-all
+          duration-300
           hover:border-teal-500
-          hover:shadow-md
+          hover:shadow-lg
         "
       >
         <div className="relative">
@@ -73,13 +93,15 @@ export function TopbarProfile() {
               rounded-full
               bg-gradient-to-br
               from-teal-500
-              to-emerald-600
+              via-emerald-500
+              to-cyan-500
               text-lg
               font-bold
               text-white
             "
           >
-            A
+            {(business?.name?.charAt(0) ??
+              "A").toUpperCase()}
           </div>
 
           <span
@@ -87,8 +109,8 @@ export function TopbarProfile() {
               absolute
               bottom-0
               right-0
-              h-3
-              w-3
+              h-3.5
+              w-3.5
               rounded-full
               border-2
               border-white
@@ -98,13 +120,13 @@ export function TopbarProfile() {
 
         </div>
 
-        <div className="text-left">
+        <div className="hidden text-left lg:block">
 
-          <h4 className="text-sm font-semibold text-slate-800">
+          <h4 className="font-semibold leading-none">
             Administrator
           </h4>
 
-          <p className="text-xs text-slate-500">
+          <p className="mt-1 text-xs text-slate-500">
             Super Admin
           </p>
 
@@ -112,8 +134,13 @@ export function TopbarProfile() {
 
         <ChevronDown
           size={18}
-          className="text-slate-500"
+          className="
+            text-slate-500
+            transition
+            group-hover:rotate-180
+          "
         />
+
       </button>
 
       {open && (
@@ -122,14 +149,15 @@ export function TopbarProfile() {
           className="
             absolute
             right-0
-            mt-3
-            w-72
+            mt-4
+            w-[360px]
             overflow-hidden
-            rounded-3xl
+            rounded-[32px]
             border
             border-slate-200
-            bg-white
-            shadow-2xl
+            bg-white/95
+            backdrop-blur-xl
+            shadow-[0_25px_70px_rgba(15,23,42,.18)]
           "
         >
 
@@ -137,106 +165,219 @@ export function TopbarProfile() {
 
           <div
             className="
-              flex
-              items-center
-              gap-4
-              border-b
-              border-slate-200
-              px-5
-              py-5
+              relative
+              overflow-hidden
+              bg-gradient-to-br
+              from-teal-600
+              via-emerald-500
+              to-cyan-500
+              px-6
+              py-7
+              text-white
             "
           >
 
             <div
               className="
-                flex
-                h-14
-                w-14
-                items-center
-                justify-center
+                absolute
+                -right-10
+                -top-10
+                h-40
+                w-40
                 rounded-full
-                bg-gradient-to-br
-                from-teal-500
-                to-emerald-600
-                text-xl
-                font-bold
-                text-white
+                bg-white/10
               "
-            >
-              A
-            </div>
+            />
 
-            <div>
+            <div className="relative flex items-center gap-4">
 
-              <h3 className="font-semibold text-slate-800">
-                Administrator
-              </h3>
+              <div
+                className="
+                  relative
+                  flex
+                  h-16
+                  w-16
+                  items-center
+                  justify-center
+                  rounded-full
+                  border-4
+                  border-white/30
+                  bg-white/15
+                  text-2xl
+                  font-bold
+                "
+              >
+                {(business?.name?.charAt(0) ??
+                  "A").toUpperCase()}
 
-              <p className="text-sm text-slate-500">
-                Super Admin
-              </p>
+                <span
+                  className="
+                    absolute
+                    bottom-1
+                    right-1
+                    h-4
+                    w-4
+                    rounded-full
+                    border-2
+                    border-white
+                    bg-emerald-400
+                  "
+                />
+
+              </div>
+
+              <div>
+
+                <h2 className="text-xl font-bold">
+                  Administrator
+                </h2>
+
+                <p className="text-white/80">
+                  Super Admin
+                </p>
+
+                <p className="mt-1 text-sm text-white/70">
+                  {business?.name ??
+                    "IndoPOS"}
+                </p>
+
+              </div>
 
             </div>
 
           </div>
 
+          {/* QUICK INFO */}
 
-          <div className="border-t border-slate-200 p-2">
+          <div className="space-y-4 p-5">
 
-            <MenuItem
-              icon={LogOut}
-              label="Logout"
-              danger
-              onClick={logout}
+            <InfoCard
+              icon={
+                Building2
+              }
+              title="Business"
+              value={
+                business?.name ??
+                "-"
+              }
             />
+
+            <InfoCard
+              icon={
+                ShieldCheck
+              }
+              title="Role"
+              value="Super Administrator"
+            />
+
+            <InfoCard
+              icon={
+                CircleCheckBig
+              }
+              title="Status"
+              value="Active"
+            />
+
+            <InfoCard
+              icon={
+                Sparkles
+              }
+              title="Subscription"
+              value="Enterprise"
+            />
+
+          </div>
+
+          <div className="border-t border-slate-100 p-5">
+
+            <button
+              onClick={logout}
+              className="
+                flex
+                w-full
+                items-center
+                justify-center
+                gap-3
+                rounded-2xl
+                bg-red-50
+                px-5
+                py-4
+                font-semibold
+                text-red-600
+                transition
+                hover:bg-red-500
+                hover:text-white
+              "
+            >
+              <LogOut size={20} />
+
+              Logout
+            </button>
 
           </div>
 
         </div>
 
       )}
+
     </div>
   );
 }
 
-type ItemProps = {
+type InfoProps = {
   icon: any;
-  label: string;
-  danger?: boolean;
-  onClick?: () => void;
+  title: string;
+  value: string;
 };
 
-function MenuItem({
+function InfoCard({
   icon: Icon,
-  label,
-  danger,
-  onClick,
-}: ItemProps) {
+  title,
+  value,
+}: InfoProps) {
   return (
-    <button
-      onClick={onClick}
-      className={`
+    <div
+      className="
         flex
-        w-full
         items-center
-        gap-3
+        gap-4
         rounded-2xl
-        px-4
-        py-3
-        text-sm
-        font-medium
-        transition-all
-
-        ${
-          danger
-            ? "text-red-600 hover:bg-red-50"
-            : "text-slate-700 hover:bg-slate-100"
-        }
-      `}
+        border
+        border-slate-100
+        bg-slate-50
+        p-4
+      "
     >
-      <Icon size={19} />
+      <div
+        className="
+          flex
+          h-11
+          w-11
+          items-center
+          justify-center
+          rounded-xl
+          bg-white
+          shadow-sm
+        "
+      >
+        <Icon
+          size={20}
+          className="text-teal-600"
+        />
+      </div>
 
-      <span>{label}</span>
-    </button>
+      <div>
+
+        <p className="text-xs text-slate-500">
+          {title}
+        </p>
+
+        <h4 className="font-semibold">
+          {value}
+        </h4>
+
+      </div>
+
+    </div>
   );
 }
