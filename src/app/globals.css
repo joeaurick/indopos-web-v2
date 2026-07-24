@@ -4,7 +4,7 @@
   color-scheme: light;
 
   /* Background */
-  --background: #f5f7fb;
+  --background: #f8fafc;
   --foreground: #0f172a;
 
   /* Surface */
@@ -13,7 +13,7 @@
   --sidebar: #ffffff;
 
   /* Border */
-  --border: #e2e8f0;
+  --border: #e5e7eb;
 
   /* Brand */
   --primary: #0f766e;
@@ -31,24 +31,17 @@
 
   /* Input */
   --input: #ffffff;
-  --input-border: #dbe4ee;
+  --input-border: #d1d5db;
 
   /* Hover */
-  --hover: #f1f5f9;
-
-  /* Charts */
-  --chart-1: #0f766e;
-  --chart-2: #2563eb;
-  --chart-3: #22c55e;
-  --chart-4: #f59e0b;
-  --chart-5: #ef4444;
+  --hover: #f8fafc;
 
   /* Radius */
-  --radius: 18px;
+  --radius: 12px;
 
   /* Shadow */
-  --shadow-sm: 0 2px 10px rgba(15,23,42,.05);
-  --shadow-md: 0 12px 30px rgba(15,23,42,.08);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
 }
 
 *{

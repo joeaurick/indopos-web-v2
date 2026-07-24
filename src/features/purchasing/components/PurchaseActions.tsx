@@ -15,82 +15,105 @@ export function PurchaseActions({
   onDelete,
 }: Props) {
   return (
-    <>
-      {/* Desktop */}
-      <div className="hidden justify-center gap-3 lg:flex">
-        <button
-          type="button"
-          onClick={onEdit}
-          className="
-            flex h-10 w-10 items-center justify-center
-            rounded-xl
-            bg-amber-50
-            text-amber-600
-            transition
-            hover:bg-amber-100
-          "
-        >
-          <Pencil size={18} />
-        </button>
+    <div
+      className="
+        flex
+        items-center
+        justify-center
+        gap-2
+      "
+    >
+      <button
+        type="button"
+        onClick={onEdit}
+        title="Edit Pembelian"
+        className="
+          group
+          flex
+          h-10
+          w-10
+          items-center
+          justify-center
 
-        <button
-          type="button"
-          onClick={onDelete}
-          className="
-            flex h-10 w-10 items-center justify-center
-            rounded-xl
-            bg-red-50
-            text-red-600
-            transition
-            hover:bg-red-100
-          "
-        >
-          <Trash2 size={18} />
-        </button>
-      </div>
+          rounded-xl
 
-      {/* Mobile */}
-      <div className="grid grid-cols-2 gap-3 lg:hidden">
-        <button
-          type="button"
-          onClick={onEdit}
-          className="
-            flex items-center justify-center gap-2
-            rounded-xl
-            border
-            border-amber-200
-            bg-amber-50
-            py-3
-            font-medium
-            text-amber-700
-            transition
-            active:scale-95
-          "
-        >
-          <Pencil size={18} />
-          Edit
-        </button>
+          border
+          border-amber-200
 
-        <button
-          type="button"
-          onClick={onDelete}
+          bg-amber-50
+          text-amber-600
+
+          shadow-sm
+
+          transition-all
+          duration-200
+
+          hover:-translate-y-0.5
+          hover:border-amber-300
+          hover:bg-amber-500
+          hover:text-white
+          hover:shadow-md
+
+          focus:outline-none
+          focus:ring-2
+          focus:ring-amber-300
+        "
+      >
+        <Pencil
+          size={17}
           className="
-            flex items-center justify-center gap-2
-            rounded-xl
-            border
-            border-red-200
-            bg-red-50
-            py-3
-            font-medium
-            text-red-700
-            transition
-            active:scale-95
+            transition-transform
+            duration-200
+            group-hover:scale-110
           "
-        >
-          <Trash2 size={18} />
-          Hapus
-        </button>
-      </div>
-    </>
+        />
+      </button>
+
+      <button
+        type="button"
+        onClick={onDelete}
+        title="Hapus Pembelian"
+        className="
+          group
+          flex
+          h-10
+          w-10
+          items-center
+          justify-center
+
+          rounded-xl
+
+          border
+          border-red-200
+
+          bg-red-50
+          text-red-600
+
+          shadow-sm
+
+          transition-all
+          duration-200
+
+          hover:-translate-y-0.5
+          hover:border-red-300
+          hover:bg-red-500
+          hover:text-white
+          hover:shadow-md
+
+          focus:outline-none
+          focus:ring-2
+          focus:ring-red-300
+        "
+      >
+        <Trash2
+          size={17}
+          className="
+            transition-transform
+            duration-200
+            group-hover:scale-110
+          "
+        />
+      </button>
+    </div>
   );
 }

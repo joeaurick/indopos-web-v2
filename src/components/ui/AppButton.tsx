@@ -13,14 +13,13 @@ type Size =
   | "md"
   | "lg";
 
-type Props =
-  ButtonHTMLAttributes<HTMLButtonElement> & {
-    children: ReactNode;
-    variant?: Variant;
-    size?: Size;
-    loading?: boolean;
-    fullWidth?: boolean;
-  };
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+  children: ReactNode;
+  variant?: Variant;
+  size?: Size;
+  loading?: boolean;
+  fullWidth?: boolean;
+};
 
 export function AppButton({
   children,
@@ -38,50 +37,53 @@ export function AppButton({
       disabled={loading || disabled}
       className={clsx(
         `
-          inline-flex
-          items-center
-          justify-center
-          gap-2
+        inline-flex
+        items-center
+        justify-center
+        gap-2
 
-          rounded-2xl
+        rounded-xl
 
-          font-semibold
+        border
+        border-transparent
 
-          transition-all
-          duration-200
+        font-semibold
+        tracking-tight
 
-          active:scale-[.98]
+        transition-all
+        duration-200
 
-          disabled:cursor-not-allowed
-          disabled:opacity-50
+        active:scale-[0.98]
 
-          hover:-translate-y-0.5
+        focus:outline-none
+        focus:ring-2
+        focus:ring-[var(--primary)]/20
+        focus:ring-offset-1
+
+        disabled:pointer-events-none
+        disabled:opacity-50
         `,
+        fullWidth && "w-full",
+        !fullWidth && "w-auto",
 
-        fullWidth ? "w-full" : "w-auto",
+        size === "sm" && "h-9 px-3 text-sm",
+        size === "md" && "h-10 px-4 text-sm",
+        size === "lg" && "h-11 px-5 text-sm",
 
-        {
-          "h-10 px-4 text-sm": size === "sm",
-          "h-12 px-5 text-sm": size === "md",
-          "h-14 px-6 text-base": size === "lg",
-        },
+        variant === "primary" &&
+          "bg-[var(--primary)] text-white shadow-sm hover:brightness-105 hover:shadow-md",
 
-        {
-          "bg-[var(--primary)] text-white shadow-md hover:bg-[var(--primary-hover)]":
-            variant === "primary",
+        variant === "secondary" &&
+          "bg-slate-100 text-slate-700 hover:bg-slate-200",
 
-          "bg-slate-100 text-slate-700 hover:bg-slate-200":
-            variant === "secondary",
+        variant === "outline" &&
+          "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300",
 
-          "border border-[var(--border)] bg-white hover:bg-slate-50":
-            variant === "outline",
+        variant === "danger" &&
+          "bg-red-600 text-white shadow-sm hover:bg-red-700 hover:shadow-md",
 
-          "bg-red-500 text-white hover:bg-red-600":
-            variant === "danger",
-
-          "bg-green-600 text-white hover:bg-green-700":
-            variant === "success",
-        },
+        variant === "success" &&
+          "bg-green-600 text-white shadow-sm hover:bg-green-700 hover:shadow-md",
 
         className
       )}

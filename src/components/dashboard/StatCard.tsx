@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { ArrowUpRight } from "lucide-react";
 
 type Props = {
   title: string;
@@ -19,59 +20,59 @@ export function StatCard({
         group
         relative
         overflow-hidden
-        rounded-[30px]
+        rounded-3xl
         border
         border-slate-200
         bg-white
-        p-7
+        p-6
         shadow-sm
         transition-all
         duration-300
         hover:-translate-y-1
+        hover:border-slate-300
         hover:shadow-xl
       "
     >
-      <div
-        className="absolute inset-x-0 top-0 h-1"
-        style={{
-          background: `linear-gradient(to right, ${color}, transparent)`,
-        }}
-      />
+      {/* Background Glow */}
 
       <div
-        className="absolute -right-16 -top-16 h-48 w-48 rounded-full blur-[90px] opacity-10"
+        className="absolute -right-20 -top-20 h-56 w-56 rounded-full blur-3xl opacity-10"
         style={{
           background: color,
         }}
       />
 
+      {/* Top */}
+
       <div className="relative flex items-start justify-between">
 
-        <div className="flex-1">
+        <div>
 
-          <span
-            className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-slate-500"
-          >
+          <p className="text-sm font-medium text-slate-500">
             {title}
-          </span>
+          </p>
 
-          <h2 className="mt-5 break-words text-3xl font-bold leading-tight text-slate-900 md:text-[34px]">
+          <h2
+            className="
+              mt-3
+              text-2xl
+              font-bold
+              tracking-tight
+              text-slate-900
+
+              md:text-3xl
+            "
+          >
             {value}
           </h2>
-
-          <div className="mt-6 flex items-center gap-2 text-sm font-medium text-emerald-600">
-            <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
-            Update Real-time
-          </div>
 
         </div>
 
         <div
           className="
             flex
-            h-16
-            w-16
-            shrink-0
+            h-14
+            w-14
             items-center
             justify-center
             rounded-2xl
@@ -81,11 +82,56 @@ export function StatCard({
             group-hover:-rotate-6
           "
           style={{
-            backgroundColor: `${color}15`,
+            background: `${color}15`,
             color,
           }}
         >
           {icon}
+        </div>
+
+      </div>
+
+      {/* Divider */}
+
+      <div className="my-6 h-px bg-slate-100" />
+
+      {/* Bottom */}
+
+      <div className="flex items-center justify-between">
+
+        <div className="flex items-center gap-2">
+
+          <span
+            className="h-2.5 w-2.5 rounded-full"
+            style={{
+              background: color,
+            }}
+          />
+
+          <span className="text-sm text-slate-500">
+            Real-time Update
+          </span>
+
+        </div>
+
+        <div
+          className="
+            flex
+            items-center
+            gap-1
+            text-sm
+            font-semibold
+          "
+          style={{
+            color,
+          }}
+        >
+          View
+
+          <ArrowUpRight
+            size={16}
+            className="transition group-hover:translate-x-1 group-hover:-translate-y-1"
+          />
         </div>
 
       </div>

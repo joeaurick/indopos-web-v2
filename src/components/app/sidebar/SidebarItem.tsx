@@ -29,60 +29,55 @@ export function SidebarItem({
       href={href}
       title={collapsed ? title : undefined}
       className={`
-        group
         relative
         flex
         items-center
-        overflow-hidden
-        rounded-2xl
+        rounded-xl
         transition-all
-        duration-300
+        duration-200
 
         ${
           collapsed
             ? `
               mx-auto
-              h-14
-              w-14
+              h-11
+              w-11
               justify-center
             `
             : `
-              h-14
-              gap-4
-              px-4
+              h-11
+              px-3
+              gap-3
             `
         }
 
         ${
           active
             ? `
-              bg-gradient-to-r
-              from-[var(--primary)]
-              via-[var(--primary)]
-              to-emerald-500
+              bg-[var(--primary)]
               text-white
-              shadow-lg
-              shadow-emerald-200/60
-              scale-[1.02]
+              shadow-sm
             `
             : `
               text-slate-600
-              hover:bg-white
+              hover:bg-slate-100
               hover:text-slate-900
-              hover:shadow-md
-              hover:scale-[1.01]
             `
         }
       `}
     >
-      {/* Glow */}
+      {/* Active Indicator */}
 
-      {active && (
-        <div
+      {!collapsed && active && (
+        <span
           className="
             absolute
-            inset-0
-            bg-white/10
+            left-0
+            top-2
+            bottom-2
+            w-1
+            rounded-r-full
+            bg-white
           "
         />
       )}
@@ -91,76 +86,47 @@ export function SidebarItem({
 
       <div
         className={`
-          relative
           flex
-          h-10
-          w-10
+          h-8
+          w-8
           items-center
           justify-center
-          rounded-xl
-          transition-all
-          duration-300
+          rounded-lg
+          transition-colors
 
           ${
             active
-              ? `
-                bg-white/20
-                backdrop-blur-sm
-              `
-              : `
-                bg-slate-100
-                group-hover:bg-[var(--primary)]
-              `
+              ? "bg-white/15"
+              : "bg-transparent"
           }
         `}
       >
         <Icon
-          size={20}
-          className={`
-            transition-all
-            duration-300
-
-            ${
-              active
-                ? "text-white"
-                : "text-slate-500 group-hover:text-white"
-            }
-          `}
+          size={18}
+          className={
+            active
+              ? "text-white"
+              : "text-slate-500"
+          }
         />
       </div>
 
       {!collapsed && (
         <span
           className={`
-            relative
             flex-1
             truncate
-            text-[14px]
+            text-sm
 
             ${
               active
-                ? "font-semibold text-white"
+                ? "font-semibold"
                 : "font-medium"
             }
           `}
         >
           {title}
         </span>
-      )}
-
-      {/* Active Dot */}
-
-      {!collapsed && active && (
-        <span
-          className="
-            relative
-            h-2.5
-            w-2.5
-            rounded-full
-            bg-white
-            shadow
-          "
-        />
       )}
     </Link>
   );

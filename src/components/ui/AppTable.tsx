@@ -17,12 +17,11 @@ export function AppTable({
         overflow-hidden
 
         rounded-2xl
-        md:rounded-3xl
 
         border
-        border-[var(--border)]
+        border-slate-200
 
-        bg-[var(--card)]
+        bg-white
 
         shadow-sm
         `,
@@ -37,8 +36,8 @@ export function AppTable({
       >
         <table
           className="
-            min-w-[700px]
-            w-full
+            min-w-full
+            border-collapse
           "
         >
           {children}

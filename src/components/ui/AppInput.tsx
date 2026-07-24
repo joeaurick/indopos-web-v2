@@ -13,13 +13,13 @@ export function AppInput({
       {...props}
       className={clsx(
         `
-        h-11
+        h-10
         w-full
 
-        rounded-2xl
+        rounded-xl
 
         border
-        border-[var(--border)]
+        border-slate-200
 
         bg-[var(--input)]
 
@@ -29,15 +29,13 @@ export function AppInput({
 
         outline-none
 
-        transition-all
+        transition-colors
 
         placeholder:text-[var(--text-muted)]
 
         focus:border-[var(--primary)]
-        focus:ring-4
-        focus:ring-teal-500/10
-
-        md:h-12
+        focus:ring-2
+        focus:ring-[var(--primary)]/10
         `,
         className
       )}

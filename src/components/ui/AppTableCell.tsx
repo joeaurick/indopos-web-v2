@@ -1,23 +1,30 @@
-import { ReactNode } from "react";
+import { TdHTMLAttributes, ReactNode } from "react";
 import clsx from "clsx";
 
-type Props = {
+type Props = TdHTMLAttributes<HTMLTableCellElement> & {
   children: ReactNode;
-  className?: string;
 };
 
 export function AppTableCell({
   children,
   className,
+  ...props
 }: Props) {
   return (
     <td
+      {...props}
       className={clsx(
         `
-        px-6
+        h-16
+        px-5
         py-4
+
+        align-middle
+        whitespace-nowrap
+
         text-sm
-        text-[var(--foreground)]
+        font-medium
+        text-slate-700
         `,
         className
       )}

@@ -2,7 +2,6 @@
 
 import {
   ChevronDown,
-  ChevronRight,
 } from "lucide-react";
 
 import { useSidebarGroupStore } from "@/store/sidebar-group.store";
@@ -35,93 +34,75 @@ export function SidebarGroup({
   );
 
   return (
-    <div className="mb-5">
+    <div className="space-y-2">
 
       {!collapsed && (
-        <div className="mb-3">
 
-          <button
-            type="button"
-            onClick={() => toggle(title)}
+        <button
+          type="button"
+          onClick={() => toggle(title)}
+          className="
+            flex
+            w-full
+            items-center
+            justify-between
+
+            rounded-lg
+
+            px-2
+            py-1.5
+
+            transition-colors
+
+            hover:bg-slate-50
+          "
+        >
+          <span
             className="
-              group
-              flex
-              w-full
-              items-center
-              justify-between
-              rounded-2xl
-              px-3
-              py-2
-              transition-all
-              duration-300
-              hover:bg-slate-100
+              text-[11px]
+              font-semibold
+              uppercase
+              tracking-wider
+              text-slate-400
             "
           >
+            {title}
+          </span>
 
-            <div className="flex items-center gap-3">
+          <ChevronDown
+            size={15}
+            className={`
+              text-slate-400
+              transition-transform
+              duration-200
 
-              <div className="h-[1px] w-6 bg-slate-200 transition-all duration-300 group-hover:w-8 group-hover:bg-teal-500" />
+              ${
+                opened
+                  ? "rotate-180"
+                  : ""
+              }
+            `}
+          />
 
-              <span
-                className="
-                  text-[11px]
-                  font-bold
-                  uppercase
-                  tracking-[0.22em]
-                  text-slate-400
-                  transition-colors
-                  group-hover:text-slate-700
-                "
-              >
-                {title}
-              </span>
+        </button>
 
-            </div>
-
-            <div
-              className={`
-                flex
-                h-6
-                w-6
-                items-center
-                justify-center
-                rounded-full
-                transition-all
-                duration-300
-
-                ${
-                  opened
-                    ? "bg-slate-100 rotate-180"
-                    : "group-hover:bg-slate-100"
-                }
-              `}
-            >
-              <ChevronDown
-                size={14}
-                className="text-slate-500"
-              />
-            </div>
-
-          </button>
-
-        </div>
       )}
 
       <div
         className={`
           overflow-hidden
           transition-all
-          duration-500
-          ease-in-out
+          duration-200
 
           ${
             collapsed || opened
-              ? "max-h-[1500px] opacity-100"
-              : "max-h-0 opacity-0"
+              ? "max-h-[1200px]"
+              : "max-h-0"
           }
         `}
       >
-        <div className="space-y-2">
+
+        <div className="space-y-1">
 
           {items.map((item) => (
             <SidebarItem
@@ -132,6 +113,7 @@ export function SidebarGroup({
           ))}
 
         </div>
+
       </div>
 
     </div>

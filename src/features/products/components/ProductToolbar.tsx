@@ -1,10 +1,16 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import {
+  Plus,
+  Search,
+  Package,
+} from "lucide-react";
 
-import { PageHeader } from "@/components/common/PageHeader";
-import { SearchToolbar } from "@/components/common/SearchToolbar";
-import { PrimaryButton } from "@/components/common/PrimaryButton";
+import {
+  AppButton,
+  AppInput,
+  AppPageHeader,
+} from "@/components/ui";
 
 import { CategoryFilter } from "./CategoryFilter";
 
@@ -31,59 +37,153 @@ export function ProductToolbar({
   onAdd,
 }: Props) {
   return (
-    <div className="space-y-5">
-      <PageHeader
+    <div className="space-y-6">
+
+      <AppPageHeader
         title="Products"
-        description="Kelola semua produk toko."
+        subtitle="Kelola seluruh produk toko Anda."
       />
 
       <div
         className="
-          flex
-          flex-col
-          gap-3
-          md:flex-row
-          md:items-center
-          md:justify-between
+          rounded-3xl
+          border
+          border-slate-200
+          bg-white
+          p-5
+          shadow-sm
         "
       >
-        <div className="flex-1">
-          <SearchToolbar
-            value={search}
-            onChange={onSearch}
-            placeholder=""
-          />
-        </div>
 
         <div
           className="
             flex
             flex-col
-            gap-3
-            sm:flex-row
+            gap-4
+
+            lg:flex-row
+            lg:items-center
+            lg:justify-between
           "
         >
-          <CategoryFilter
-            businessId={businessId}
-            value={selectedCategory}
-            onChange={onSelectCategory}
-          />
 
-          <PrimaryButton
-            onClick={onAdd}
+          {/* LEFT */}
+
+          <div
             className="
-              w-full
-              sm:w-auto
-              whitespace-nowrap
+              flex
+              flex-1
+              flex-col
+              gap-4
+
+              lg:flex-row
+              lg:items-center
             "
           >
-            <span className="flex items-center gap-2 justify-center">
+
+            {/* Search */}
+
+            <div className="relative flex-1">
+
+              <AppInput
+                value={search}
+                onChange={(e) =>
+                  onSearch(e.target.value)
+                }
+                placeholder="Cari nama produk atau SKU..."
+                className="
+                  h-12
+                  rounded-xl
+                  border-slate-200
+                  pl-11
+                  shadow-none
+                "
+              />
+
+            </div>
+
+            {/* Filter */}
+
+            <div className="w-full lg:w-72">
+
+              <CategoryFilter
+                businessId={businessId}
+                value={selectedCategory}
+                onChange={onSelectCategory}
+              />
+
+            </div>
+
+          </div>
+
+          {/* RIGHT */}
+
+          <div
+            className="
+              flex
+              items-center
+              justify-between
+              gap-4
+            "
+          >
+
+            <div
+              className="
+                hidden
+                items-center
+                gap-2
+
+                rounded-xl
+                bg-slate-100
+
+                px-4
+                py-3
+
+                lg:flex
+              "
+            >
+              <Package
+                size={18}
+                className="text-emerald-600"
+              />
+
+              <span
+                className="
+                  text-sm
+                  font-medium
+                  text-slate-600
+                "
+              >
+                Data Produk
+              </span>
+
+            </div>
+
+            <AppButton
+              onClick={onAdd}
+              className="
+                h-12
+                w-full
+
+                rounded-xl
+
+                px-6
+
+                lg:w-auto
+              "
+            >
               <Plus size={18} />
+
               Tambah Produk
-            </span>
-          </PrimaryButton>
+
+            </AppButton>
+
+          </div>
+
         </div>
+
       </div>
+
     </div>
   );
 }

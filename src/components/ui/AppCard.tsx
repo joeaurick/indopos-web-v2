@@ -14,20 +14,19 @@ export function AppCard({
     <div
       className={clsx(
         `
-        overflow-hidden
         rounded-2xl
-        md:rounded-3xl
 
         border
-        border-[var(--border)]
+        border-slate-200
 
-        bg-[var(--card)]
+        bg-white
 
         shadow-sm
-        transition-all
-        duration-300
 
-        hover:shadow-lg
+        transition-all
+        duration-200
+
+        hover:shadow-md
         `,
         className
       )}

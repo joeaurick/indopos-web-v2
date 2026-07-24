@@ -1,23 +1,32 @@
-import { ReactNode } from "react";
+import {
+  HTMLAttributes,
+  ReactNode,
+} from "react";
+
 import clsx from "clsx";
 
-type Props = {
-  children: ReactNode;
-  className?: string;
-};
+type Props =
+  HTMLAttributes<HTMLTableRowElement> & {
+    children: ReactNode;
+  };
 
 export function AppTableRow({
   children,
   className,
+  ...props
 }: Props) {
   return (
     <tr
+      {...props}
       className={clsx(
         `
         border-b
-        border-[var(--border)]
+        border-slate-100
+
         transition-all
-        hover:bg-[var(--hover)]
+        duration-200
+
+        hover:bg-slate-50
         `,
         className
       )}

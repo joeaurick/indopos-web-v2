@@ -60,192 +60,143 @@ export function TopbarProfile() {
       {/* BUTTON */}
 
       <button
-        onClick={() =>
-          setOpen(!open)
-        }
-        className="
-          group
-          flex
-          items-center
-          gap-3
-          rounded-2xl
-          border
-          border-slate-200
-          bg-white
-          px-3
-          py-2
-          shadow-sm
-          transition-all
-          duration-300
-          hover:border-teal-500
-          hover:shadow-lg
-        "
-      >
-        <div className="relative">
+  onClick={() => setOpen(!open)}
+  className="
+    group
+    flex
+    h-10
+    items-center
+    gap-3
 
-          <div
-            className="
-              flex
-              h-11
-              w-11
-              items-center
-              justify-center
-              rounded-full
-              bg-gradient-to-br
-              from-teal-500
-              via-emerald-500
-              to-cyan-500
-              text-lg
-              font-bold
-              text-white
-            "
-          >
-            {(business?.name?.charAt(0) ??
-              "A").toUpperCase()}
-          </div>
+    rounded-xl
 
-          <span
-            className="
-              absolute
-              bottom-0
-              right-0
-              h-3.5
-              w-3.5
-              rounded-full
-              border-2
-              border-white
-              bg-emerald-500
-            "
-          />
+    border
+    border-[var(--border)]
 
-        </div>
+    bg-white
 
-        <div className="hidden text-left lg:block">
+    px-3
 
-          <h4 className="font-semibold leading-none">
-            Administrator
-          </h4>
+    transition-all
 
-          <p className="mt-1 text-xs text-slate-500">
-            Super Admin
-          </p>
+    hover:border-[var(--primary)]
+    hover:bg-[var(--hover)]
+  "
+>
+  <div
+    className="
+      flex
+      h-8
+      w-8
+      items-center
+      justify-center
 
-        </div>
+      rounded-full
 
-        <ChevronDown
-          size={18}
-          className="
-            text-slate-500
-            transition
-            group-hover:rotate-180
-          "
-        />
+      bg-[var(--primary)]
 
-      </button>
+      text-sm
+      font-semibold
+      text-white
+    "
+  >
+    {(business?.name?.charAt(0) ?? "A").toUpperCase()}
+  </div>
+
+  <div className="hidden lg:block text-left">
+    <p className="text-sm font-semibold leading-none">
+      Administrator
+    </p>
+
+    <p className="mt-1 text-xs text-slate-500">
+      Super Admin
+    </p>
+  </div>
+
+  <ChevronDown
+    size={16}
+    className="
+      text-slate-400
+      transition-transform
+      group-hover:rotate-180
+    "
+  />
+</button>
 
       {open && (
 
         <div
-          className="
-            absolute
-            right-0
-            mt-4
-            w-[360px]
-            overflow-hidden
-            rounded-[32px]
-            border
-            border-slate-200
-            bg-white/95
-            backdrop-blur-xl
-            shadow-[0_25px_70px_rgba(15,23,42,.18)]
-          "
-        >
+  className="
+    absolute
+    right-0
+    mt-3
+
+    w-80
+
+    overflow-hidden
+
+    rounded-2xl
+
+    border
+    border-[var(--border)]
+
+    bg-white
+
+    shadow-lg
+  "
+>
 
           {/* HEADER */}
 
           <div
-            className="
-              relative
-              overflow-hidden
-              bg-gradient-to-br
-              from-teal-600
-              via-emerald-500
-              to-cyan-500
-              px-6
-              py-7
-              text-white
-            "
-          >
+  className="
+    border-b
+    border-[var(--border)]
 
-            <div
-              className="
-                absolute
-                -right-10
-                -top-10
-                h-40
-                w-40
-                rounded-full
-                bg-white/10
-              "
-            />
+    px-5
+    py-5
+  "
+>
+  <div className="flex items-center gap-3">
 
-            <div className="relative flex items-center gap-4">
+    <div
+      className="
+        flex
+        h-12
+        w-12
+        items-center
+        justify-center
 
-              <div
-                className="
-                  relative
-                  flex
-                  h-16
-                  w-16
-                  items-center
-                  justify-center
-                  rounded-full
-                  border-4
-                  border-white/30
-                  bg-white/15
-                  text-2xl
-                  font-bold
-                "
-              >
-                {(business?.name?.charAt(0) ??
-                  "A").toUpperCase()}
+        rounded-full
 
-                <span
-                  className="
-                    absolute
-                    bottom-1
-                    right-1
-                    h-4
-                    w-4
-                    rounded-full
-                    border-2
-                    border-white
-                    bg-emerald-400
-                  "
-                />
+        bg-[var(--primary)]
 
-              </div>
+        text-lg
+        font-semibold
+        text-white
+      "
+    >
+      {(business?.name?.charAt(0) ?? "A").toUpperCase()}
+    </div>
 
-              <div>
+    <div>
 
-                <h2 className="text-xl font-bold">
-                  Administrator
-                </h2>
+      <h3 className="font-semibold">
+        Administrator
+      </h3>
 
-                <p className="text-white/80">
-                  Super Admin
-                </p>
+      <p className="text-sm text-slate-500">
+        Super Admin
+      </p>
 
-                <p className="mt-1 text-sm text-white/70">
-                  {business?.name ??
-                    "IndoPOS"}
-                </p>
+      <p className="text-xs text-slate-400 mt-1">
+        {business?.name ?? "IndoPOS"}
+      </p>
 
-              </div>
+    </div>
 
-            </div>
-
-          </div>
+  </div>
+</div>
 
           {/* QUICK INFO */}
 
@@ -288,33 +239,42 @@ export function TopbarProfile() {
 
           </div>
 
-          <div className="border-t border-slate-100 p-5">
+          <div className="border-t border-[var(--border)] p-4">
 
-            <button
-              onClick={logout}
-              className="
-                flex
-                w-full
-                items-center
-                justify-center
-                gap-3
-                rounded-2xl
-                bg-red-50
-                px-5
-                py-4
-                font-semibold
-                text-red-600
-                transition
-                hover:bg-red-500
-                hover:text-white
-              "
-            >
-              <LogOut size={20} />
+  <button
+    onClick={logout}
+    className="
+      flex
+      w-full
+      items-center
+      justify-center
+      gap-2
 
-              Logout
-            </button>
+      rounded-xl
 
-          </div>
+      border
+      border-red-200
+
+      bg-red-50
+
+      py-2.5
+
+      font-medium
+
+      text-red-600
+
+      transition-all
+
+      hover:bg-red-600
+      hover:text-white
+    "
+  >
+    <LogOut size={18} />
+
+    Logout
+  </button>
+
+</div>
 
         </div>
 
@@ -340,44 +300,46 @@ function InfoCard({
       className="
         flex
         items-center
-        gap-4
-        rounded-2xl
-        border
-        border-slate-100
-        bg-slate-50
-        p-4
+        gap-3
+
+        rounded-xl
+
+        px-3
+        py-2
+
+        transition-colors
+
+        hover:bg-slate-50
       "
     >
       <div
         className="
           flex
-          h-11
-          w-11
+          h-9
+          w-9
           items-center
           justify-center
-          rounded-xl
-          bg-white
-          shadow-sm
+
+          rounded-lg
+
+          bg-slate-100
         "
       >
         <Icon
-          size={20}
-          className="text-teal-600"
+          size={18}
+          className="text-[var(--primary)]"
         />
       </div>
 
-      <div>
-
+      <div className="min-w-0">
         <p className="text-xs text-slate-500">
           {title}
         </p>
 
-        <h4 className="font-semibold">
+        <p className="truncate text-sm font-medium text-slate-800">
           {value}
-        </h4>
-
+        </p>
       </div>
-
     </div>
   );
 }

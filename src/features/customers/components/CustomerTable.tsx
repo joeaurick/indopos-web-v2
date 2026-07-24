@@ -6,6 +6,7 @@ import {
 
 import { Customer } from "../types";
 import { CustomerActions } from "./CustomerActions";
+import { CustomerMobileCard } from "./CustomerMobileCard";
 
 type Props = {
   customers: Customer[];
@@ -30,7 +31,8 @@ export function CustomerTable({
   return (
     <div className="overflow-hidden rounded-2xl bg-white shadow">
 
-      <table className="w-full">
+      <div className="hidden lg:block">
+  <table className="w-full">
 
         <thead className="bg-slate-50">
 
@@ -152,7 +154,37 @@ export function CustomerTable({
 
         </tbody>
 
-      </table>
+        </table>
+</div>
+
+      <div className="space-y-4 lg:hidden">
+
+  {loading ? (
+
+    <div className="rounded-2xl bg-white p-8 text-center">
+      Memuat data...
+    </div>
+
+  ) : customers.length === 0 ? (
+
+    <div className="rounded-2xl bg-white p-8 text-center text-slate-400">
+      Customer tidak ditemukan.
+    </div>
+
+  ) : (
+
+    customers.map((customer) => (
+      <CustomerMobileCard
+        key={customer.id}
+        customer={customer}
+        onEdit={onEdit}
+        onDelete={onDelete}
+      />
+    ))
+
+  )}
+
+</div>
 
     </div>
   );

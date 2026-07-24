@@ -4,17 +4,25 @@ import {
   ArrowDownLeft,
   ArrowUpRight,
   Wallet,
+  TrendingUp,
 } from "lucide-react";
 
 import { AppCard } from "@/components/ui";
+import { useDashboardStore } from "@/features/dashboard/store/dashboard-store";
 
 export function DashboardCashFlow() {
-  const cashIn = 25850000;
-  const cashOut = 9240000;
+  const summary = useDashboardStore(
+    (state) => state.data.summary
+  );
+
+  const cashIn = summary.todayIncome ?? 0;
+  const cashOut = summary.todayExpense ?? 0;
   const balance = cashIn - cashOut;
 
   return (
     <AppCard className="p-6">
+
+      {/* Header */}
 
       <div className="mb-8 flex items-center justify-between">
 
@@ -25,7 +33,7 @@ export function DashboardCashFlow() {
           </h2>
 
           <p className="mt-1 text-sm text-[var(--text-muted)]">
-            Ringkasan arus kas hari ini.
+            Ringkasan pemasukan dan pengeluaran hari ini.
           </p>
 
         </div>
@@ -33,8 +41,8 @@ export function DashboardCashFlow() {
         <div
           className="
             flex
-            h-12
-            w-12
+            h-14
+            w-14
             items-center
             justify-center
             rounded-2xl
@@ -42,48 +50,57 @@ export function DashboardCashFlow() {
             text-emerald-600
           "
         >
-          <Wallet size={22} />
+          <Wallet size={24} />
         </div>
 
       </div>
 
       <div className="space-y-5">
 
+        {/* Cash In */}
+
         <div
           className="
+            group
             flex
             items-center
             justify-between
-            rounded-2xl
+            rounded-3xl
             border
             border-[var(--border)]
+            bg-white
             p-5
+            transition-all
+            duration-300
+            hover:-translate-y-1
+            hover:shadow-lg
           "
         >
+
           <div className="flex items-center gap-4">
 
             <div
               className="
                 flex
-                h-12
-                w-12
+                h-14
+                w-14
                 items-center
                 justify-center
-                rounded-xl
+                rounded-2xl
                 bg-emerald-100
                 text-emerald-600
               "
             >
-              <ArrowDownLeft size={20} />
+              <ArrowDownLeft size={24} />
             </div>
 
             <div>
 
-              <p className="text-sm text-[var(--text-muted)]">
+              <p className="text-sm text-slate-500">
                 Cash In
               </p>
 
-              <h3 className="text-xl font-bold">
+              <h3 className="mt-1 text-2xl font-bold">
                 Rp {cashIn.toLocaleString("id-ID")}
               </h3>
 
@@ -91,43 +108,57 @@ export function DashboardCashFlow() {
 
           </div>
 
+          <TrendingUp
+            size={22}
+            className="text-emerald-500"
+          />
+
         </div>
+
+        {/* Cash Out */}
 
         <div
           className="
+            group
             flex
             items-center
             justify-between
-            rounded-2xl
+            rounded-3xl
             border
             border-[var(--border)]
+            bg-white
             p-5
+            transition-all
+            duration-300
+            hover:-translate-y-1
+            hover:shadow-lg
           "
         >
+
           <div className="flex items-center gap-4">
 
             <div
               className="
                 flex
-                h-12
-                w-12
+                h-14
+                w-14
                 items-center
                 justify-center
-                rounded-xl
+                rounded-2xl
                 bg-red-100
                 text-red-600
               "
             >
-              <ArrowUpRight size={20} />
+              <ArrowUpRight size={24} />
             </div>
 
             <div>
 
-              <p className="text-sm text-[var(--text-muted)]">
+              <p className="text-sm text-slate-500">
                 Cash Out
               </p>
 
-              <h3 className="text-xl font-bold">
+              <h3 className="mt-1 text-2xl font-bold">
                 Rp {cashOut.toLocaleString("id-ID")}
               </h3>
 
@@ -137,22 +168,44 @@ export function DashboardCashFlow() {
 
         </div>
 
+        {/* Balance */}
+
         <div
           className="
-            rounded-3xl
-            bg-[var(--primary)]
-            p-6
+            relative
+            overflow-hidden
+            rounded-[30px]
+            bg-gradient-to-r
+            from-[var(--primary)]
+            to-emerald-500
+            p-7
             text-white
           "
         >
 
-          <p className="text-sm opacity-80">
+          <div
+            className="
+              absolute
+              -right-10
+              -top-10
+              h-40
+              w-40
+              rounded-full
+              bg-white/10
+            "
+          />
+
+          <p className="relative text-sm opacity-90">
             Saldo Kas
           </p>
 
-          <h2 className="mt-2 text-3xl font-bold">
+          <h2 className="relative mt-3 text-4xl font-bold">
             Rp {balance.toLocaleString("id-ID")}
           </h2>
+
+          <p className="relative mt-2 text-sm text-white/80">
+            Cash In − Cash Out
+          </p>
 
         </div>
 

@@ -10,3 +10,5 @@ export * from "./AppTable";
 export * from "./AppTableCell";
 export * from "./AppTableHead";
 export * from "./AppTableRow";
+export * from "./AppToolbar";
+export * from "./AppPageHeader";

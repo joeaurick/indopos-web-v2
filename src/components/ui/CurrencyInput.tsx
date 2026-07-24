@@ -2,6 +2,8 @@
 
 import { forwardRef } from "react";
 
+import { useNumeric } from "@/components/ui/numeric/useNumeric";
+
 type Props = {
   value: string | number;
   onChange: (value: string) => void;
@@ -32,6 +34,12 @@ export const CurrencyInput = forwardRef<
     },
     ref
   ) => {
+    const { open } = useNumeric();
+
+    const isMobile =
+      typeof window !== "undefined" &&
+      window.innerWidth < 1024;
+
     return (
       <input
         ref={ref}
@@ -41,7 +49,25 @@ export const CurrencyInput = forwardRef<
         disabled={disabled}
         placeholder={placeholder}
         value={format(value)}
+        readOnly={isMobile}
+        onFocus={(e) => {
+          if (isMobile) {
+            e.target.blur();
+          }
+        }}
+        onClick={() => {
+          if (!isMobile) return;
+
+          open({
+            title: "Masukkan Harga",
+            type: "currency",
+            value: String(value),
+            onSubmit: onChange,
+          });
+        }}
         onChange={(e) => {
+          if (isMobile) return;
+
           const raw = e.target.value.replace(
             /\D/g,
             ""
@@ -55,4 +81,5 @@ export const CurrencyInput = forwardRef<
   }
 );
 
-CurrencyInput.displayName = "CurrencyInput";
+CurrencyInput.displayName =
+  "CurrencyInput";

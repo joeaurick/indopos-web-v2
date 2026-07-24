@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Search,
   Bell,
   Settings,
   Moon,
@@ -13,106 +12,85 @@ import { TopbarClock } from "./TopbarClock";
 export function Topbar() {
   return (
     <header
-  className="
-    hidden
-    md:flex
-    sticky
-    top-0
-    z-30
-    h-20
-    items-center
-    justify-end
-    border-b
-    border-[var(--border)]
-    bg-[var(--card)]/90
-    px-4
-    lg:px-8
-    backdrop-blur-xl
-  "
->
-      {/* LEFT di hapus dulu */}
+      className="
+        sticky
+        top-0
+        z-30
 
-  
+        hidden
+        md:flex
 
-      {/* RIGHT */}
+        h-16
 
-      <div className="flex items-center gap-2 lg:gap-3">
+        items-center
+        justify-end
 
-        {/* Clock hanya desktop */}
+        border-b
+        border-[var(--border)]
+
+        bg-white/95
+        backdrop-blur-md
+
+        px-4
+        lg:px-8
+      "
+    >
+      <div className="flex items-center gap-2">
 
         <div className="hidden lg:block">
           <TopbarClock />
         </div>
 
-        {/* Bell */}
-
-        <button
-          className="
-            hidden
-            md:flex
-            h-11
-            w-11
-            items-center
-            justify-center
-            rounded-2xl
-            border
-            border-[var(--border)]
-            bg-[var(--card)]
-            transition
-            hover:bg-[var(--hover)]
-          "
-        >
+        <TopbarIconButton>
           <Bell size={18} />
-        </button>
+        </TopbarIconButton>
 
-        {/* Settings */}
-
-        <button
-          className="
-            hidden
-            md:flex
-            h-11
-            w-11
-            items-center
-            justify-center
-            rounded-2xl
-            border
-            border-[var(--border)]
-            bg-[var(--card)]
-            transition
-            hover:bg-[var(--hover)]
-          "
-        >
+        <TopbarIconButton>
           <Settings size={18} />
-        </button>
+        </TopbarIconButton>
 
-        {/* Dark Mode */}
-
-        <button
-          className="
-            hidden
-            md:flex
-            h-11
-            w-11
-            items-center
-            justify-center
-            rounded-2xl
-            border
-            border-[var(--border)]
-            bg-[var(--card)]
-            transition
-            hover:bg-[var(--hover)]
-          "
-        >
+        <TopbarIconButton>
           <Moon size={18} />
-        </button>
-
-        {/* Profile tetap tampil */}
+        </TopbarIconButton>
 
         <TopbarProfile />
 
       </div>
-
     </header>
+  );
+}
+
+function TopbarIconButton({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      className="
+        flex
+        h-9
+        w-9
+        items-center
+        justify-center
+
+        rounded-xl
+
+        border
+        border-[var(--border)]
+
+        bg-white
+
+        text-slate-600
+
+        transition-all
+
+        hover:border-[var(--primary)]
+        hover:bg-[var(--hover)]
+        hover:text-[var(--primary)]
+      "
+    >
+      {children}
+    </button>
   );
 }

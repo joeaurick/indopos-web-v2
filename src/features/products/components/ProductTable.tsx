@@ -6,24 +6,34 @@ import { Product } from "../types";
 import { ProductActions } from "./ProductActions";
 import { ProductMobileCard } from "./ProductMobileCard";
 
+import {
+  AppTable,
+  AppTableHead,
+  AppTableRow,
+  AppTableCell,
+} from "@/components/ui";
+
 function getStockStatus(stock: number) {
   if (stock === 0) {
     return {
       label: "Habis",
-      className: "bg-red-100 text-red-700",
+      className:
+        "bg-red-100 text-red-700 border border-red-200",
     };
   }
 
   if (stock <= 10) {
     return {
       label: "Menipis",
-      className: "bg-yellow-100 text-yellow-700",
+      className:
+        "bg-amber-100 text-amber-700 border border-amber-200",
     };
   }
 
   return {
     label: "Normal",
-    className: "bg-green-100 text-green-700",
+    className:
+      "bg-emerald-100 text-emerald-700 border border-emerald-200",
   };
 }
 
@@ -46,20 +56,14 @@ export function ProductTable({
     <>
       {/* ================= MOBILE ================= */}
 
-      <div
-  className="
-    space-y-4
-    pb-40
-    lg:hidden
-  "
->
+      <div className="space-y-4 pb-40 lg:hidden">
 
         {loading ? (
-          <div className="rounded-2xl bg-white py-12 text-center shadow">
+          <div className="rounded-3xl bg-white py-12 text-center shadow-sm">
             Memuat data...
           </div>
         ) : products.length === 0 ? (
-          <div className="rounded-2xl bg-white py-12 text-center text-slate-400 shadow">
+          <div className="rounded-3xl bg-white py-12 text-center text-slate-400 shadow-sm">
             Produk tidak ditemukan.
           </div>
         ) : (
@@ -77,73 +81,80 @@ export function ProductTable({
 
       {/* ================= DESKTOP ================= */}
 
-      <div className="hidden overflow-hidden rounded-2xl bg-white shadow lg:block">
+      <div
+        className="
+          hidden
+          overflow-hidden
+          rounded-3xl
+          border
+          border-slate-200
+          bg-white
+          shadow-sm
+          lg:block
+        "
+      >
 
-        <table className="w-full">
+        <AppTable>
 
-          <thead className="bg-slate-50">
+          <AppTableHead
+            className="
+              bg-gradient-to-b
+              from-slate-50
+              to-white
+            "
+          >
 
             <tr>
 
-              <th className="px-6 py-4 text-left">
+              <th className="w-[40%] px-6 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500">
                 Produk
               </th>
 
-              <th className="px-6 py-4 text-left">
-                SKU
-              </th>
-
-              <th className="px-6 py-4 text-left">
+              <th className="w-[18%] px-4 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-500">
                 Kategori
               </th>
 
-              <th className="px-6 py-4 text-right">
+              <th className="w-[15%] px-4 py-4 text-right text-xs font-bold uppercase tracking-wider text-slate-500">
                 Harga
               </th>
 
-              <th className="px-6 py-4 text-center">
+              <th className="w-[10%] px-4 py-4 text-center text-xs font-bold uppercase tracking-wider text-slate-500">
                 Stock
               </th>
 
-              <th className="px-6 py-4 text-center">
+              <th className="w-[10%] px-4 py-4 text-center text-xs font-bold uppercase tracking-wider text-slate-500">
                 Status
               </th>
 
-              <th className="px-6 py-4 text-center">
-                Action
+              <th className="w-[7%] px-4 py-4 text-center text-xs font-bold uppercase tracking-wider text-slate-500">
+                Aksi
               </th>
 
             </tr>
 
-          </thead>
+          </AppTableHead>
 
           <tbody>
 
             {loading ? (
 
-              <tr>
+              <AppTableRow>
 
-                <td
-                  colSpan={7}
-                  className="py-12 text-center"
-                >
+                <AppTableCell colSpan={6}>
                   Memuat data...
-                </td>
+                </AppTableCell>
 
-              </tr>
+              </AppTableRow>
 
             ) : products.length === 0 ? (
 
-              <tr>
+              <AppTableRow>
 
-                <td
-                  colSpan={7}
-                  className="py-12 text-center text-slate-400"
-                >
+                <AppTableCell colSpan={6}>
                   Produk tidak ditemukan.
-                </td>
+                </AppTableCell>
 
-              </tr>
+              </AppTableRow>
 
             ) : (
 
@@ -154,14 +165,21 @@ export function ProductTable({
 
                 return (
 
-                  <tr
+                  <AppTableRow
                     key={product.id}
-                    className="border-t transition hover:bg-slate-50"
+                    className="
+                      h-[76px]
+                      transition-all
+                      duration-200
+                      hover:bg-slate-50
+                    "
                   >
 
-                    <td className="px-6 py-4">
+                    {/* Produk */}
 
-                      <div className="flex items-center gap-3">
+                    <AppTableCell className="px-6">
+
+                      <div className="flex items-center gap-4">
 
                         <div
                           className="
@@ -170,100 +188,132 @@ export function ProductTable({
                             w-12
                             items-center
                             justify-center
-                            rounded-xl
-                            bg-slate-100
+                            rounded-2xl
+                            bg-gradient-to-br
+                            from-slate-100
+                            to-slate-200
                           "
                         >
 
-                          <Package className="text-slate-500" />
+                          <Package
+                            size={22}
+                            className="text-slate-600"
+                          />
 
                         </div>
 
                         <div>
 
-                          <p className="font-semibold">
+                          <h4 className="font-semibold text-slate-800">
                             {product.name}
+                          </h4>
+
+                          <p className="mt-1 text-xs text-slate-500">
+                            SKU : {product.sku}
                           </p>
 
                         </div>
 
                       </div>
 
-                    </td>
+                    </AppTableCell>
 
-                    <td className="px-6 py-4">
-                      {product.sku}
-                    </td>
+                    {/* Kategori */}
 
-                    <td className="px-6 py-4">
+                    <AppTableCell>
 
                       <span
                         className="
+                          inline-flex
+                          items-center
                           rounded-full
-                          bg-blue-100
-                          px-3
-                          py-1
-                          text-sm
-                          font-medium
-                          text-blue-700
+                          bg-[var(--primary)]/10
+                          px-3.5
+                          py-1.5
+                          text-xs
+                          font-semibold
+                          text-[var(--primary)]
                         "
                       >
                         {product.category_name ??
                           "Tanpa Kategori"}
                       </span>
 
-                    </td>
+                    </AppTableCell>
 
-                    <td className="px-6 py-4 text-right font-semibold">
+                    {/* Harga */}
 
-                      Rp{" "}
-                      {product.price.toLocaleString(
-                        "id-ID"
-                      )}
+                    <AppTableCell className="text-right">
 
-                    </td>
+                      <span className="font-semibold text-slate-800">
+                        Rp{" "}
+                        {product.price.toLocaleString("id-ID")}
+                      </span>
 
-                    <td className="px-6 py-4 text-center">
+                    </AppTableCell>
+
+                    {/* Stock */}
+
+                    <AppTableCell className="text-center">
 
                       <span
                         className="
+                          inline-flex
+                          h-8
+                          min-w-[56px]
+                          items-center
+                          justify-center
                           rounded-full
                           bg-slate-100
                           px-3
-                          py-1
                           text-sm
-                          font-semibold
+                          font-bold
+                          text-slate-700
                         "
                       >
                         {product.stock}
                       </span>
 
-                    </td>
+                    </AppTableCell>
 
-                    <td className="px-6 py-4 text-center">
+                    {/* Status */}
+
+                    <AppTableCell className="text-center">
 
                       <span
-                        className={`rounded-full px-3 py-1 text-sm font-semibold ${status.className}`}
+                        className={`
+                          inline-flex
+                          items-center
+                          justify-center
+                          rounded-full
+                          px-3
+                          py-1.5
+                          text-xs
+                          font-semibold
+                          ${status.className}
+                        `}
                       >
                         {status.label}
                       </span>
 
-                    </td>
+                    </AppTableCell>
 
-                    <td className="px-6 py-4">
+                    {/* Action */}
 
-                      <ProductActions
-                        onEdit={() =>
-                          onEdit(product)
-                        }
-                        onDelete={() =>
-                          onDelete(product)
-                        }
-                      />
+                    <AppTableCell>
 
-                    </td>
+                      <div className="flex justify-center">
 
-                  </tr>
+                        <ProductActions
+                          onEdit={() => onEdit(product)}
+                          onDelete={() => onDelete(product)}
+                        />
+
+                      </div>
+
+                    </AppTableCell>
+
+                  </AppTableRow>
 
                 );
 
@@ -273,7 +323,7 @@ export function ProductTable({
 
           </tbody>
 
-        </table>
+        </AppTable>
 
       </div>
     </>

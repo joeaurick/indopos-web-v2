@@ -67,51 +67,6 @@ export function TopbarClock() {
 
         {/* Live */}
 
-        <div className="flex items-center gap-2">
-
-          <span className="relative flex h-3 w-3">
-
-            <span
-              className="
-                absolute
-                inline-flex
-                h-full
-                w-full
-                animate-ping
-                rounded-full
-                bg-emerald-500
-                opacity-75
-              "
-            />
-
-            <span
-              className="
-                relative
-                inline-flex
-                h-3
-                w-3
-                rounded-full
-                bg-emerald-500
-              "
-            />
-
-          </span>
-
-          <span
-            className="
-              text-[11px]
-              font-semibold
-              uppercase
-              tracking-[0.25em]
-              text-emerald-600
-            "
-          >
-            Live
-          </span>
-
-        </div>
-
-        <div className="h-10 w-px bg-slate-200" />
 
         {/* Time */}
 

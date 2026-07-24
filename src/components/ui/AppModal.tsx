@@ -95,9 +95,15 @@ export function AppModal({
           </button>
         </div>
 
-        <div className="p-6">
-          {children}
-        </div>
+        <div
+    className="
+        p-6
+        pb-32
+        md:pb-6
+    "
+>
+    {children}
+</div>
       </div>
     </div>
   );
