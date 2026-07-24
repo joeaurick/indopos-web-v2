@@ -212,6 +212,9 @@ await deleteSupplier(
   onSuccess={() =>
     setOpenCreateDialog(false)
   }
+  onCancel={() =>
+    setOpenCreateDialog(false)
+  }
 />
       </SupplierDialog>
 
@@ -233,6 +236,10 @@ await deleteSupplier(
   mode="edit"
   supplier={selectedSupplier}
   onSuccess={() => {
+    setOpenEditDialog(false);
+    setSelectedSupplier(null);
+  }}
+  onCancel={() => {
     setOpenEditDialog(false);
     setSelectedSupplier(null);
   }}

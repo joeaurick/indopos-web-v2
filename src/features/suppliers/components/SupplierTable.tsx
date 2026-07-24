@@ -2,21 +2,24 @@
 
 import { Building2 } from "lucide-react";
 
+import {
+  AppTable,
+  AppTableBody,
+  AppTableCell,
+  AppTableHead,
+  AppTableHeader,
+  AppTableRow,
+} from "@/components/ui";
+
 import { Supplier } from "../types";
 import { SupplierActions } from "./SupplierActions";
+import { SupplierMobileCard } from "./SupplierMobileCard";
 
 type Props = {
   suppliers: Supplier[];
-
   loading: boolean;
-
-  onEdit: (
-    supplier: Supplier
-  ) => void;
-
-  onDelete: (
-    supplier: Supplier
-  ) => void;
+  onEdit: (supplier: Supplier) => void;
+  onDelete: (supplier: Supplier) => void;
 };
 
 export function SupplierTable({
@@ -26,136 +29,182 @@ export function SupplierTable({
   onDelete,
 }: Props) {
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow">
+    <>
+      {/* Desktop */}
 
-      <table className="w-full">
+      <div className="hidden lg:block">
 
-        <thead className="bg-slate-50">
+        <AppTable>
 
-          <tr>
+          <AppTableHead>
 
-            <th className="px-6 py-4 text-left">
-              Supplier
-            </th>
+            <AppTableRow>
 
-            <th className="px-6 py-4 text-left">
-              Contact
-            </th>
+              <AppTableHeader>
+                Supplier
+              </AppTableHeader>
 
-            <th className="px-6 py-4 text-left">
-              Phone
-            </th>
+              <AppTableHeader>
+                Contact
+              </AppTableHeader>
 
-            <th className="px-6 py-4 text-left">
-              Email
-            </th>
+              <AppTableHeader>
+                Phone
+              </AppTableHeader>
 
-            <th className="px-6 py-4 text-left">
-              Address
-            </th>
+              <AppTableHeader>
+                Email
+              </AppTableHeader>
 
-            <th className="px-6 py-4 text-center">
-              Action
-            </th>
+              <AppTableHeader>
+                Address
+              </AppTableHeader>
 
-          </tr>
+              <AppTableHeader className="text-center">
+                Action
+              </AppTableHeader>
 
-        </thead>
+            </AppTableRow>
 
-        <tbody>
+          </AppTableHead>
 
-          {loading ? (
+          <AppTableBody>
 
-            <tr>
+            {loading ? (
 
-              <td
-                colSpan={6}
-                className="py-12 text-center"
-              >
-                Memuat data...
-              </td>
+              <AppTableRow>
 
-            </tr>
+                <AppTableCell
+                  colSpan={6}
+                  className="py-16 text-center"
+                >
+                  Memuat data...
+                </AppTableCell>
 
-          ) : suppliers.length === 0 ? (
+              </AppTableRow>
 
-            <tr>
+            ) : suppliers.length === 0 ? (
 
-              <td
-                colSpan={6}
-                className="py-12 text-center text-slate-400"
-              >
-                Supplier tidak ditemukan.
-              </td>
+              <AppTableRow>
 
-            </tr>
+                <AppTableCell
+                  colSpan={6}
+                  className="py-16 text-center text-slate-400"
+                >
+                  Supplier tidak ditemukan.
+                </AppTableCell>
 
-          ) : (
+              </AppTableRow>
 
-            suppliers.map((supplier) => (
+            ) : (
 
-              <tr
-                key={supplier.id}
-                className="border-t hover:bg-slate-50"
-              >
+              suppliers.map((supplier) => (
 
-                <td className="px-6 py-4">
+                <AppTableRow key={supplier.id}>
 
-                  <div className="flex items-center gap-3">
+                  <AppTableCell>
 
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100">
+                    <div className="flex items-center gap-3">
 
-                      <Building2 className="text-slate-500" />
+                      <div
+                        className="
+                          flex
+                          h-12
+                          w-12
+                          items-center
+                          justify-center
+                          rounded-xl
+                          bg-slate-100
+                        "
+                      >
+                        <Building2
+                          size={20}
+                          className="text-slate-500"
+                        />
+                      </div>
+
+                      <div>
+
+                        <div className="font-semibold">
+                          {supplier.name}
+                        </div>
+
+                      </div>
 
                     </div>
 
-                    <div className="font-semibold">
-                      {supplier.name}
-                    </div>
+                  </AppTableCell>
 
-                  </div>
+                  <AppTableCell>
+                    {supplier.contact_person}
+                  </AppTableCell>
 
-                </td>
+                  <AppTableCell>
+                    {supplier.phone}
+                  </AppTableCell>
 
-                <td className="px-6 py-4">
-                  {supplier.contact_person}
-                </td>
+                  <AppTableCell>
+                    {supplier.email || "-"}
+                  </AppTableCell>
 
-                <td className="px-6 py-4">
-                  {supplier.phone}
-                </td>
+                  <AppTableCell className="max-w-xs truncate">
+                    {supplier.address || "-"}
+                  </AppTableCell>
 
-                <td className="px-6 py-4">
-                  {supplier.email}
-                </td>
+                  <AppTableCell>
 
-                <td className="px-6 py-4">
-                  {supplier.address}
-                </td>
+                    <SupplierActions
+                      onEdit={() => onEdit(supplier)}
+                      onDelete={() => onDelete(supplier)}
+                    />
 
-                <td className="px-6 py-4">
+                  </AppTableCell>
 
-                  <SupplierActions
-                    onEdit={() =>
-                      onEdit(supplier)
-                    }
-                    onDelete={() =>
-                      onDelete(supplier)
-                    }
-                  />
+                </AppTableRow>
 
-                </td>
+              ))
 
-              </tr>
+            )}
 
-            ))
+          </AppTableBody>
 
-          )}
+        </AppTable>
 
-        </tbody>
+      </div>
 
-      </table>
+      {/* Mobile */}
 
-    </div>
+      <div className="space-y-4 lg:hidden">
+
+        {loading ? (
+
+          <div className="rounded-2xl bg-white p-8 text-center">
+            Memuat data...
+          </div>
+
+        ) : suppliers.length === 0 ? (
+
+          <div className="rounded-2xl bg-white p-8 text-center text-slate-400">
+            Supplier tidak ditemukan.
+          </div>
+
+        ) : (
+
+          suppliers.map((supplier) => (
+
+            <SupplierMobileCard
+              key={supplier.id}
+              supplier={supplier}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
+
+          ))
+
+        )}
+
+      </div>
+
+    </>
   );
 }

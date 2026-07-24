@@ -12,3 +12,5 @@ export * from "./AppTableHead";
 export * from "./AppTableRow";
 export * from "./AppToolbar";
 export * from "./AppPageHeader";
+export * from "./AppTableBody";
+export * from "./AppTableHeader";

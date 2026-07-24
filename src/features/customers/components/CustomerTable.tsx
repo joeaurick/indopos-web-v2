@@ -29,10 +29,11 @@ export function CustomerTable({
   onDelete,
 }: Props) {
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow">
+  <>
+    {/* ================= Desktop ================= */}
+    <div className="hidden lg:block overflow-hidden rounded-2xl bg-white shadow-sm">
 
-      <div className="hidden lg:block">
-  <table className="w-full">
+      <table className="w-full">
 
         <thead className="bg-slate-50">
 
@@ -92,100 +93,95 @@ export function CustomerTable({
 
           ) : (
 
-            customers.map(
-              (customer) => (
+            customers.map((customer) => (
 
-                <tr
-                  key={customer.id}
-                  className="border-t hover:bg-slate-50"
-                >
+              <tr
+                key={customer.id}
+                className="border-t hover:bg-slate-50"
+              >
 
-                  <td className="px-6 py-4">
+                <td className="px-6 py-4">
 
-                    <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3">
 
-                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100">
 
-                        <User className="text-slate-500" />
-
-                      </div>
-
-                      <div className="font-semibold">
-
-                        {customer.name}
-
-                      </div>
+                      <User className="text-slate-500" />
 
                     </div>
 
-                  </td>
+                    <div className="font-semibold">
+                      {customer.name}
+                    </div>
 
-                  <td className="px-6 py-4">
-                    {customer.phone}
-                  </td>
+                  </div>
 
-                  <td className="px-6 py-4">
-                    {customer.email}
-                  </td>
+                </td>
 
-                  <td className="px-6 py-4">
-                    {customer.address}
-                  </td>
+                <td className="px-6 py-4">
+                  {customer.phone}
+                </td>
 
-                  <td className="px-6 py-4">
+                <td className="px-6 py-4">
+                  {customer.email}
+                </td>
 
-                    <CustomerActions
-                      onEdit={() =>
-                        onEdit(customer)
-                      }
-                      onDelete={() =>
-                        onDelete(customer)
-                      }
-                    />
+                <td className="px-6 py-4">
+                  {customer.address}
+                </td>
 
-                  </td>
+                <td className="px-6 py-4">
 
-                </tr>
+                  <CustomerActions
+                    onEdit={() => onEdit(customer)}
+                    onDelete={() => onDelete(customer)}
+                  />
 
-              )
-            )
+                </td>
+
+              </tr>
+
+            ))
 
           )}
 
         </tbody>
 
-        </table>
-</div>
-
-      <div className="space-y-4 lg:hidden">
-
-  {loading ? (
-
-    <div className="rounded-2xl bg-white p-8 text-center">
-      Memuat data...
-    </div>
-
-  ) : customers.length === 0 ? (
-
-    <div className="rounded-2xl bg-white p-8 text-center text-slate-400">
-      Customer tidak ditemukan.
-    </div>
-
-  ) : (
-
-    customers.map((customer) => (
-      <CustomerMobileCard
-        key={customer.id}
-        customer={customer}
-        onEdit={onEdit}
-        onDelete={onDelete}
-      />
-    ))
-
-  )}
-
-</div>
+      </table>
 
     </div>
-  );
+
+    {/* ================= Mobile ================= */}
+    <div className="space-y-4 lg:hidden">
+
+      {loading ? (
+
+        <div className="rounded-2xl bg-white p-8 text-center">
+          Memuat data...
+        </div>
+
+      ) : customers.length === 0 ? (
+
+        <div className="rounded-2xl bg-white p-8 text-center text-slate-400">
+          Customer tidak ditemukan.
+        </div>
+
+      ) : (
+
+        customers.map((customer) => (
+
+          <CustomerMobileCard
+            key={customer.id}
+            customer={customer}
+            onEdit={onEdit}
+            onDelete={onDelete}
+          />
+
+        ))
+
+      )}
+
+    </div>
+  </>
+);
 }

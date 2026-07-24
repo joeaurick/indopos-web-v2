@@ -5,6 +5,8 @@ import {
   useState,
 } from "react";
 
+import clsx from "clsx";
+
 import {
   NumericOptions,
 } from "./NumericContext";
@@ -25,13 +27,24 @@ export function NumericBottomSheet({
   const [value, setValue] =
     useState("");
 
+  const [mounted, setMounted] =
+    useState(open);
+
   useEffect(() => {
     if (open) {
+      setMounted(true);
       setValue(options.value ?? "");
+      return;
     }
+
+    const timer = setTimeout(() => {
+      setMounted(false);
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, [open, options]);
 
-  if (!open) return null;
+  if (!mounted) return null;
 
   function append(number: string) {
     setValue((prev) => prev + number);
@@ -64,30 +77,50 @@ export function NumericBottomSheet({
 
   return (
     <div
-      className="
+      className={clsx(
+        `
         fixed
         inset-0
         z-[9999]
+
         flex
         items-end
-        bg-black/30
-      "
+
+        transition-all
+        duration-300
+        `,
+        open
+          ? "bg-black/30 opacity-100"
+          : "bg-black/0 opacity-0"
+      )}
     >
       <div
-        className="
+        className={clsx(
+          `
           w-full
+
           rounded-t-3xl
+
           bg-white
+
           p-6
+
           shadow-2xl
-          animate-in
-          slide-in-from-bottom
-        "
+
+          transform
+
+          transition-transform
+          duration-300
+          ease-out
+          `,
+          open
+            ? "translate-y-0"
+            : "translate-y-full"
+        )}
       >
         {/* Handle */}
 
         <div className="mb-5 flex justify-center">
-
           <div
             className="
               h-1.5
@@ -96,18 +129,15 @@ export function NumericBottomSheet({
               bg-slate-300
             "
           />
-
         </div>
 
         {/* Title */}
 
         <h2 className="text-center text-lg font-bold">
-
           {options.title ?? "Input"}
-
         </h2>
 
-        {/* Value */}
+        {/* Display */}
 
         <div
           className="
@@ -130,7 +160,6 @@ export function NumericBottomSheet({
         {/* Keyboard */}
 
         <div className="grid grid-cols-3 gap-5">
-
           {[
             "1",
             "2",
@@ -144,14 +173,20 @@ export function NumericBottomSheet({
           ].map((item) => (
             <button
               key={item}
+              type="button"
               onClick={() =>
                 append(item)
               }
               className="
                 h-14
                 rounded-xl
+
                 text-3xl
                 font-semibold
+
+                transition
+
+                active:scale-95
                 active:bg-slate-100
               "
             >
@@ -160,184 +195,209 @@ export function NumericBottomSheet({
           ))}
 
           <button
+            type="button"
             onClick={clear}
             className="
               h-14
               rounded-xl
+
               text-2xl
               font-semibold
+
               text-red-500
+
+              transition
+
+              active:scale-95
             "
           >
             clr
           </button>
 
           <button
+            type="button"
             onClick={() =>
               append("0")
             }
             className="
               h-14
               rounded-xl
+
               text-3xl
               font-semibold
+
+              transition
+
+              active:scale-95
             "
           >
             0
           </button>
 
           <button
+            type="button"
             onClick={backspace}
             className="
               h-14
               rounded-xl
+
               text-2xl
+
+              transition
+
+              active:scale-95
             "
           >
             ⌫
           </button>
-
         </div>
 
-{/* Quick Amount */}
+        {/* Quick Amount */}
 
-<div className="mt-8">
+        <div className="mt-8">
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-slate-700">
+              Tambah Cepat
+            </h3>
 
-  <div className="mb-4 flex items-center justify-between">
+            <span className="text-xs text-slate-400">
+              Shortcut Nominal
+            </span>
+          </div>
 
-    <h3 className="text-sm font-semibold text-slate-700">
-      Tambah Cepat
-    </h3>
+          <div className="grid grid-cols-5 gap-3">
+            {[
+              {
+                label: "+5rb",
+                value: 5000,
+              },
+              {
+                label: "+10rb",
+                value: 10000,
+              },
+              {
+                label: "+20rb",
+                value: 20000,
+              },
+              {
+                label: "+50rb",
+                value: 50000,
+              },
+              {
+                label: "+100rb",
+                value: 100000,
+              },
+            ].map((item) => (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => {
+                  const current =
+                    Number(value || 0);
 
-    <span className="text-xs text-slate-400">
-      Shortcut Nominal
-    </span>
+                  setValue(
+                    String(
+                      current +
+                        item.value
+                    )
+                  );
+                }}
+                className="
+                  group
 
-  </div>
+                  flex
+                  h-14
+                  flex-col
+                  items-center
+                  justify-center
 
-  <div className="grid grid-cols-5 gap-3">
+                  rounded-2xl
 
-    {[
-      {
-        label: "+5rb",
-        value: 5000,
-      },
-      {
-        label: "+10rb",
-        value: 10000,
-      },
-      {
-        label: "+20rb",
-        value: 20000,
-      },
-      {
-        label: "+50rb",
-        value: 50000,
-      },
-      {
-        label: "+100rb",
-        value: 100000,
-      },
-    ].map((item) => (
+                  border
+                  border-emerald-100
 
-      <button
-        key={item.label}
-        type="button"
-        onClick={() => {
-          const current =
-            Number(value || 0);
+                  bg-gradient-to-b
+                  from-white
+                  to-emerald-50
 
-          setValue(
-            String(current + item.value)
-          );
-        }}
-        className="
-          group
+                  shadow-sm
 
-          flex
-          h-14
-          flex-col
-          items-center
-          justify-center
+                  transition-all
+                  duration-200
 
-          rounded-2xl
+                  hover:-translate-y-1
+                  hover:border-emerald-300
+                  hover:shadow-lg
 
-          border
-          border-emerald-100
+                  active:scale-95
+                "
+              >
+                <span
+                  className="
+                    text-sm
+                    font-bold
+                    text-emerald-700
 
-          bg-gradient-to-b
-          from-white
-          to-emerald-50
+                    transition-transform
 
-          shadow-sm
-
-          transition-all
-          duration-200
-
-          hover:-translate-y-1
-          hover:border-emerald-300
-          hover:shadow-lg
-
-          active:scale-95
-        "
-      >
-
-        <span
-          className="
-            text-sm
-            font-bold
-            text-emerald-700
-
-            transition-transform
-
-            group-hover:scale-110
-          "
-        >
-          {item.label}
-        </span>
-
-      </button>
-
-    ))}
-
-  </div>
-
-</div>
-
+                    group-hover:scale-110
+                  "
+                >
+                  {item.label}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* Footer */}
 
         <div className="mt-8 grid grid-cols-2 gap-4">
-
           <button
+            type="button"
             onClick={onClose}
             className="
               rounded-xl
+
               border
               border-red-300
+
               py-4
+
               font-semibold
+
               text-red-600
+
+              transition
+
+              hover:bg-red-50
             "
           >
             Batal
           </button>
 
           <button
+            type="button"
             onClick={submit}
             className="
               rounded-xl
+
               bg-orange-500
+
               py-4
+
               font-semibold
+
               text-white
+
+              transition
+
+              hover:bg-orange-600
             "
           >
             Proses
           </button>
-
         </div>
-
       </div>
     </div>
   );
