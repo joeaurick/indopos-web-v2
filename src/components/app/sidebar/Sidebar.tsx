@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-
 import {
   PanelLeftClose,
   PanelLeftOpen,
@@ -39,199 +38,245 @@ export function Sidebar() {
     hydrate();
   }, [hydrate]);
 
-  const filteredNavigation =
-    navigation
-      .map((group) => ({
-        ...group,
-        items: group.items.filter((item) =>
-          item.title
-            .toLowerCase()
-            .includes(
-              keyword.toLowerCase()
-            )
-        ),
-      }))
-      .filter(
-        (group) =>
-          group.items.length > 0
-      );
+  const filteredNavigation = navigation
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) =>
+        item.title
+          .toLowerCase()
+          .includes(keyword.toLowerCase())
+      ),
+    }))
+    .filter((group) => group.items.length > 0);
 
   return (
     <aside
-  className={`
-    hidden
-    lg:flex
-    sticky
-    top-0
-    h-screen
-    shrink-0
-    flex-col
-    border-r
-    border-[var(--border)]
-    bg-white
-    shadow-[0_1px_3px_rgba(15,23,42,.04)]
-    transition-all
-    duration-300
+      className={`
+        hidden
+        lg:flex
+        sticky
+        top-0
+        h-screen
+        shrink-0
+        flex-col
 
-    ${
-      collapsed
-        ? "w-[76px]"
-        : "w-[272px]"
-    }
-  `}
->
+        bg-[#171717]
+
+        border-r
+        border-white/5
+
+        transition-all
+        duration-300
+
+        ${
+          collapsed
+            ? "w-[84px]"
+            : "w-[290px]"
+        }
+      `}
+    >
       {/* HEADER */}
 
       <div
-  className="
-    flex
-    h-16
-    shrink-0
-    items-center
-    justify-between
-    border-b
-    border-[var(--border)]
-    bg-white
-    px-4
-  "
->
-  {!collapsed && <Logo />}
+        className="
+          border-b
+          border-white/5
 
-  <button
-    onClick={toggle}
-    className="
-      flex
-      h-9
-      w-9
-      items-center
-      justify-center
-      rounded-xl
-      border
-      border-[var(--border)]
-      bg-white
-      text-slate-500
-      transition-all
-      hover:border-[var(--primary)]
-      hover:text-[var(--primary)]
-      hover:bg-[var(--hover)]
-    "
-  >
-    {collapsed ? (
-      <PanelLeftOpen size={18} />
-    ) : (
-      <PanelLeftClose size={18} />
-    )}
-  </button>
-</div>
+          px-5
+          py-5
+        "
+      >
+        <div
+          className="
+            flex
+            items-start
+            justify-between
+            gap-3
+          "
+        >
+          {!collapsed && <Logo />}
+
+          <button
+            onClick={toggle}
+            className="
+              flex
+              h-10
+              w-10
+              shrink-0
+              items-center
+              justify-center
+
+              rounded-xl
+
+              text-gray-400
+
+              transition-all
+
+              hover:bg-[#242424]
+              hover:text-white
+            "
+          >
+            {collapsed ? (
+              <PanelLeftOpen size={18} />
+            ) : (
+              <PanelLeftClose size={18} />
+            )}
+          </button>
+        </div>
+
+        {!collapsed && (
+          <div
+            className="
+              mt-5
+
+              flex
+              items-center
+              gap-2
+
+              rounded-xl
+
+              bg-[#242424]
+
+              px-4
+              py-3
+            "
+          >
+            <span
+              className="
+                h-2.5
+                w-2.5
+                rounded-full
+                bg-green-500
+              "
+            />
+
+            <span
+              className="
+                text-sm
+                font-medium
+                text-white
+              "
+            >
+              Online
+            </span>
+          </div>
+        )}
+      </div>
 
       {/* SEARCH */}
 
-      <div
-  className="
-    border-b
-    border-[var(--border)]
-    bg-white
-    px-3
-    py-3
-  "
->
-  <SidebarSearch
-    collapsed={collapsed}
-  />
-</div>
+      {!collapsed && (
+        <div className="pt-4">
+          <SidebarSearch collapsed={collapsed} />
+        </div>
+      )}
 
       {/* MENU */}
 
       <nav
-  className="
-    flex-1
-    overflow-y-auto
-    px-3
-    py-4
-    space-y-6
-  "
->
-        {filteredNavigation.map(
-          (group) => (
-            <SidebarGroup
-              key={group.title}
-              title={group.title}
-              items={group.items}
-              collapsed={collapsed}
-            />
-          )
-        )}
+        className="
+          flex-1
+          overflow-y-auto
+
+          px-4
+          py-5
+
+          space-y-7
+        "
+      >
+        {filteredNavigation.map((group) => (
+          <SidebarGroup
+            key={group.title}
+            title={group.title}
+            items={group.items}
+            collapsed={collapsed}
+          />
+        ))}
       </nav>
 
       {/* FOOTER */}
 
       <div
+        className="
+          border-t
+          border-white/5
+
+          p-4
+        "
+      >
+        <div
+          className={`
+            rounded-2xl
+
+            bg-[#242424]
+
+            p-3
+
+            ${
+              collapsed
+                ? "flex justify-center"
+                : "flex items-center gap-3"
+            }
+          `}
+        >
+          <div
   className="
-    border-t
-    border-[var(--border)]
-    bg-white
-    p-4
+    flex
+    h-12
+    w-12
+    shrink-0
+    items-center
+    justify-center
+
+    rounded-2xl
+
+    bg-[#343C67]
+
+    shadow-sm
   "
 >
-  <div
-    className={`
-      flex
-      items-center
-      ${
-        collapsed
-          ? "justify-center"
-          : "gap-3"
-      }
-    `}
-  >
-    <div
-      className="
-        flex
-        h-11
-        w-11
-        items-center
-        justify-center
-        rounded-xl
-        bg-[var(--primary)]
-        text-white
-      "
-    >
-      <img
-        src="/favicon.png"
-        alt="IndoPOS"
-        className="h-6 w-6"
-      />
-    </div>
+            <img
+              src="/favicon.png"
+              alt="IndoPOS"
+              className="h-6 w-6 object-contain"
+            />
+          </div>
 
-    {!collapsed && (
-      <div className="min-w-0">
-        <h4 className="truncate text-sm font-semibold">
-          IndoPOS
-        </h4>
+          {!collapsed && (
+            <div className="min-w-0">
+              <h4 className="truncate text-sm font-semibold text-white">
+                IndoPOS
+              </h4>
 
-        <p className="truncate text-xs text-[var(--text-muted)]">
-          Business Platform
-        </p>
+              <p className="truncate text-xs text-gray-400">
+                Business Platform
+              </p>
 
-        <span
-          className="
-            mt-2
-            inline-flex
-            rounded-full
-            bg-emerald-50
-            px-2
-            py-1
-            text-[10px]
-            font-medium
-            text-emerald-700
-          "
-        >
-          v2.0.0
-        </span>
+              <div
+                className="
+                  mt-2
+
+                  inline-flex
+
+                  rounded-full
+
+                  bg-green-500/15
+
+                  px-2.5
+                  py-1
+
+                  text-[10px]
+                  font-semibold
+
+                  text-green-400
+                "
+              >
+                ONLINE
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    )}
-  </div>
-</div>
     </aside>
   );
 }

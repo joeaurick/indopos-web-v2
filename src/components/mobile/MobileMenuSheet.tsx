@@ -1,82 +1,29 @@
 "use client";
 
-import { LogOut } from "lucide-react";
 import { logout } from "@/lib/auth/logout";
 import { useBusinessStore } from "@/features/settings";
 import { useEffect } from "react";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  X,
-  Package,
-  Boxes,
-  Users,
-  Truck,
-  Wallet,
-  ArrowDownCircle,
-  ArrowUpCircle,
-  BarChart3,
-  Settings,
-} from "lucide-react";
+// ===== TAMBAHKAN DIBAWAH IMPORT INI =====
+
+import { Logo } from "@/components/app/logo/Logo";
+
+// ===== SELESAI =====
+
+import { X, LogOut } from "lucide-react";
 
 type Props = {
   open: boolean;
   onClose: () => void;
 };
 
-const menus = [
-  {
-    title: "Inventory",
-    href: "/inventory",
-    icon: Boxes,
-  },
-  {
-    title: "Products",
-    href: "/products",
-    icon: Package,
-  },
-  {
-    title: "Customers",
-    href: "/customers",
-    icon: Users,
-  },
-  {
-    title: "Suppliers",
-    href: "/suppliers",
-    icon: Truck,
-  },
-  {
-    title: "Cash In",
-    href: "/cash-in",
-    icon: ArrowDownCircle,
-  },
-  {
-    title: "Cash Out",
-    href: "/cash-out",
-    icon: ArrowUpCircle,
-  },
-  {
-    title: "Finance",
-    href: "/finance",
-    icon: Wallet,
-  },
-  {
-    title: "Purchasing",
-    href: "/purchasing",
-    icon: Package,
-  },
-  {
-    title: "Reports",
-    href: "/reports",
-    icon: BarChart3,
-  },
-  {
-    title: "Settings",
-    href: "/settings",
-    icon: Settings,
-  },
-];
+// ===== GANTI const menus DENGAN INI =====
+
+import { navigation } from "@/constants/navigation";
+
+// ===== SELESAI =====
 
 export function MobileMenuSheet({
   open,
@@ -84,7 +31,6 @@ export function MobileMenuSheet({
 }: Props) {
   const pathname = usePathname();
   const {
-  business,
   fetchBusiness,
 } = useBusinessStore();
 
@@ -92,208 +38,392 @@ useEffect(() => {
   fetchBusiness();
 }, [fetchBusiness]);
 
-  if (!open) return null;
 
   return (
     <>
-      {/* Overlay */}
+  
+      {/* Drawer */}
+
+<div
+  className={`
+    fixed
+    inset-0
+    z-50
+
+    transition-all
+    duration-300
+
+    ${
+      open
+        ? "pointer-events-auto"
+        : "pointer-events-none"
+    }
+  `}
+>
+
+  {/* Overlay */}
+
+  <div
+    onClick={onClose}
+    className={`
+      absolute
+      inset-0
+
+      bg-black/45
+      backdrop-blur-sm
+
+      transition-opacity
+      duration-300
+
+      ${
+        open
+          ? "opacity-100"
+          : "opacity-0"
+      }
+    `}
+  />
+
+  {/* Sidebar */}
+
+  <aside
+  className={`
+    absolute
+    left-0
+    top-0
+
+    flex
+    h-full
+    w-[310px]
+    flex-col
+
+    rounded-r-[28px]
+
+    bg-[#18181B]
+
+    shadow-[0_0_40px_rgba(0,0,0,.45)]
+
+      transition-transform
+      duration-300
+
+      ${
+        open
+          ? "translate-x-0"
+          : "-translate-x-full"
+      }
+    `}
+  >
+
+    {/* HEADER */}
+
+<div
+  className="
+    border-b
+    border-white/10
+
+    bg-[#1D1D1D]
+
+    px-5
+    py-7
+  "
+>
+
+  <div className="flex items-start justify-between">
+
+    <div className="flex items-center gap-4">
 
       <div
-        onClick={onClose}
         className="
-          fixed
-          inset-0
-          z-40
-          bg-slate-900/45
-          backdrop-blur-sm
-        "
-      />
+          flex
+          h-14
+          w-14
+          items-center
+          justify-center
 
-      {/* Sheet */}
+          rounded-2xl
 
-      <div
-        className="
-          fixed
-          bottom-0
-          left-0
-          right-0
-          z-50
-
-          rounded-t-[32px]
-
-          bg-[var(--card)]
-
-          px-5
-          pb-8
-          pt-4
-
-          shadow-[0_-15px_40px_rgba(0,0,0,.18)]
-
-          animate-in
-          slide-in-from-bottom
-          duration-300
+          text-gray-300
         "
       >
-        {/* Handle */}
+        <img
+          src="/favicon.png"
+          alt="IndoPOS"
+          className="h-8 w-8 object-contain"
+        />
+      </div>
 
-        <div className="mb-5 flex justify-center">
+      <div>
 
-          <div
+        <h2
+          className="
+            text-[20px]
+            font-bold
+            leading-none
+
+            text-white
+          "
+        >
+          INDOPOS
+        </h2>
+
+        <p
+          className="
+            mt-1
+
+            text-sm
+
+            text-gray-400
+          "
+        >
+          Jasa Layanan
+        </p>
+
+        <div
+          className="
+            mt-2
+
+            flex
+            items-center
+            gap-2
+          "
+        >
+          <span
             className="
-              h-1.5
-              w-14
+              h-2
+              w-2
+
               rounded-full
-              bg-slate-300
+
+              bg-emerald-400
             "
           />
 
-        </div>
-
-        {/* Header */}
-
-        <div className="mb-6 flex items-center justify-between">
-
-          <div>
-
-            <h2 className="text-xl font-bold">
-              Menu
-            </h2>
-
-            <p className="text-sm text-slate-500">
-              Pilih menu yang ingin dibuka
-            </p>
-
-          </div>
-
-          <button
-            onClick={onClose}
+          <span
             className="
-              flex
-              h-11
-              w-11
-              items-center
-              justify-center
-              rounded-2xl
-              bg-slate-100
-              transition
-              hover:bg-slate-200
+              text-xs
+
+              font-medium
+
+              text-gray-300
             "
           >
-            <X size={20} />
-          </button>
+            Online
+          </span>
 
         </div>
 
-        
+      </div>
 
-        {/* Menu */}
+    </div>
 
-        <div className="grid grid-cols-3 gap-4">
+    <button
+      onClick={onClose}
+      className="
+        flex
+        h-10
+        w-10
+        items-center
+        justify-center
 
-          {menus.map((item) => {
+        rounded-xl
 
-            const Icon = item.icon;
+        text-gray-400
 
-            const active =
-              pathname === item.href;
+        transition
 
-            return (
-              <Link
-                key={item.title}
-                href={item.href}
-                onClick={onClose}
-                className={`
-                  group
+        hover:bg-[#2B2B2B]
+        hover:text-white
+      "
+    >
+      <X size={20} />
+    </button>
 
-                  flex
-                  flex-col
-                  items-center
-                  justify-center
-
-                  rounded-3xl
-
-                  p-4
-
-                  transition-all
-                  duration-200
-
-                  ${
-                    active
-                      ? "bg-teal-50 border border-teal-200"
-                      : "bg-white border border-slate-200 hover:border-teal-200 hover:shadow-md active:scale-95"
-                  }
-                `}
-              >
-                <div
-                  className={`
-                    mb-3
-
-                    flex
-                    h-14
-                    w-14
-                    items-center
-                    justify-center
-
-                    rounded-2xl
-
-                    transition-all
-
-                    ${
-                      active
-                        ? "bg-[var(--primary)] text-white"
-                        : "bg-slate-100 text-[var(--primary)] group-hover:bg-teal-50"
-                    }
-                  `}
-                >
-                  <Icon size={28} />
-                </div>
-
-                <span
-                  className="
-                    text-center
-                    text-xs
-                    font-semibold
-                    leading-4
-                  "
-                >
-                  {item.title}
-                </span>
-
-              </Link>
-            );
-
-          })}
-
-        </div>
-
-        <div className="mt-7 border-t pt-5">
-
-  <button
-    onClick={logout}
-    className="
-      flex
-      w-full
-      items-center
-      justify-center
-      gap-3
-      rounded-2xl
-      bg-red-50
-      px-5
-      py-4
-      font-semibold
-      text-red-600
-      transition
-      hover:bg-red-100
-    "
-  >
-    <LogOut size={20} />
-
-    Logout
-
-  </button>
+  </div>
 
 </div>
+
+    {/* MENU */}
+
+<div
+  className="
+    flex-1
+    overflow-y-auto
+
+    px-5
+    py-6
+
+    space-y-8
+
+    [&::-webkit-scrollbar]:hidden
+    [-ms-overflow-style:none]
+    [scrollbar-width:none]
+"
+>
+
+  {navigation.map((group) => (
+
+    <div
+      key={group.title}
+      className="space-y-2"
+    >
+
+      <h3
+        className="
+          mb-3
+          px-2
+
+          text-[11px]
+          font-semibold
+          uppercase
+          tracking-wider
+
+          text-gray-400
+        "
+      >
+        {group.title}
+      </h3>
+
+      <div className="space-y-1">
+
+        {group.items.map((item) => {
+
+          const Icon = item.icon;
+
+          const active =
+            pathname === item.href ||
+            (
+              item.href !== "/" &&
+              pathname.startsWith(item.href)
+            );
+
+          return (
+
+            <Link
+  key={item.href}
+  href={item.href}
+  onClick={onClose}
+  className={`
+    group
+
+    relative
+
+    flex
+    items-center
+
+    gap-4
+
+    rounded-2xl
+
+    px-4
+    py-3.5
+
+    transition-all
+    duration-200
+
+    ${
+      active
+        ? "bg-[#343C67] text-white shadow-sm"
+        : "text-[#E5E7EB] hover:bg-[#2A2A2A]"
+    }
+  `}
+>
+
+              <Icon
+                size={21}
+                className={`
+  shrink-0
+  transition-colors
+
+  ${
+    active
+      ? "text-white"
+      : "text-gray-300 group-hover:text-white"
+  }
+`}
+              />
+
+              <span
+  className={`
+    flex-1
+
+    truncate
+
+    text-[15px]
+
+    ${
+      active
+        ? "font-semibold text-white"
+        : "font-medium text-[#E5E7EB]"
+    }
+  `}
+>
+                {item.title}
+              </span>
+
+            </Link>
+
+          );
+
+        })}
+
       </div>
+
+    </div>
+
+  ))}
+
+</div>
+
+    {/* FOOTER */}
+
+    <div
+      className="
+border-t
+border-white/10
+
+bg-[#1D1D1D]
+
+px-5
+py-5
+"
+    >
+
+      <button
+        onClick={logout}
+        className="
+          flex
+          w-full
+          items-center
+          justify-center
+          gap-3
+
+          rounded-3xl
+
+          bg-red-500/15
+
+          px-4
+          py-4
+
+          font-semibold
+
+          text-red-300
+
+          transition
+
+          hover:bg-red-500/20
+        "
+      >
+
+        <LogOut size={18} />
+
+        Logout
+
+      </button>
+
+    </div>
+
+  </aside>
+
+</div>
     </>
   );
 }

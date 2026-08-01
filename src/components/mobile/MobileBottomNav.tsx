@@ -6,9 +6,8 @@ import { usePathname } from "next/navigation";
 
 import {
   LayoutDashboard,
-  ShoppingCart,
-  Receipt,
-  Boxes,
+  BookOpen,
+  BarChart3,
   Menu,
 } from "lucide-react";
 
@@ -21,19 +20,14 @@ const menus = [
     icon: LayoutDashboard,
   },
   {
-    name: "POS",
-    href: "/pos",
-    icon: ShoppingCart,
+    name: "Bookkeeping",
+    href: "/bookkeeping",
+    icon: BookOpen,
   },
   {
-    name: "Sales",
-    href: "/sales",
-    icon: Receipt,
-  },
-  {
-    name: "Inventory",
-    href: "/inventory",
-    icon: Boxes,
+    name: "Reports",
+    href: "/reports",
+    icon: BarChart3,
   },
 ];
 
@@ -45,33 +39,33 @@ export function MobileBottomNav() {
   return (
     <>
       <div
-  className="
-    fixed
-    left-4
-    right-4
-    bottom-4
-    z-50
-    h-20
-    md:hidden
+        className="
+          fixed
+          bottom-0
+          left-0
+          right-0
+          z-50
 
-    rounded-full
+          md:hidden
 
-    border
-    border-white/70
+          border-t
+          border-gray-200
 
-    bg-white/85
+          bg-white
 
-    backdrop-blur-2xl
+          pb-[env(safe-area-inset-bottom)]
 
-    shadow-[0_18px_40px_rgba(15,23,42,.16)]
-
-    pb-[env(safe-area-inset-bottom)]
-  "
->
-        <div className="grid h-full grid-cols-5 items-center px-2">
-
+          shadow-[0_-4px_18px_rgba(0,0,0,.06)]
+        "
+      >
+        <div
+          className="
+            grid
+            h-[72px]
+            grid-cols-4
+          "
+        >
           {menus.map((item) => {
-
             const Icon = item.icon;
 
             const active =
@@ -81,73 +75,55 @@ export function MobileBottomNav() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`
-flex
-h-14
-flex-col
-items-center
-justify-center
-rounded-2xl
-transition-all
-duration-200
-active:scale-95
-
-${
-active
-? "bg-teal-50 text-[var(--primary)]"
-: "hover:bg-slate-100"
-}
-`}
+                className="
+                  flex
+                  flex-col
+                  items-center
+                  justify-center
+                  gap-1
+                "
               >
                 <Icon
                   size={22}
                   className={
                     active
-? "text-[var(--primary)]"
-: "text-slate-500"
+                      ? "text-[#343C67]"
+                      : "text-gray-400"
                   }
                 />
 
                 <span
-                  className={`mt-1 text-[11px] ${
+                  className={`text-[11px] ${
                     active
-                      ? "font-semibold text-[var(--primary)]"
-                      : "text-slate-500"
+                      ? "font-semibold text-[#343C67]"
+                      : "text-gray-500"
                   }`}
                 >
                   {item.name}
                 </span>
-
               </Link>
             );
-
           })}
 
           <button
             onClick={() => setOpen(true)}
             className="
-flex
-h-14
-flex-col
-items-center
-justify-center
-rounded-2xl
-transition
-hover:bg-slate-100
-active:scale-95
-"
+              flex
+              flex-col
+              items-center
+              justify-center
+              gap-1
+            "
           >
             <Menu
-              size={20}
-              className="text-slate-400"
+              size={22}
+              className="text-gray-400"
             />
 
-            <span className="mt-1 text-[11px] text-slate-500">
-              Menu
+            <span className="text-[11px] text-gray-500">
+              More
             </span>
-
           </button>
-
         </div>
       </div>
 

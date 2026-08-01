@@ -17,40 +17,55 @@ export function Logo() {
   }, [fetchBusiness]);
 
   return (
-    <div className="flex min-w-0 items-center gap-3">
+    <div className="flex min-w-0 items-center gap-4">
 
       {business?.logo_url ? (
-        <img
-          src={business.logo_url}
-          alt={business.name}
+        <div
           className="
-            h-11
-            w-11
+            flex
+            h-12
+            w-12
             shrink-0
+            items-center
+            justify-center
+
+            overflow-hidden
+
             rounded-2xl
-            border
-            border-[var(--border)]
-            object-cover
+
+            bg-[#343C67]
+
+            shadow-md
           "
-        />
+        >
+          <img
+            src={business.logo_url}
+            alt={business.name}
+            className="h-7 w-7 object-contain"
+          />
+        </div>
       ) : (
         <div
           className="
             flex
-            h-11
-            w-11
+            h-12
+            w-12
             shrink-0
             items-center
             justify-center
+
             rounded-2xl
-            bg-[var(--primary)]
-            text-lg
+
+            bg-[#343C67]
+
+            text-xl
             font-bold
             text-white
+
+            shadow-md
           "
         >
-          {business?.name?.charAt(0)?.toUpperCase() ??
-            "I"}
+          {business?.name?.charAt(0)?.toUpperCase() ?? "I"}
         </div>
       )}
 
@@ -59,10 +74,10 @@ export function Logo() {
         <h2
           className="
             truncate
-            text-lg
+            text-[18px]
             font-bold
             leading-none
-            text-[var(--text)]
+            text-white
           "
         >
           {business?.name ?? "IndoPOS"}
@@ -73,11 +88,10 @@ export function Logo() {
             mt-1
             truncate
             text-xs
-            text-[var(--text-muted)]
+            text-gray-400
           "
         >
-          {business?.business_type ??
-            "Smart Business"}
+          {business?.business_type ?? "Point of Sale"}
         </p>
 
       </div>

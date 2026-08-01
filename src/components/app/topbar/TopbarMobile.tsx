@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
   ChevronRight,
-  Circle,
+  Menu,
 } from "lucide-react";
 
 import { useBusinessStore } from "@/features/settings";
+
+import { MobileMenuSheet } from "@/components/mobile/MobileMenuSheet";
 
 export function TopbarMobile() {
   const {
@@ -15,195 +17,156 @@ export function TopbarMobile() {
     fetchBusiness,
   } = useBusinessStore();
 
+  const [open, setOpen] = useState(false);
+
   useEffect(() => {
     fetchBusiness();
   }, [fetchBusiness]);
 
-  const time = new Date().toLocaleTimeString(
-    "id-ID",
-    {
-      hour: "2-digit",
-      minute: "2-digit",
-    }
-  );
-
   return (
-    <header
-      className="
-        sticky
-        top-0
-        z-40
-        bg-gradient-to-b
-        from-slate-50
-        to-white
-        px-4
-        pt-4
-        pb-2
-        md:hidden
-      "
-    >
-      <div
+    <>
+      <header
         className="
-          relative
-          overflow-hidden
-          rounded-[28px]
-          border
-          border-slate-200
-          bg-white
-          p-5
-          shadow-xl
-          shadow-slate-200/60
+          sticky
+          top-0
+          z-40
+
+          md:hidden
+
+          bg-[#343C67]
+
+          px-4
+          pt-safe
+          pt-5
+          pb-6
+
+          shadow-lg
         "
       >
-        {/* Glow */}
+        {/* HEADER */}
 
-        <div
-          className="
-            absolute
-            -right-16
-            -top-16
-            h-48
-            w-48
-            rounded-full
-            bg-gradient-to-br
-            from-teal-400/15
-            to-cyan-400/10
-            blur-3xl
-          "
-        />
+        <div className="flex items-center justify-between">
 
-        {/* Header */}
+          <div className="flex items-center gap-4">
 
-
-        {/* Business */}
-
-        <div className="relative mt-6 flex items-center gap-4">
-
-          {business?.logo_url ? (
-
-            <img
-              src={business.logo_url}
-              alt="Logo"
-              className="
-                h-16
-                w-16
-                rounded-3xl
-                border
-                border-slate-200
-                object-cover
-                shadow-md
-              "
-            />
-
-          ) : (
-
-            <div
+            <button
+              onClick={() => setOpen(true)}
               className="
                 flex
-                h-16
-                w-16
+                h-11
+                w-11
                 items-center
                 justify-center
-                rounded-3xl
-                bg-gradient-to-br
-                from-teal-500
-                via-emerald-500
-                to-cyan-500
-                text-2xl
-                font-bold
-                text-white
-                shadow-lg
+
+                rounded-2xl
+
+                bg-white/10
+
+                transition
+
+                hover:bg-white/20
               "
             >
-              {(business?.name?.charAt(0) ?? "I").toUpperCase()}
+              <Menu
+                size={22}
+                className="text-white"
+              />
+            </button>
+
+            <div>
+
+              <h1
+                className="
+                  text-[22px]
+                  font-bold
+                  leading-none
+                  text-white
+                "
+              >
+                {business?.name ?? "IndoPOS"}
+              </h1>
+
+              <p
+                className="
+                  mt-1
+                  text-sm
+                  text-gray-200
+                "
+              >
+                {business?.business_type ?? "Point of Sale"}
+              </p>
+
             </div>
-
-          )}
-
-          <div className="min-w-0 flex-1">
-
-            <h1
-              className="
-                truncate
-                text-xl
-                font-bold
-                tracking-tight
-                text-slate-900
-              "
-            >
-              {business?.name ?? "IndoPOS"}
-            </h1>
-
-            <p
-              className="
-                mt-1
-                truncate
-                text-sm
-                text-slate-500
-              "
-            >
-              {business?.business_type ??
-                "Business"}
-            </p>
 
           </div>
 
+          {business?.logo_url ? (
+            <img
+              src={business.logo_url}
+              alt="Logo"
+              className="h-10 w-10 object-contain"
+            />
+          ) : (
+            <img
+              src="/favicon.png"
+              alt="Logo"
+              className="h-10 w-10 object-contain"
+            />
+          )}
+
         </div>
 
-        {/* Footer */}
+        {/* WORKSPACE */}
 
         <button
           className="
-            relative
-            mt-6
+            mt-5
+
             flex
             w-full
             items-center
             justify-between
+
             rounded-2xl
+
             border
-            border-slate-200
-            bg-slate-50
+            border-white/10
+
+            bg-white/10
+
             px-4
             py-3
-            transition
-            hover:bg-slate-100
+
+            backdrop-blur
+
+            transition-all
+
+            hover:bg-white/15
           "
         >
-          <div>
-
-            <p
-              className="
-                text-xs
-                uppercase
-                tracking-widest
-                text-slate-400
-              "
-            >
-              Workspace
-            </p>
-
-            <p
-              className="
-                mt-1
-                font-semibold
-                text-slate-800
-              "
-            >
-              Business Management
-            </p>
-
-          </div>
+          <p
+            className="
+              text-sm
+              font-semibold
+              text-gray-100
+            "
+          >
+            Business Management
+          </p>
 
           <ChevronRight
-            size={20}
-            className="text-slate-400"
+            size={18}
+            className="text-gray-200"
           />
 
         </button>
 
-      </div>
+      </header>
 
-    </header>
+      <MobileMenuSheet
+        open={open}
+        onClose={() => setOpen(false)}
+      />
+    </>
   );
 }

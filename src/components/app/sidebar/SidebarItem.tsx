@@ -21,18 +21,18 @@ export function SidebarItem({
 
   const active =
     pathname === href ||
-    (href !== "/" &&
-      pathname.startsWith(href));
+    (href !== "/" && pathname.startsWith(href));
 
   return (
     <Link
       href={href}
       title={collapsed ? title : undefined}
       className={`
+        group
         relative
         flex
         items-center
-        rounded-xl
+
         transition-all
         duration-200
 
@@ -40,28 +40,30 @@ export function SidebarItem({
           collapsed
             ? `
               mx-auto
-              h-11
-              w-11
+              h-12
+              w-12
               justify-center
+              rounded-2xl
             `
             : `
-              h-11
-              px-3
+              h-12
               gap-3
+              rounded-2xl
+              px-4
             `
         }
 
         ${
           active
             ? `
-              bg-[var(--primary)]
+              bg-[#2D2D2D]
               text-white
               shadow-sm
             `
             : `
-              text-slate-600
-              hover:bg-slate-100
-              hover:text-slate-900
+              text-gray-300
+              hover:bg-[#242424]
+              hover:text-white
             `
         }
       `}
@@ -72,11 +74,11 @@ export function SidebarItem({
         <span
           className="
             absolute
-            left-0
-            top-2
-            bottom-2
+            left-2
+            top-3
+            bottom-3
             w-1
-            rounded-r-full
+            rounded-full
             bg-white
           "
         />
@@ -84,44 +86,34 @@ export function SidebarItem({
 
       {/* Icon */}
 
-      <div
+      <Icon
+        size={20}
         className={`
-          flex
-          h-8
-          w-8
-          items-center
-          justify-center
-          rounded-lg
+          shrink-0
           transition-colors
+          duration-200
 
           ${
             active
-              ? "bg-white/15"
-              : "bg-transparent"
+              ? "text-white"
+              : "text-gray-300 group-hover:text-white"
           }
         `}
-      >
-        <Icon
-          size={18}
-          className={
-            active
-              ? "text-white"
-              : "text-slate-500"
-          }
-        />
-      </div>
+      />
 
       {!collapsed && (
         <span
           className={`
             flex-1
             truncate
-            text-sm
+            text-[15px]
+            transition-colors
+            duration-200
 
             ${
               active
-                ? "font-semibold"
-                : "font-medium"
+                ? "font-semibold text-white"
+                : "font-medium text-gray-300 group-hover:text-white"
             }
           `}
         >
