@@ -1,6 +1,5 @@
 import {
   CheckCircle2,
-  ShieldCheck,
   BarChart3,
   ShoppingCart,
   Package,
@@ -10,55 +9,76 @@ import {
 export function LoginHero() {
   return (
     <section
-  className="
-    bg-gradient-to-br
-    from-teal-700
-    via-teal-800
-    to-slate-900
+      className="
+        flex
+        h-full
+        flex-col
+        justify-between
 
-    p-6
-    text-white
+        bg-[#343C67]
 
-    lg:flex
-    lg:flex-col
-    lg:justify-between
-    lg:p-12
-  "
->
-      {/* TOP */}
+        p-10
+
+        text-white
+      "
+    >
+      {/* HEADER */}
 
       <div>
+
         <div
-  className="
-    flex
-    h-14
-    w-14
-    lg:h-20
-    lg:w-20
+          className="
+            flex
+            h-20
+            w-20
             items-center
             justify-center
+
             rounded-3xl
-            bg-white/15
-            backdrop-blur
+
+            bg-white/10
           "
         >
-          <ShieldCheck size={40} />
+          <img
+            src="/favicon.png"
+            alt="IndoPOS"
+            className="h-11 w-11 object-contain"
+          />
         </div>
 
-        <h1 className="mt-6 text-3xl font-bold tracking-tight lg:text-5xl">
+        <h1
+          className="
+            mt-6
+
+            text-5xl
+            font-bold
+            tracking-tight
+          "
+        >
           IndoPOS
         </h1>
 
-        <p className="mt-3 max-w-md text-sm leading-6 text-teal-100 lg:mt-5 lg:text-lg lg:leading-8">
+        <p
+          className="
+            mt-4
+            max-w-md
+
+            text-lg
+            leading-8
+
+            text-white/75
+          "
+        >
           Enterprise Point of Sale modern
           untuk Restaurant, Cafe, Coffee Shop,
           Bakery dan UMKM Indonesia.
         </p>
+
       </div>
 
-      {/* FEATURES */}
+      {/* FITUR */}
 
-      <div className="mt-8 hidden space-y-6 lg:block">
+      <div className="mt-12 space-y-6">
 
         <Feature
           icon={<ShoppingCart size={20} />}
@@ -68,7 +88,7 @@ export function LoginHero() {
 
         <Feature
           icon={<Package size={20} />}
-          title="Inventory"
+          title="Inventori"
           desc="Pantau stok barang secara real-time."
         />
 
@@ -89,38 +109,68 @@ export function LoginHero() {
       {/* FOOTER */}
 
       <div
-  className="
-    mt-8
-    hidden
-    rounded-3xl
-    border
-    border-white/10
-    bg-white/10
-    p-5
-    backdrop-blur
-    lg:block
-  "
->
+        className="
+          mt-12
+
+          rounded-3xl
+
+          border
+          border-white/10
+
+          bg-white/10
+
+          p-5
+        "
+      >
+
         <div className="flex items-center gap-3">
 
-          <CheckCircle2
-            size={24}
-            className="text-emerald-300"
-          />
+          <div
+            className="
+              flex
+              h-10
+              w-10
+              items-center
+              justify-center
+
+              rounded-xl
+
+              bg-emerald-500
+            "
+          >
+            <CheckCircle2
+              size={18}
+              className="text-white"
+            />
+          </div>
 
           <div>
 
-            <p className="font-semibold">
+            <p
+              className="
+                text-sm
+                font-semibold
+              "
+            >
               Sistem Aman
             </p>
 
-            <p className="text-sm text-teal-100">
+            <p
+              className="
+                mt-1
+
+                text-sm
+
+                text-white/70
+              "
+            >
               Data tersimpan aman di Cloud Supabase.
             </p>
 
           </div>
 
         </div>
+
       </div>
 
     </section>
@@ -139,7 +189,7 @@ function Feature({
   desc,
 }: FeatureProps) {
   return (
-    <div className="flex gap-4">
+    <div className="flex items-start gap-4">
 
       <div
         className="
@@ -149,8 +199,10 @@ function Feature({
           shrink-0
           items-center
           justify-center
+
           rounded-2xl
-          bg-white/15
+
+          bg-white/10
         "
       >
         {icon}
@@ -158,11 +210,25 @@ function Feature({
 
       <div>
 
-        <h3 className="font-semibold">
+        <h3
+          className="
+            text-lg
+            font-semibold
+          "
+        >
           {title}
         </h3>
 
-        <p className="mt-1 text-sm leading-6 text-teal-100">
+        <p
+          className="
+            mt-1
+
+            text-sm
+            leading-6
+
+            text-white/70
+          "
+        >
           {desc}
         </p>
 

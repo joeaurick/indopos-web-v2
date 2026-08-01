@@ -11,7 +11,6 @@ import {
   LockKeyhole,
   ShieldCheck,
   ArrowRight,
-  Sparkles,
 } from "lucide-react";
 
 import { toast } from "sonner";
@@ -87,117 +86,141 @@ export function LoginForm() {
   return (
     <section
       className="
-        relative
-        overflow-hidden
+  relative
+  overflow-hidden
 
-        flex
-        min-h-screen
-        items-center
-        justify-center
+  flex
+  min-h-screen
+  items-center
+  justify-center
 
-        px-6
-        py-10
+  px-5
+  py-8
 
-        lg:px-12
-      "
+  sm:px-6
+
+  lg:px-12
+"
     >
 
       {/* Background Blur */}
 
       <div
-        className="
-          absolute
-          -left-44
-          -top-44
-          h-[420px]
-          w-[420px]
-          rounded-full
-          bg-teal-400/20
-          blur-[140px]
-        "
-      />
+  className="
+    absolute
+    -left-44
+    -top-44
+    h-[420px]
+    w-[420px]
+    rounded-full
+
+    bg-[#343C67]/15
+
+    blur-[150px]
+  "
+/>
 
       <div
-        className="
-          absolute
-          -bottom-52
-          -right-44
-          h-[500px]
-          w-[500px]
-          rounded-full
-          bg-cyan-400/20
-          blur-[180px]
-        "
-      />
+  className="
+    absolute
+    -bottom-52
+    -right-44
+    h-[500px]
+    w-[500px]
+    rounded-full
+
+    bg-[#343C67]/10
+
+    blur-[190px]
+  "
+/>
 
       <div className="relative w-full max-w-md">
 
-        {/* Logo */}
+        {/* LOGO */}
 
-        <div className="mb-10 text-center">
+<div
+  className="
+    mb-8
 
-          <div
-            className="
-              mx-auto
-              flex
-              h-24
-              w-24
-              items-center
-              justify-center
-              rounded-[30px]
+    flex
+    flex-col
+    items-center
+    justify-center
 
-              bg-gradient-to-br
-              from-teal-500
-              via-emerald-500
-              to-cyan-500
+    text-center
+  "
+>
 
-              shadow-[0_25px_60px_rgba(13,148,136,.35)]
-            "
-          >
+  <div
+    className="
+      flex
+      h-20
+      w-20
+      items-center
+      justify-center
 
-            <Sparkles
-              size={38}
-              className="text-white"
-            />
+      rounded-2xl
 
-          </div>
+      bg-[#343C67]
 
-          <h1
-            className="
-              mt-7
-              text-4xl
-              font-extrabold
-              tracking-tight
-              text-slate-900
-            "
-          >
-            Selamat Datang
-          </h1>
+      shadow-[0_20px_40px_rgba(52,60,103,.25)]
+    "
+  >
 
-          <p
-            className="
-              mt-3
-              text-base
-              text-slate-500
-            "
-          >
-            Login ke Dashboard IndoPOS
-          </p>
+    <img
+      src="/favicon.png"
+      alt="IndoPOS"
+      className="h-12 w-12 object-contain"
+    />
 
-        </div>
+  </div>
+
+  <h1
+  className="
+    mt-6
+
+    text-[32px]
+      font-bold
+
+      tracking-tight
+
+      text-[#343C67]
+    "
+  >
+    Selamat Datang
+  </h1>
+
+  <p
+    className="
+      mt-3
+
+      text-[15px]
+
+      text-slate-500
+    "
+  >
+    Masuk ke Dashboard IndoPOS
+  </p>
+
+</div>
 
         {/* Glass Card */}
 
         <div
           className="
-            rounded-[34px]
-            border
-            border-white/40
-            bg-white/85
-            p-8
-            shadow-[0_25px_70px_rgba(15,23,42,.10)]
-            backdrop-blur-2xl
-          "
+  rounded-[30px]
+
+  border
+  border-slate-200
+
+  bg-white
+
+  p-6
+sm:p-8
+
+  shadow-[0_12px_30px_rgba(15,23,42,.08)]
+"
         >
 
           <form
@@ -208,7 +231,19 @@ export function LoginForm() {
 
             <div>
 
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
+              <label
+  className="
+    mb-2
+    block
+
+    text-[12px]
+    font-semibold
+    uppercase
+    tracking-[0.12em]
+
+    text-slate-500
+  "
+>
                 Email
               </label>
 
@@ -216,9 +251,9 @@ export function LoginForm() {
                 className="
                   group
                   flex
-                  h-14
+                  h-12
                   items-center
-                  gap-4
+                  gap-3
                   rounded-2xl
                   border
                   border-slate-200
@@ -226,15 +261,15 @@ export function LoginForm() {
                   px-5
                   transition-all
                   duration-300
-                  focus-within:border-teal-500
+                  focus-within:border-[#343C67]
                   focus-within:ring-4
-                  focus-within:ring-teal-100
+                  focus-within:ring-[#343C67]/10
                 "
               >
 
                 <Mail
-                  size={20}
-                  className="text-slate-400 transition group-focus-within:text-teal-600"
+                  size={18}
+                  className="text-slate-400 transition group-focus-within:text-[#343C67]"
                 />
 
                 <input
@@ -245,7 +280,7 @@ export function LoginForm() {
                       e.target.value
                     )
                   }
-                  placeholder="nama@email.com"
+                  placeholder="Masukkan email"
                   className="
                     h-full
                     flex-1
@@ -272,14 +307,14 @@ export function LoginForm() {
                 className="
                   group
                   flex
-                  h-14
+                  h-12
                   items-center
-                  gap-4
+                  gap-3
                   rounded-2xl
                   border
                   border-slate-200
                   bg-white
-                  px-5
+                  px-4
                   transition-all
                   duration-300
                   focus-within:border-teal-500
@@ -289,8 +324,8 @@ export function LoginForm() {
               >
 
                 <LockKeyhole
-                  size={20}
-                  className="text-slate-400 transition group-focus-within:text-teal-600"
+                  size={18}
+                  className="text-slate-400 transition group-focus-within:text-[#343C67]"
                 />
 
                 <input
@@ -310,7 +345,7 @@ export function LoginForm() {
                     h-full
                     flex-1
                     bg-transparent
-                    text-[15px]
+                    text-sm
                     outline-none
                     placeholder:text-slate-400
                   "
@@ -329,7 +364,7 @@ export function LoginForm() {
                     text-slate-400
                     transition
                     hover:bg-slate-100
-                    hover:text-teal-600
+                    hover:text-[#343C67]
                   "
                 >
                   {showPassword ? (
@@ -350,24 +385,24 @@ export function LoginForm() {
                 flex
                 items-center
                 gap-3
-                rounded-2xl
+                rounded-xl
                 border
-                border-emerald-100
-                bg-emerald-50
-                px-4
-                py-3
+                border-slate-200
+bg-slate-50
+                px-3
+py-2.5
               "
             >
 
               <div
                 className="
                   flex
-                  h-10
-                  w-10
+                  h-9
+w-9
                   items-center
                   justify-center
-                  rounded-xl
-                  bg-emerald-500
+                  rounded-lg
+                  bg-[#343C67]
                   text-white
                 "
               >
@@ -376,11 +411,11 @@ export function LoginForm() {
 
               <div>
 
-                <h4 className="text-sm font-semibold text-emerald-700">
+                <h4 className="text-[13px] font-semibold text-slate-700">
                   Secure Authentication
                 </h4>
 
-                <p className="text-xs text-emerald-600">
+                <p className="text-[11px] text-slate-500">
                   Login diamankan dengan Supabase Auth.
                 </p>
 
@@ -394,22 +429,29 @@ export function LoginForm() {
               type="submit"
               loading={loading}
               className="
-                group
-                h-14
-                w-full
-                rounded-2xl
-                bg-gradient-to-r
-                from-teal-600
-                via-emerald-600
-                to-cyan-600
-                text-base
-                font-semibold
-                shadow-lg
-                shadow-teal-600/25
-                transition-all
-                hover:scale-[1.02]
-                hover:shadow-xl
-              "
+  group
+
+  h-12
+  w-full
+
+  rounded-2xl
+
+  bg-[#343C67]
+
+  text-sm
+  font-semibold
+  text-white
+
+  shadow-[0_10px_30px_rgba(52,60,103,.30)]
+
+  transition-all
+  duration-200
+
+  hover:bg-[#2C345A]
+  hover:shadow-[0_16px_35px_rgba(52,60,103,.35)]
+
+  active:scale-[.98]
+"
             >
 
               <span className="flex items-center justify-center gap-2">
@@ -417,7 +459,7 @@ export function LoginForm() {
                 Login ke Dashboard
 
                 <ArrowRight
-                  size={18}
+                  size={16}
                   className="
                     transition-transform
                     duration-300
@@ -443,14 +485,14 @@ export function LoginForm() {
                   items-center
                   gap-2
                   font-semibold
-                  text-teal-600
+                  text-[#343C67]
                   transition
-                  hover:text-teal-700
+                  hover:text-[#2C345A]
                 "
               >
                 Daftar Gratis
 
-                <ArrowRight size={16} />
+                
 
               </Link>
 
@@ -458,14 +500,14 @@ export function LoginForm() {
 
 {/* FOOTER */}
 
-<div className="mt-10 text-center">
+<div className="mt-6 text-center">
 
-  <p className="text-xs text-slate-400">
+  <p className="text-[11px] text-slate-400">
     © {new Date().getFullYear()} IndoPOS
   </p>
 
   <p className="mt-1 text-xs text-slate-400">
-    Enterprise Point of Sale Platform
+    Smart Business Platform
   </p>
 
 </div>

@@ -9,24 +9,31 @@ export default function LoginPage() {
         className="
           relative
           w-full
-          max-w-6xl
-
-          lg:grid
-          lg:grid-cols-2
+          max-w-7xl
 
           overflow-hidden
 
           bg-white
 
+          lg:grid
+          lg:grid-cols-[1.1fr_.9fr]
+
           lg:rounded-[36px]
           lg:border
-          lg:border-white/50
+          lg:border-white/40
           lg:bg-white/70
-          lg:shadow-2xl
+          lg:shadow-[0_30px_80px_rgba(15,23,42,.12)]
           lg:backdrop-blur-xl
         "
       >
-        <LoginHero />
+        {/* Hero hanya Desktop */}
+
+        <div className="hidden lg:block">
+          <LoginHero />
+        </div>
+
+        {/* Form */}
+
         <LoginForm />
       </div>
     </LoginBackground>
