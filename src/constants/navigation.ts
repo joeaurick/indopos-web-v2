@@ -16,7 +16,7 @@ import {
 
 export const navigation = [
   {
-    title: "Main",
+    title: "Dashboard",
     items: [
       {
         title: "Dashboard",
@@ -24,7 +24,7 @@ export const navigation = [
         icon: LayoutDashboard,
       },
       {
-        title: "Point of Sale",
+        title: "Kasir",
         href: "/pos",
         icon: ShoppingCart,
       },
@@ -32,88 +32,36 @@ export const navigation = [
   },
 
   {
-    title: "Transaction",
+    title: "Transaksi",
     items: [
       {
-        title: "Sales",
+        title: "Penjualan",
         href: "/sales",
         icon: ReceiptText,
       },
       {
-        title: "Purchasing",
+        title: "Pembelian",
         href: "/purchasing",
         icon: ClipboardList,
       },
+    ],
+  },
+
+  {
+    title: "Keuangan",
+    items: [
       {
-        title: "Cash In",
+        title: "Kas Masuk",
         href: "/cash-in",
         icon: Wallet,
       },
       {
-        title: "Cash Out",
+        title: "Kas Keluar",
         href: "/cash-out",
         icon: Wallet,
       },
-    ],
-  },
-
-  {
-    title: "Inventory",
-    items: [
       {
-        title: "Inventory",
-        href: "/inventory",
-        icon: Boxes,
-      },
-      {
-        title: "Adjustment",
-        href: "/inventory-adjustment",
-        icon: Package,
-      },
-      {
-        title: "Stock Card",
-        href: "/stock-card",
-        icon: History,
-      },
-    ],
-  },
-
-  {
-    title: "Master Data",
-    items: [
-      {
-        title: "Products",
-        href: "/products",
-        icon: Package,
-      },
-      {
-        title: "Categories",
-        href: "/categories",
-        icon: Tags,
-      },
-      {
-        title: "Customers",
-        href: "/customers",
-        icon: Users,
-      },
-      {
-        title: "Suppliers",
-        href: "/suppliers",
-        icon: Truck,
-      },
-    ],
-  },
-
-  {
-    title: "Analytics",
-    items: [
-      {
-        title: "Finance",
-        href: "/finance",
-        icon: Wallet,
-      },
-      {
-        title: "Reports",
+        title: "Laporan",
         href: "/reports",
         icon: BarChart3,
       },
@@ -121,10 +69,57 @@ export const navigation = [
   },
 
   {
-    title: "System",
+    title: "Inventori",
     items: [
       {
-        title: "Settings",
+        title: "Inventori",
+        href: "/inventory",
+        icon: Boxes,
+      },
+      {
+        title: "Penyesuaian Stok",
+        href: "/inventory-adjustment",
+        icon: Package,
+      },
+      {
+        title: "Kartu Stok",
+        href: "/stock-card",
+        icon: History,
+      },
+    ],
+  },
+
+  {
+    title: "Data Master",
+    items: [
+      {
+        title: "Produk",
+        href: "/products",
+        icon: Package,
+      },
+      {
+        title: "Kategori",
+        href: "/categories",
+        icon: Tags,
+      },
+      {
+        title: "Pelanggan",
+        href: "/customers",
+        icon: Users,
+      },
+      {
+        title: "Supplier",
+        href: "/suppliers",
+        icon: Truck,
+      },
+    ],
+  },
+
+  {
+    title: "Pengaturan",
+    items: [
+      {
+        title: "Pengaturan",
         href: "/settings",
         icon: Settings,
       },

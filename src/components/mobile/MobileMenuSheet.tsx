@@ -101,7 +101,7 @@ useEffect(() => {
 
     bg-[#18181B]
 
-    shadow-[0_0_40px_rgba(0,0,0,.45)]
+    shadow-[0_0_60px_rgba(0,0,0,.55)]
 
       transition-transform
       duration-300
@@ -144,7 +144,10 @@ useEffect(() => {
 
     rounded-3xl
 
-    bg-[#2A2A2A]
+    bg-white
+border
+border-white/10
+shadow-lg
   "
 >
   {business?.logo_url ? (
@@ -170,7 +173,7 @@ useEffect(() => {
 
         <h2
           className="
-            text-[20px]
+            text-[22px]
             font-bold
             leading-none
 
@@ -218,7 +221,7 @@ useEffect(() => {
 
               font-medium
 
-              text-gray-300
+              text-gray-200
             "
           >
             Online
@@ -241,7 +244,7 @@ useEffect(() => {
 
         rounded-xl
 
-        text-gray-400
+        text-gray-500
 
         transition
 
@@ -289,9 +292,9 @@ useEffect(() => {
           text-[11px]
           font-semibold
           uppercase
-          tracking-wider
+          tracking-[0.22em]
 
-          text-gray-400
+          text-gray-500
         "
       >
         {group.title}
@@ -341,6 +344,23 @@ useEffect(() => {
     }
   `}
 >
+
+{active && (
+  <span
+    className="
+      absolute
+      left-0
+      top-3
+      bottom-3
+
+      w-1
+
+      rounded-r-full
+
+      bg-white
+    "
+  />
+)}
 
               <Icon
                 size={21}
@@ -401,6 +421,26 @@ px-5
 py-5
 "
     >
+
+      <div
+  className="
+    mb-5
+
+    text-center
+  "
+>
+
+  <p
+    className="
+      text-xs
+
+      text-gray-500
+    "
+  >
+    IndoPOS v2.0.0
+  </p>
+
+</div>
 
       <button
         onClick={logout}
