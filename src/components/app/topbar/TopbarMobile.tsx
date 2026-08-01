@@ -100,19 +100,22 @@ export function TopbarMobile() {
 
           </div>
 
-          {business?.logo_url ? (
-            <img
-              src={business.logo_url}
-              alt="Logo"
-              className="h-10 w-10 object-contain"
-            />
-          ) : (
-            <img
-              src="/favicon.png"
-              alt="Logo"
-              className="h-10 w-10 object-contain"
-            />
-          )}
+          <div
+  className="
+    flex
+    h-11
+    w-11
+    items-center
+    justify-center
+    rounded-xl
+  "
+>
+  <img
+    src="/favicon.png"
+    alt="IndoPOS"
+    className="h-8 w-8 object-contain"
+  />
+</div>
 
         </div>
 

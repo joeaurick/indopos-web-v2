@@ -31,6 +31,7 @@ export function MobileMenuSheet({
 }: Props) {
   const pathname = usePathname();
   const {
+    business,
   fetchBusiness,
 } = useBusinessStore();
 
@@ -132,24 +133,38 @@ useEffect(() => {
     <div className="flex items-center gap-4">
 
       <div
-        className="
-          flex
-          h-14
-          w-14
-          items-center
-          justify-center
+  className="
+    flex
+    h-20
+    w-20
+    items-center
+    justify-center
 
-          rounded-2xl
+    overflow-hidden
 
-          text-gray-300
-        "
-      >
-        <img
-          src="/favicon.png"
-          alt="IndoPOS"
-          className="h-8 w-8 object-contain"
-        />
-      </div>
+    rounded-3xl
+
+    bg-[#2A2A2A]
+  "
+>
+  {business?.logo_url ? (
+    <img
+      src={business.logo_url}
+      alt={business.name}
+      className="
+        h-full
+        w-full
+        object-cover
+      "
+    />
+  ) : (
+    <img
+      src="/favicon.png"
+      alt="IndoPOS"
+      className="h-10 w-10 object-contain"
+    />
+  )}
+</div>
 
       <div>
 
