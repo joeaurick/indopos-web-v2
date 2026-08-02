@@ -10,24 +10,24 @@ import {
 } from "lucide-react";
 
 export function LandingNavbar() {
+  const [open, setOpen] = useState(false);
 
-  const [open, setOpen] =
-    useState(false);
   return (
-    <header
-      className="
-        sticky
-        top-0
-        z-50
+    <>
+      <header
+        className="
+          sticky
+          top-0
+          z-50
 
-        border-b
-        border-slate-200/70
+          border-b
+          border-slate-200/70
 
-        bg-white/80
+          bg-white/80
 
-        backdrop-blur-xl
-      "
-    >
+          backdrop-blur-xl
+        "
+      >
       <div
         className="
           mx-auto
@@ -207,27 +207,28 @@ export function LandingNavbar() {
           <Link
             href="/register"
             className="
-              inline-flex
-              items-center
-              gap-2
+  inline-flex
+  items-center
+  gap-2
 
-              rounded-2xl
+  rounded-2xl
 
-              bg-[#343C67]
+  bg-[#343C67]
 
-              px-6
-              py-3
+  px-6
+  py-3
 
-              text-sm
-              font-semibold
+  text-sm
+  font-semibold
 
-              text-white
+  !text-white
 
-              transition-all
+  transition-all
 
-              hover:-translate-y-0.5
-              hover:shadow-lg
-            "
+  hover:bg-[#2B3257]
+  hover:-translate-y-0.5
+  hover:shadow-lg
+"
           >
             Mulai Gratis
 
@@ -257,10 +258,13 @@ export function LandingNavbar() {
           <Menu size={22} />
         </button>
       </div>
-      <LandingMobileDrawer
-  open={open}
-  onClose={() => setOpen(false)}
-/>
+      
     </header>
+
+  <LandingMobileDrawer
+    open={open}
+    onClose={() => setOpen(false)}
+  />
+</>
   );
 }
