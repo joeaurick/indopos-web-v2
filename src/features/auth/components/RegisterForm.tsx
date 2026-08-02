@@ -164,40 +164,68 @@ export function RegisterForm() {
     >
       <div className="w-full max-w-lg">
 
-        <div className="mb-8 text-center">
+        <div
+  className="
+    mb-8
 
-          <div
-            className="
-              mx-auto
-              mb-5
+    flex
+    flex-col
+    items-center
 
-              flex
-              h-16
-              w-16
-              items-center
-              justify-center
+    text-center
+  "
+>
 
-              rounded-3xl
+  <div
+    className="
+      flex
+      h-20
+      w-20
+      items-center
+      justify-center
 
-              bg-[var(--primary)]
+      rounded-2xl
 
-              text-2xl
-              font-bold
-              text-white
-            "
-          >
-            I
-          </div>
+      bg-[#343C67]
 
-          <h2 className="text-3xl font-bold">
-            Daftar Gratis
-          </h2>
+      shadow-[0_20px_40px_rgba(52,60,103,.25)]
+    "
+  >
 
-          <p className="mt-2 text-sm text-slate-500">
-            Buat akun IndoPOS Trial 14 Hari
-          </p>
+    <img
+      src="/favicon.png"
+      alt="IndoPOS"
+      className="h-12 w-12 object-contain"
+    />
 
-        </div>
+  </div>
+
+  <h2
+    className="
+      mt-6
+
+      text-[30px]
+      font-bold
+
+      text-[#343C67]
+    "
+  >
+    Daftar Gratis
+  </h2>
+
+  <p
+    className="
+      mt-2
+
+      text-[15px]
+
+      text-slate-500
+    "
+  >
+    Buat akun IndoPOS Trial 14 Hari
+  </p>
+
+</div>
 
         <form
   onSubmit={handleRegister}
@@ -218,28 +246,28 @@ export function RegisterForm() {
     className="
       group
       flex
-      h-14
+      h-12
       items-center
-      gap-4
+      gap-3
       rounded-2xl
       border
       border-slate-200
       bg-white
-      px-5
+      px-4
       transition-all
       duration-300
-      focus-within:border-teal-500
+      focus-within:border-[#343C67]
       focus-within:ring-4
-      focus-within:ring-teal-100
+      focus-within:ring-[#343C67]/10
     "
   >
 
     <User
-      size={20}
+      size={18}
       className="
         text-slate-400
         transition
-        group-focus-within:text-teal-600
+        group-focus-within:text-[#343C67]
       "
     />
 
@@ -270,7 +298,7 @@ export function RegisterForm() {
 
 <div>
 
-  <label className="mb-2 block text-sm font-semibold text-slate-700">
+  <label className="mb-2 block text-[15px] font-semibold text-slate-700">
     Nama Bisnis
   </label>
 
@@ -288,9 +316,9 @@ export function RegisterForm() {
       px-5
       transition-all
       duration-300
-      focus-within:border-teal-500
+      focus-within:border-[#343C67]
       focus-within:ring-4
-      focus-within:ring-teal-100
+      focus-within:ring-[#343C67]/10
     "
   >
 
@@ -299,7 +327,7 @@ export function RegisterForm() {
       className="
         text-slate-400
         transition
-        group-focus-within:text-teal-600
+        group-focus-within:text-[#343C67]
       "
     />
 
@@ -348,9 +376,9 @@ export function RegisterForm() {
       px-5
       transition-all
       duration-300
-      focus-within:border-teal-500
+      focus-within:border-[#343C67]
       focus-within:ring-4
-      focus-within:ring-teal-100
+      focus-within:ring-[#343C67]/10
     "
   >
 
@@ -359,7 +387,7 @@ export function RegisterForm() {
       className="
         text-slate-400
         transition
-        group-focus-within:text-teal-600
+        group-focus-within:text-[#343C67]
       "
     />
 
@@ -418,9 +446,9 @@ export function RegisterForm() {
       px-5
       transition-all
       duration-300
-      focus-within:border-teal-500
+      focus-within:border-[#343C67]
       focus-within:ring-4
-      focus-within:ring-teal-100
+      focus-within:ring-[#343C67]/10
     "
   >
 
@@ -429,7 +457,7 @@ export function RegisterForm() {
       className="
         text-slate-400
         transition
-        group-focus-within:text-teal-600
+        group-focus-within:text-[#343C67]
       "
     />
 
@@ -478,9 +506,9 @@ export function RegisterForm() {
       px-5
       transition-all
       duration-300
-      focus-within:border-teal-500
+      focus-within:border-[#343C67]
       focus-within:ring-4
-      focus-within:ring-teal-100
+      focus-within:ring-[#343C67]/10
     "
   >
 
@@ -489,7 +517,7 @@ export function RegisterForm() {
       className="
         text-slate-400
         transition
-        group-focus-within:text-teal-600
+        group-focus-within:text-[#343C67]
       "
     />
 
@@ -499,7 +527,7 @@ export function RegisterForm() {
       onChange={(e) =>
         setEmail(e.target.value)
       }
-      placeholder="email@domain.com"
+      placeholder="Masukan Email Anda"
       className="
         h-full
         flex-1
@@ -536,9 +564,9 @@ export function RegisterForm() {
       px-5
       transition-all
       duration-300
-      focus-within:border-teal-500
+      focus-within:border-[#343C67]
       focus-within:ring-4
-      focus-within:ring-teal-100
+      focus-within:ring-[#343C67]/10
     "
   >
 
@@ -547,7 +575,7 @@ export function RegisterForm() {
       className="
         text-slate-400
         transition
-        group-focus-within:text-teal-600
+        group-focus-within:text-[#343C67]
       "
     />
 
@@ -579,7 +607,7 @@ export function RegisterForm() {
         text-slate-400
         transition
         hover:bg-slate-100
-        hover:text-teal-600
+        hover:text-[#343C67]
       "
     >
       {showPassword ? (
@@ -615,9 +643,9 @@ export function RegisterForm() {
       px-5
       transition-all
       duration-300
-      focus-within:border-teal-500
+      focus-within:border-[#343C67]
       focus-within:ring-4
-      focus-within:ring-teal-100
+      focus-within:ring-[#343C67]/10
     "
   >
 
@@ -626,7 +654,7 @@ export function RegisterForm() {
       className="
         text-slate-400
         transition
-        group-focus-within:text-teal-600
+        group-focus-within:text-[#343C67]
       "
     />
 
@@ -666,7 +694,7 @@ export function RegisterForm() {
         text-slate-400
         transition
         hover:bg-slate-100
-        hover:text-teal-600
+        hover:text-[#343C67]
       "
     >
       {showConfirmPassword ? (
@@ -689,10 +717,8 @@ export function RegisterForm() {
     w-full
     rounded-2xl
 
-    bg-gradient-to-r
-    from-teal-600
-    via-emerald-600
-    to-cyan-600
+    bg-[#343C67]
+    hover:bg-[#2C345A]
 
     text-base
     font-semibold
@@ -743,7 +769,7 @@ export function RegisterForm() {
       gap-2
 
       font-semibold
-      text-teal-600
+      text-[#343C67]
 
       transition
       hover:text-teal-700
@@ -776,10 +802,10 @@ export function RegisterForm() {
 >
   <div className="space-y-6">
 
-    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100">
+    <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#343C67]/10">
       <Mail
         size={40}
-        className="text-emerald-600"
+        className="text-[#343C67]"
       />
     </div>
 
