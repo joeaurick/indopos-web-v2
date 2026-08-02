@@ -170,32 +170,34 @@ export function LandingHero() {
           >
 
             <Link
-              href="/register"
-              className="
-                inline-flex
-                items-center
-                gap-3
+  href="/register"
+  className="
+    inline-flex
+    items-center
+    gap-3
 
-                rounded-2xl
+    rounded-2xl
 
-                bg-white
+    bg-white
 
-                px-7
-                py-4
+    px-7
+    py-4
 
-                font-semibold
+    font-semibold
 
-                text-[#343C67]
+    transition
+    hover:scale-[1.02]
+  "
+>
+  <span className="text-[#343C67]">
+    Mulai Gratis
+  </span>
 
-                transition
-
-                hover:scale-[1.02]
-              "
-            >
-              Mulai Gratis
-
-              <ArrowRight size={18} />
-            </Link>
+  <ArrowRight
+    size={18}
+    className="text-[#343C67]"
+  />
+</Link>
 
             <Link
               href="/login"
