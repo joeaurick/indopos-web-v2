@@ -6,12 +6,38 @@ import {
   ShoppingBasket,
   HandCoins,
   WalletCards,
+  ChevronRight,
 } from "lucide-react";
-
-import { AppButton } from "@/components/ui";
 
 export function DashboardActions() {
   const router = useRouter();
+
+  const actions = [
+    {
+      title: "Penjualan Baru",
+      subtitle: "Mulai transaksi kasir",
+      icon: ShoppingBasket,
+      href: "/pos",
+      color: "#343C67",
+      bg: "bg-[#EEF1FF]",
+    },
+    {
+      title: "Kas Masuk",
+      subtitle: "Catat pemasukan kas",
+      icon: HandCoins,
+      href: "/cash-in",
+      color: "#16A34A",
+      bg: "bg-emerald-50",
+    },
+    {
+      title: "Kas Keluar",
+      subtitle: "Catat pengeluaran kas",
+      icon: WalletCards,
+      href: "/cash-out",
+      color: "#EA580C",
+      bg: "bg-orange-50",
+    },
+  ];
 
   return (
     <div
@@ -20,111 +46,113 @@ export function DashboardActions() {
         grid-cols-1
         gap-4
 
-        sm:grid-cols-3
-        xl:grid-cols-1
-        xl:w-[280px]
+        xl:w-[320px]
       "
     >
-      <AppButton
-        onClick={() =>
-          router.push("/pos")
-        }
-        className="
-          group
-          flex
-          h-16
-          items-center
-          justify-center
-          gap-3
-          rounded-2xl
-          bg-gradient-to-r
-          from-emerald-600
-          to-teal-600
-          text-base
-          font-semibold
-          shadow-lg
-          shadow-emerald-200/60
-          transition-all
-          duration-300
-          hover:-translate-y-1
-          hover:shadow-xl
-        "
-      >
-        <ShoppingBasket
-          size={22}
-          className="transition-transform duration-300 group-hover:scale-110"
-        />
+      {actions.map((item) => {
 
-        <span>Penjualan Baru</span>
-      </AppButton>
+        const Icon = item.icon;
 
-      <AppButton
-        onClick={() =>
-          router.push("/cash-in")
-        }
-        className="
-          group
-          flex
-          h-16
-          items-center
-          justify-center
-          gap-3
-          rounded-2xl
-          bg-gradient-to-r
-          from-cyan-500
-          to-sky-600
-          text-base
-          font-semibold
-          text-white
-          shadow-lg
-          shadow-cyan-200/60
-          transition-all
-          duration-300
-          hover:-translate-y-1
-          hover:shadow-xl
-        "
-      >
-        <HandCoins
-          size={22}
-          className="transition-transform duration-300 group-hover:scale-110"
-        />
+        return (
 
-        <span>Cash In</span>
-      </AppButton>
+          <button
+            key={item.title}
+            onClick={() => router.push(item.href)}
+            className="
+              group
 
-      <AppButton
-        onClick={() =>
-          router.push("/cash-out")
-        }
-        className="
-          group
-          flex
-          h-16
-          items-center
-          justify-center
-          gap-3
-          rounded-2xl
-          bg-gradient-to-r
-          from-rose-500
-          to-red-600
-          text-base
-          font-semibold
-          text-white
-          shadow-lg
-          shadow-red-200/60
-          transition-all
-          duration-300
-          hover:-translate-y-1
-          hover:shadow-xl
-        "
-      >
-        <WalletCards
-          size={22}
-          className="transition-transform duration-300 group-hover:scale-110"
-        />
+              flex
+              items-center
+              justify-between
 
-        <span>Cash Out</span>
-      </AppButton>
+              rounded-3xl
+
+              border
+              border-slate-200
+
+              bg-white
+
+              p-5
+
+              text-left
+
+              shadow-sm
+
+              transition-all
+              duration-200
+
+              hover:-translate-y-1
+              hover:shadow-lg
+            "
+          >
+
+            <div className="flex items-center gap-4">
+
+              <div
+                className={`
+                  flex
+                  h-12
+                  w-12
+                  items-center
+                  justify-center
+
+                  rounded-2xl
+
+                  ${item.bg}
+                `}
+              >
+
+                <Icon
+                  size={22}
+                  color={item.color}
+                />
+
+              </div>
+
+              <div>
+
+                <h3
+                  className="
+                    font-semibold
+
+                    text-slate-900
+                  "
+                >
+                  {item.title}
+                </h3>
+
+                <p
+                  className="
+                    mt-1
+
+                    text-sm
+
+                    text-slate-500
+                  "
+                >
+                  {item.subtitle}
+                </p>
+
+              </div>
+
+            </div>
+
+            <ChevronRight
+              size={18}
+              className="
+                text-slate-400
+
+                transition-transform
+
+                group-hover:translate-x-1
+              "
+            />
+
+          </button>
+
+        );
+
+      })}
     </div>
   );
 }

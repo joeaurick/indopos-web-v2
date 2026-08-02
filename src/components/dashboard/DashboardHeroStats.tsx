@@ -9,41 +9,42 @@ import {
 import { useDashboardStore } from "@/features/dashboard/store/dashboard-store";
 
 export function DashboardHeroStats() {
-  const summary =
-    useDashboardStore(
-      (state) => state.data.summary
-    );
+  const summary = useDashboardStore(
+    (state) => state.data.summary
+  );
 
   const cards = [
     {
       title: "Transaksi Hari Ini",
-      value: `${summary.todayTransactions} Transaksi`,
+      value: summary.todayTransactions.toLocaleString("id-ID"),
+      subtitle: "Hari ini",
       icon: ClipboardCheck,
-      color:
-        "from-blue-500 to-indigo-600",
+      color: "#343C67",
+      bg: "bg-[#EEF1FF]",
     },
     {
       title: "Revenue Hari Ini",
-      value: `Rp ${summary.todayIncome.toLocaleString(
-        "id-ID"
-      )}`,
+      value: `Rp ${summary.todayIncome.toLocaleString("id-ID")}`,
+      subtitle: "Pendapatan",
       icon: HandCoins,
-      color:
-        "from-emerald-500 to-teal-600",
+      color: "#16A34A",
+      bg: "bg-emerald-50",
     },
     {
       title: "Low Stock",
-      value: `${summary.lowStock} Produk`,
+      value: summary.lowStock.toLocaleString("id-ID"),
+      subtitle: "Perlu Restock",
       icon: Boxes,
-      color:
-        "from-orange-500 to-amber-600",
+      color: "#EA580C",
+      bg: "bg-orange-50",
     },
   ];
 
   return (
     <div
       className="
-        mt-8
+        mt-6
+
         grid
         grid-cols-1
         gap-5
@@ -54,76 +55,104 @@ export function DashboardHeroStats() {
       "
     >
       {cards.map((card) => {
+
         const Icon = card.icon;
 
         return (
+
           <div
             key={card.title}
             className="
-              group
-              relative
-              overflow-hidden
               rounded-3xl
+
               border
               border-slate-200
+
               bg-white
+
               p-6
+
               shadow-sm
+
               transition-all
-              duration-300
+              duration-200
+
               hover:-translate-y-1
-              hover:shadow-xl
+              hover:shadow-lg
             "
           >
-            <div
-              className={`
-                absolute
-                right-0
-                top-0
-                h-36
-                w-36
-                rounded-full
-                bg-gradient-to-br
-                ${card.color}
-                opacity-[0.08]
-                blur-3xl
-              `}
-            />
 
-            <div className="relative flex items-center gap-5">
-              <div
-                className={`
-                  flex
-                  h-16
-                  w-16
-                  items-center
-                  justify-center
-                  rounded-2xl
-                  bg-gradient-to-br
-                  ${card.color}
-                  text-white
-                  shadow-lg
-                  transition
-                  duration-300
-                  group-hover:scale-110
-                  group-hover:-rotate-6
-                `}
-              >
-                <Icon size={28} />
-              </div>
+            <div className="flex items-start justify-between">
 
               <div>
-                <p className="text-sm text-slate-500">
+
+                <p
+                  className="
+                    text-sm
+
+                    font-medium
+
+                    text-slate-500
+                  "
+                >
                   {card.title}
                 </p>
 
-                <h2 className="mt-1 text-xl font-bold text-slate-900">
+                <h2
+                  className="
+                    mt-3
+
+                    text-3xl
+
+                    font-bold
+
+                    text-slate-900
+                  "
+                >
                   {card.value}
                 </h2>
+
+                <p
+                  className="
+                    mt-2
+
+                    text-sm
+
+                    text-slate-400
+                  "
+                >
+                  {card.subtitle}
+                </p>
+
               </div>
+
+              <div
+                className={`
+                  flex
+                  h-14
+                  w-14
+                  items-center
+                  justify-center
+
+                  rounded-2xl
+
+                  ${card.bg}
+                `}
+              >
+
+                <Icon
+                  size={26}
+                  color={card.color}
+                />
+
+              </div>
+
             </div>
+
           </div>
+
         );
+
       })}
     </div>
   );

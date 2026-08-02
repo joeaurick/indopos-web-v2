@@ -26,36 +26,42 @@ export function DashboardInventoryAlert() {
   return (
     <AppCard className="p-6">
 
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between">
 
-        <div>
+  <div>
 
-          <h2 className="text-2xl font-bold">
-            Inventory Alert
-          </h2>
+    <h2 className="text-xl font-bold text-slate-900">
+      Low Stock
+    </h2>
 
-          <p className="mt-1 text-sm text-[var(--text-muted)]">
-            Produk yang harus segera di-restock.
-          </p>
+    <p className="mt-1 text-sm text-slate-500">
+      Produk yang perlu segera di-restock.
+    </p>
 
-        </div>
+  </div>
 
-        <div
-          className="
-            flex
-            h-12
-            w-12
-            items-center
-            justify-center
-            rounded-2xl
-            bg-red-100
-            text-red-600
-          "
-        >
-          <AlertTriangle size={22} />
-        </div>
+  <div
+    className="
+      flex
+      h-11
+      w-11
+      items-center
+      justify-center
 
-      </div>
+      rounded-2xl
+
+      bg-orange-50
+    "
+  >
+
+    <AlertTriangle
+      size={20}
+      className="text-orange-600"
+    />
+
+  </div>
+
+</div>
 
       <div className="space-y-5">
 
@@ -78,18 +84,20 @@ export function DashboardInventoryAlert() {
     <div
       key={item.id}
       className="
-        group
-        rounded-3xl
-        border
-        border-[var(--border)]
-        bg-[var(--card)]
-        p-5
-        transition-all
-        duration-300
-        hover:-translate-y-1
-        hover:border-slate-300
-        hover:shadow-xl
-      "
+rounded-3xl
+
+border
+border-slate-200
+
+bg-white
+
+p-5
+
+transition
+duration-200
+
+hover:shadow-md
+"
     >
 
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -99,30 +107,36 @@ export function DashboardInventoryAlert() {
         <div className="flex items-center gap-4">
 
           <div
-            className="
-              flex
-              h-14
-              w-14
-              shrink-0
-              items-center
-              justify-center
-              rounded-2xl
-              bg-gradient-to-br
-              from-red-500
-              to-orange-500
-              text-white
-              shadow-lg
-              transition-transform
-              duration-300
-              group-hover:scale-110
-            "
-          >
-            <Package size={24} />
-          </div>
+  className="
+    flex
+    h-12
+    w-12
+    shrink-0
+    items-center
+    justify-center
+
+    rounded-2xl
+
+    bg-orange-50
+  "
+>
+
+  <Package
+    size={20}
+    className="text-orange-600"
+  />
+
+</div>
 
           <div>
 
-            <h3 className="text-lg font-semibold">
+            <h3
+  className="
+    text-base
+    font-semibold
+    text-slate-900
+  "
+>
               {item.name}
             </h3>
 
@@ -138,7 +152,13 @@ export function DashboardInventoryAlert() {
 
         <div className="text-left lg:text-right">
 
-          <div className="text-3xl font-bold text-red-600">
+          <div
+  className="
+    text-2xl
+    font-bold
+    text-slate-900
+  "
+>
             {item.stock}
           </div>
 
@@ -210,7 +230,17 @@ export function DashboardInventoryAlert() {
 
         </div>
 
-        <div className="h-2 overflow-hidden rounded-full bg-slate-200">
+        <div
+  className="
+    h-2
+
+    overflow-hidden
+
+    rounded-full
+
+    bg-slate-100
+  "
+>
 
           <div
             className={`
@@ -221,10 +251,10 @@ export function DashboardInventoryAlert() {
 
               ${
                 critical
-                  ? "bg-gradient-to-r from-red-500 to-red-600"
-                  : warning
-                  ? "bg-gradient-to-r from-amber-400 to-orange-500"
-                  : "bg-gradient-to-r from-green-500 to-emerald-600"
+  ? "bg-red-500"
+  : warning
+  ? "bg-amber-500"
+  : "bg-emerald-500"
               }
             `}
             style={{
@@ -245,34 +275,71 @@ export function DashboardInventoryAlert() {
         {products.length === 0 && (
 
   <div
+  className="
+    flex
+    h-60
+    flex-col
+    items-center
+    justify-center
+
+    rounded-3xl
+
+    border
+    border-dashed
+    border-slate-200
+
+    bg-slate-50
+  "
+>
+
+  <div
     className="
+      mb-4
+
       flex
-      h-72
-      flex-col
+      h-14
+      w-14
       items-center
       justify-center
-      rounded-3xl
-      border-2
-      border-dashed
-      border-green-300
-      bg-green-50/50
+
+      rounded-2xl
+
+      bg-white
+
+      shadow-sm
     "
   >
 
     <Package
-      size={52}
-      className="mb-5 text-green-500"
+      size={24}
+      className="text-emerald-600"
     />
 
-    <h3 className="text-lg font-semibold text-green-700">
-      Semua stok masih aman
-    </h3>
-
-    <p className="mt-2 max-w-xs text-center text-sm text-green-600">
-      Tidak ada produk yang memerlukan restock saat ini.
-    </p>
-
   </div>
+
+  <h3
+    className="
+      text-base
+      font-semibold
+      text-slate-800
+    "
+  >
+    Semua stok masih aman
+  </h3>
+
+  <p
+    className="
+      mt-2
+
+      text-sm
+
+      text-slate-500
+    "
+  >
+    Belum ada produk yang perlu di-restock.
+  </p>
+
+</div>
 
 )}
 

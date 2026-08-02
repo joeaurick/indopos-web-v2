@@ -20,40 +20,40 @@ function getActivity(type: string) {
       return {
         title: "Penjualan",
         icon: ClipboardCheck,
-        color:
-          "from-emerald-500 to-emerald-600",
+        color: "#16A34A",
+        bg: "bg-emerald-50",
       };
 
     case "PURCHASE":
       return {
-        title: "Purchase",
+        title: "Purchasing",
         icon: ShoppingBasket,
-        color:
-          "from-blue-500 to-indigo-600",
+        color: "#343C67",
+        bg: "bg-[#EEF1FF]",
       };
 
     case "EXPENSE":
       return {
         title: "Cash Out",
         icon: WalletCards,
-        color:
-          "from-rose-500 to-red-600",
+        color: "#DC2626",
+        bg: "bg-red-50",
       };
 
     case "CASH_IN":
       return {
         title: "Cash In",
         icon: HandCoins,
-        color:
-          "from-cyan-500 to-sky-600",
+        color: "#0891B2",
+        bg: "bg-cyan-50",
       };
 
     default:
       return {
-        title: "Activity",
+        title: "Aktivitas",
         icon: RefreshCcw,
-        color:
-          "from-slate-500 to-slate-700",
+        color: "#64748B",
+        bg: "bg-slate-100",
       };
   }
 }
@@ -87,25 +87,22 @@ export function DashboardActivity() {
   return (
     <AppCard className="rounded-3xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
 
-  <div className="mb-8 flex items-center justify-between">
+  <div className="mb-6 flex items-center justify-between">
 
   <div>
 
-    <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-      Activity Timeline
+    <h2 className="text-xl font-bold text-slate-900">
+      Aktivitas Terbaru
     </h2>
 
-    <p className="mt-2 text-sm text-slate-500">
-      Aktivitas terbaru seluruh sistem.
+    <p className="mt-1 text-sm text-slate-500">
+      5 aktivitas terakhir bisnis Anda.
     </p>
 
   </div>
 
   <button
     className="
-      flex
-      items-center
-      gap-2
       rounded-xl
       border
       border-slate-200
@@ -114,12 +111,10 @@ export function DashboardActivity() {
       text-sm
       font-medium
       transition
-      hover:bg-slate-100
+      hover:bg-slate-50
     "
   >
-    View All
-
-    <ArrowRight size={16} />
+    Lihat Semua
   </button>
 
 </div>
@@ -127,50 +122,77 @@ export function DashboardActivity() {
   {activities.length === 0 ? (
 
     <div
-      className="
-        flex
-        h-72
-        flex-col
-        items-center
-        justify-center
-        rounded-3xl
-        border-2
-        border-dashed
-        border-slate-200
-      "
-    >
+  className="
+    flex
+    h-60
+    flex-col
+    items-center
+    justify-center
 
-      <ClipboardCheck
-        size={50}
-        className="mb-4 text-slate-300"
-      />
+    rounded-3xl
 
-      <h3 className="font-semibold text-slate-700">
-        Belum ada aktivitas
-      </h3>
+    border
+    border-dashed
+    border-slate-200
 
-      <p className="mt-2 text-sm text-slate-500">
-        Timeline aktivitas akan muncul di sini.
-      </p>
+    bg-slate-50/50
+  "
+>
 
-    </div>
+  <div
+    className="
+      mb-4
+
+      flex
+      h-14
+      w-14
+      items-center
+      justify-center
+
+      rounded-2xl
+
+      bg-white
+
+      shadow-sm
+    "
+  >
+
+    <ClipboardCheck
+      size={24}
+      className="text-slate-400"
+    />
+
+  </div>
+
+  <h3
+    className="
+      text-base
+      font-semibold
+      text-slate-800
+    "
+  >
+    Belum ada aktivitas
+  </h3>
+
+  <p
+    className="
+      mt-2
+
+      text-sm
+
+      text-slate-500
+    "
+  >
+    Aktivitas terbaru akan muncul di sini.
+  </p>
+
+</div>
 
   ) : (
 
-    <div className="relative">
+    <div>
 
-      <div
-        className="
-          absolute
-          left-6
-          top-2
-          bottom-2
-          w-px
-          bg-slate-200
-        "
-      />
-
-      <div className="space-y-5">
+  <div className="space-y-4">
 
         {activities.map((item) => {
 
@@ -184,48 +206,49 @@ export function DashboardActivity() {
             <div
   key={item.id}
   className="
-    group
-    relative
-    overflow-hidden
+    flex
+    items-start
+    gap-4
+
     rounded-3xl
+
     border
     border-slate-200
+
     bg-white
-    p-5
 
-    transition-all
-    duration-300
+    p-6
 
-    hover:-translate-y-1
-    hover:border-teal-300
-    hover:shadow-2xl
+    transition
+    duration-200
+
+    hover:shadow-md
   "
 >
 
               {/* Timeline Icon */}
 
               <div
-                className={`
-                  relative
-                  z-10
-                  flex
-                  h-12
-                  w-12
-                  shrink-0
-                  items-center
-                  justify-center
-                  rounded-2xl
-                  bg-gradient-to-br
-                  ${activity.color}
-                  text-white
-                  shadow-lg
-                  transition-transform
-                  duration-300
-                  group-hover:scale-105
-                `}
-              >
-                <Icon size={22} />
-              </div>
+  className={`
+    flex
+    h-11
+    w-11
+    shrink-0
+    items-center
+    justify-center
+
+    rounded-2xl
+
+    ${activity.bg}
+  `}
+>
+
+  <Icon
+    size={20}
+    color={activity.color}
+  />
+
+</div>
 
               {/* Content */}
 
@@ -237,77 +260,80 @@ export function DashboardActivity() {
 
                     <div className="flex flex-wrap items-center gap-2">
 
-                      <h3 className="font-semibold text-slate-900">
+                      <h3
+  className="
+    text-base
+    font-semibold
+    text-slate-900
+  "
+>
                         {activity.title}
                       </h3>
                       <div className="mt-2">
+
   <span
     className={`
       inline-flex
+
       rounded-full
+
       px-3
       py-1
+
       text-[11px]
       font-semibold
-      uppercase
 
       ${
         item.reference_type === "SALE"
           ? "bg-emerald-100 text-emerald-700"
-          : item.reference_type ===
-            "EXPENSE"
+          : item.reference_type === "PURCHASE"
+          ? "bg-[#EEF1FF] text-[#343C67]"
+          : item.reference_type === "EXPENSE"
           ? "bg-red-100 text-red-700"
-          : item.reference_type ===
-            "CASH_IN"
+          : item.reference_type === "CASH_IN"
           ? "bg-cyan-100 text-cyan-700"
           : "bg-slate-100 text-slate-700"
       }
     `}
   >
-    {item.reference_type}
+    {activity.title}
   </span>
+
 </div>
 
-                      <span
-                        className="
-                          rounded-full
-                          bg-slate-100
-                          px-2.5
-                          py-1
-                          text-[11px]
-                          font-medium
-                          text-slate-600
-                        "
-                      >
-                        {item.reference_type}
-                      </span>
+                    
 
                     </div>
 
-                    <p className="mt-2 break-words text-sm text-slate-500">
+                    <p
+  className="
+    mt-3
+
+    break-words
+
+    text-sm
+    leading-6
+
+    text-slate-500
+  "
+>
                       {item.note || "-"}
                     </p>
 
                   </div>
-
-                  <div
-                    className="
-                      self-start
-                      rounded-full
-                      bg-slate-100
-                      px-3
-                      py-1.5
-                      text-xs
-                      font-medium
-                      text-slate-600
-                      whitespace-nowrap
-                    "
-                  >
-                    {relativeTime(item.created_at)}
-                  </div>
-
+                
                 </div>
+<p
+  className="
+    mt-2
 
+    text-xs
+
+    text-slate-400
+  "
+>
+  {relativeTime(item.created_at)}
+</p>
               </div>
 
             </div>
