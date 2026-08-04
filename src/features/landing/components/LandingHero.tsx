@@ -69,168 +69,277 @@ export function LandingHero() {
       />
 
       <div
-        className="
-          relative
+  className="
+    relative
 
-          mx-auto
+    mx-auto
 
-          grid
-          max-w-7xl
+    grid
+    max-w-7xl
 
-          items-center
-          gap-20
+    items-center
+    gap-16
 
-          px-6
-          py-24
+    px-6
 
-          lg:grid-cols-2
-          lg:px-8
-        "
-      >
+    pt-24
+    pb-36
 
-        {/* LEFT */}
+    lg:grid-cols-2
+    lg:px-8
+    lg:pt-32
+    lg:pb-44
+  "
+>
 
         <div>
 
-          <div
-            className="
-              inline-flex
-              items-center
-              gap-2
+  {/* Badge */}
 
-              rounded-full
+  <div
+    className="
+      inline-flex
+      items-center
+      gap-2
 
-              border
-              border-white/10
+      rounded-full
 
-              bg-white/10
+      border
+      border-white/15
 
-              px-4
-              py-2
+      bg-white/10
 
-              text-sm
+      px-5
+      py-2.5
 
-              backdrop-blur
-            "
-          >
-            <ShieldCheck size={16} />
+      text-sm
+      font-medium
 
-            Enterprise Point of Sale
-          </div>
+      backdrop-blur-xl
+    "
+  >
+    <ShieldCheck size={16} />
 
-          <h1
-            className="
-              mt-8
+    Smart Business Platform
+  </div>
 
-              text-5xl
+  {/* Heading */}
 
-              font-black
-              leading-tight
+  <h1
+    className="
+      mt-8
 
-              lg:text-7xl
-            "
-          >
-            Kelola
-            <br />
+      max-w-2xl
 
-            Bisnis Anda
-            <br />
+      text-4xl
+      font-black
+      leading-tight
 
-            Lebih Mudah.
-          </h1>
+      tracking-tight
 
-          <p
-            className="
-              mt-8
+      sm:text-5xl
+      lg:text-7xl
+    "
+  >
+    Kelola Bisnis
+    <br />
 
-              max-w-xl
+    <span className="text-cyan-300">
+      Lebih Cepat.
+    </span>
 
-              text-lg
-              leading-8
+    <br />
 
-              text-indigo-100
-            "
-          >
-            IndoPOS membantu Anda mengelola
-            penjualan, inventory, pelanggan,
-            supplier, laporan hingga multi outlet
-            dalam satu platform modern.
-          </p>
+    Lebih Cerdas.
+  </h1>
 
-          {/* BUTTON */}
+  {/* Description */}
 
-          <div
-            className="
-              mt-10
+  <p
+    className="
+      mt-8
 
-              flex
-              flex-wrap
-              gap-4
-            "
-          >
+      max-w-xl
 
-            <Link
-  href="/register"
+      text-lg
+      leading-8
+
+      text-indigo-100
+    "
+  >
+    IndoPOS membantu Anda mengelola kasir,
+    inventory, pelanggan, pembukuan,
+    laporan bisnis hingga multi outlet
+    dalam satu platform cloud yang modern.
+  </p>
+
+  {/* Social Proof */}
+
+  <div
+    className="
+      mt-12
+
+      flex
+      flex-wrap
+      items-center
+      gap-10
+    "
+  >
+    <div>
+
+      <h3 className="text-3xl font-black">
+        500+
+      </h3>
+
+      <p className="text-sm text-indigo-200">
+        Merchant Aktif
+      </p>
+
+    </div>
+
+    <div>
+
+      <h3 className="text-3xl font-black">
+        99.9%
+      </h3>
+
+      <p className="text-sm text-indigo-200">
+        Cloud Uptime
+      </p>
+
+    </div>
+
+    <div>
+
+      <h3 className="text-3xl font-black">
+        24/7
+      </h3>
+
+      <p className="text-sm text-indigo-200">
+        Customer Support
+      </p>
+
+    </div>
+
+  </div>
+
+          {/* CTA */}
+
+<div
   className="
-    inline-flex
+    mt-14
+
+    flex
+    flex-wrap
+
     items-center
-    gap-3
 
-    rounded-2xl
-
-    bg-white
-
-    px-7
-    py-4
-
-    font-semibold
-
-    transition
-    hover:scale-[1.02]
+    gap-4
   "
 >
-  <span className="text-[#343C67]">
+
+  {/* PRIMARY */}
+
+  <Link
+    href="/register"
+    className="
+      inline-flex
+      items-center
+      gap-3
+
+      rounded-2xl
+
+      bg-white
+
+      px-8
+      py-4
+
+      font-semibold
+
+      text-[#343C67]
+
+      shadow-xl
+
+      transition-all
+      duration-300
+
+      hover:-translate-y-1
+      hover:shadow-2xl
+    "
+  >
     Mulai Gratis
-  </span>
 
-  <ArrowRight
-    size={18}
-    className="text-[#343C67]"
-  />
-</Link>
+    <ArrowRight size={18} />
+  </Link>
 
-            <Link
-              href="/login"
-              className="
-                inline-flex
-                items-center
-                gap-3
+  {/* SECONDARY */}
 
-                rounded-2xl
+  <Link
+    href="#demo"
+    className="
+      inline-flex
+      items-center
+      gap-3
 
-                border
-                border-white/20
+      rounded-2xl
 
-                bg-white/10
+      border
+      border-white/20
 
-                px-7
-                py-4
+      bg-white/10
 
-                font-semibold
+      px-8
+      py-4
 
-                backdrop-blur
+      font-semibold
 
-                transition
+      text-white
 
-                hover:bg-white/20
-              "
-            >
-              <Play size={18} />
+      backdrop-blur-xl
 
-              Login
-            </Link>
+      transition-all
+      duration-300
 
-          </div>
+      hover:bg-white/20
+    "
+  >
+    <Play size={18} />
+
+    Lihat Demo
+  </Link>
+
+</div>
+
+{/* TRUST */}
+
+<div
+  className="
+    mt-14
+
+    flex
+    flex-wrap
+
+    items-center
+
+    gap-5
+  "
+>
+
+  <div className="flex text-yellow-400 text-lg">
+    ★★★★★
+  </div>
+
+  <p
+    className="
+      text-sm
+
+      text-indigo-100
+    "
+  >
+    Dipercaya oleh merchant di berbagai sektor bisnis.
+  </p>
+
+</div>
 
         </div>
 
@@ -257,7 +366,7 @@ export function LandingHero() {
     right-4
 top-6
 
-    w-[650px]
+    w-[720px]
 
     rotate-2
 
@@ -350,7 +459,7 @@ top-6
     bottom-6
 left-0
 
-    w-[250px]
+    w-[280px]
 
     -rotate-6
 
@@ -418,161 +527,28 @@ left-0
 
 </div>
 
-          {/* FLOATING */}
-
-          <div
-            className="
-              absolute
-
-              left-56
-              top-12
-
-              flex
-              items-center
-              gap-3
-
-              rounded-2xl
-
-              bg-white
-
-              px-5
-              py-4
-
-              text-slate-900
-
-              shadow-xl
-            "
-          >
-
-            <Monitor
-              className="text-[#343C67]"
-              size={22}
-            />
-
-            <div>
-
-              <p className="text-xs text-slate-500">
-                Dashboard
-              </p>
-
-              <h4 className="font-bold">
-                Business Management
-              </h4>
-
-            </div>
-
-          </div>
-
-          <div
-            className="
-              absolute
-
-              right-8
-              bottom-32
-
-              flex
-              items-center
-              gap-3
-
-              rounded-2xl
-
-              bg-white
-
-              px-5
-              py-4
-
-              text-slate-900
-
-              shadow-xl
-            "
-          >
-
-            <Smartphone
-              className="text-emerald-600"
-              size={22}
-            />
-
-            <div>
-
-              <p className="text-xs text-slate-500">
-                Flutter
-              </p>
-
-              <h4 className="font-bold">
-                POS Mobile
-              </h4>
-
-            </div>
-
-          </div>
-
-          <div
-            className="
-              absolute
-
-              left-64
-              bottom-12
-
-              flex
-              items-center
-              gap-3
-
-              rounded-2xl
-
-              bg-white
-
-              px-5
-              py-4
-
-              text-slate-900
-
-              shadow-xl
-            "
-          >
-
-            <BarChart3
-              className="text-blue-600"
-              size={22}
-            />
-
-            <div>
-
-              <p className="text-xs text-slate-500">
-                Analytics
-              </p>
-
-              <h4 className="font-bold">
-                Real-time Report
-              </h4>
-
-            </div>
-
-          </div>
-
-          {/* FLOAT CARD 1 */}
+         {/* FLOAT CARD */}
 
 <div
   className="
     absolute
 
-    left-2
-top-20
+    left-8
+    top-16
 
     rounded-3xl
 
-    border
-    border-white/20
-
-    bg-white/90
+    bg-white
 
     px-6
     py-5
 
-    backdrop-blur-xl
-
     shadow-2xl
 
-    animate-[float_6s_ease-in-out_infinite]
+    transition-all
+    duration-300
+
+    hover:-translate-y-1
   "
 >
 
@@ -581,8 +557,8 @@ top-20
     <div
       className="
         flex
-        h-12
-        w-12
+        h-14
+        w-14
         items-center
         justify-center
 
@@ -593,262 +569,96 @@ top-20
     >
 
       <TrendingUp
+        size={24}
         className="text-emerald-600"
-        size={22}
       />
 
     </div>
 
     <div>
 
-      <h4
+      <h3
         className="
-          text-2xl
-          font-black
-          text-slate-900
-        "
-      >
-        2.450
-      </h4>
-
-      <p
-        className="
-          text-sm
-          text-slate-500
-        "
-      >
-        Transaksi Hari Ini
-      </p>
-
-    </div>
-
-  </div>
-
-</div>
-
-{/* FLOAT CARD 2 */}
-
-<div
-  className="
-    absolute
-
-    right-6
-top-28
-
-    rounded-3xl
-
-    border
-    border-white/20
-
-    bg-white/90
-
-    px-6
-    py-5
-
-    backdrop-blur-xl
-
-    shadow-2xl
-
-    animate-[float_7s_ease-in-out_infinite]
-  "
->
-
-  <div className="flex items-center gap-4">
-
-    <div
-      className="
-        flex
-        h-12
-        w-12
-        items-center
-        justify-center
-
-        rounded-2xl
-
-        bg-sky-100
-      "
-    >
-
-      <Cloud
-        className="text-sky-600"
-        size={22}
-      />
-
-    </div>
-
-    <div>
-
-      <h4
-        className="
-          text-2xl
-          font-black
-          text-slate-900
-        "
-      >
-        99.9%
-      </h4>
-
-      <p
-        className="
-          text-sm
-          text-slate-500
-        "
-      >
-        Cloud Sync
-      </p>
-
-    </div>
-
-  </div>
-
-</div>
-
-{/* FLOAT CARD 3 */}
-
-<div
-  className="
-    absolute
-
-    left-14
-bottom-28
-
-    rounded-3xl
-
-    border
-    border-white/20
-
-    bg-white/90
-
-    px-6
-    py-5
-
-    backdrop-blur-xl
-
-    shadow-2xl
-
-    animate-[float_5s_ease-in-out_infinite]
-  "
->
-
-  <div className="flex items-center gap-4">
-
-    <div
-      className="
-        flex
-        h-12
-        w-12
-        items-center
-        justify-center
-
-        rounded-2xl
-
-        bg-violet-100
-      "
-    >
-
-      <Store
-        className="text-violet-600"
-        size={22}
-      />
-
-    </div>
-
-    <div>
-
-      <h4
-        className="
-          text-2xl
-          font-black
-          text-slate-900
-        "
-      >
-        24
-      </h4>
-
-      <p
-        className="
-          text-sm
-          text-slate-500
-        "
-      >
-        Outlet Aktif
-      </p>
-
-    </div>
-
-  </div>
-
-</div>
-
-{/* FLOAT CARD 4 */}
-
-<div
-  className="
-    absolute
-
-    right-8
-bottom-12
-
-    rounded-3xl
-
-    border
-    border-white/20
-
-    bg-white/90
-
-    px-6
-    py-5
-
-    backdrop-blur-xl
-
-    shadow-2xl
-
-    animate-[float_8s_ease-in-out_infinite]
-  "
->
-
-  <div className="flex items-center gap-4">
-
-    <div
-      className="
-        flex
-        h-12
-        w-12
-        items-center
-        justify-center
-
-        rounded-2xl
-
-        bg-orange-100
-      "
-    >
-
-      <Wallet
-        className="text-orange-600"
-        size={22}
-      />
-
-    </div>
-
-    <div>
-
-      <h4
-        className="
-          text-2xl
+          text-3xl
           font-black
           text-slate-900
         "
       >
         Rp18.5M
-      </h4>
+      </h3>
 
-      <p
+      <p className="text-sm text-slate-500">
+        Revenue Bulan Ini
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+{/* FLOAT CARD */}
+
+<div
+  className="
+    absolute
+
+    right-4
+    bottom-20
+
+    rounded-3xl
+
+    bg-white
+
+    px-6
+    py-5
+
+    shadow-2xl
+
+    transition-all
+    duration-300
+
+    hover:-translate-y-1
+  "
+>
+
+  <div className="flex items-center gap-4">
+
+    <div
+      className="
+        flex
+        h-14
+        w-14
+        items-center
+        justify-center
+
+        rounded-2xl
+
+        bg-blue-100
+      "
+    >
+
+      <Wallet
+        size={24}
+        className="text-blue-600"
+      />
+
+    </div>
+
+    <div>
+
+      <h3
         className="
-          text-sm
-          text-slate-500
+          text-3xl
+          font-black
+          text-slate-900
         "
       >
-        Revenue
+        2.450
+      </h3>
+
+      <p className="text-sm text-slate-500">
+        Transaksi Hari Ini
       </p>
 
     </div>

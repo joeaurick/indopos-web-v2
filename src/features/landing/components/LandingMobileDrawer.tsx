@@ -1,43 +1,15 @@
 "use client";
 
-import Link from "next/link";
-
-import {
-  X,
-  ArrowRight,
-  LayoutDashboard,
-  Boxes,
-  BadgeDollarSign,
-  CircleHelp,
-} from "lucide-react";
+import { DrawerAccordion } from "./drawer/DrawerAccordion";
+import { DrawerFooter } from "./drawer/DrawerFooter";
+import { DrawerHeader } from "./drawer/DrawerHeader";
+import { DrawerItem } from "./drawer/DrawerItem";
+import { drawerMenus } from "./drawer/drawer.data";
 
 type Props = {
   open: boolean;
   onClose: () => void;
 };
-
-const menus = [
-  {
-    title: "Features",
-    href: "#features",
-    icon: Boxes,
-  },
-  {
-    title: "Showcase",
-    href: "#showcase",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Pricing",
-    href: "#pricing",
-    icon: BadgeDollarSign,
-  },
-  {
-    title: "FAQ",
-    href: "#faq",
-    icon: CircleHelp,
-  },
-];
 
 export function LandingMobileDrawer({
   open,
@@ -45,7 +17,7 @@ export function LandingMobileDrawer({
 }: Props) {
   return (
     <>
-      {/* Overlay */}
+      {/* BACKDROP */}
 
       <div
         onClick={onClose}
@@ -55,9 +27,9 @@ export function LandingMobileDrawer({
           z-40
 
           bg-black/40
-          backdrop-blur-sm
+          backdrop-blur-md
 
-          transition-opacity
+          transition-all
           duration-300
 
           ${
@@ -68,29 +40,28 @@ export function LandingMobileDrawer({
         `}
       />
 
-      {/* Drawer */}
+      {/* DRAWER */}
 
       <aside
         className={`
           fixed
-
           left-0
           top-0
-
-          z-[60]
+          z-50
 
           flex
-          h-full
-          w-[290px]
-max-w-[82vw]
+          h-screen
+          w-[340px]
+          max-w-[88vw]
           flex-col
 
           bg-white
 
-          shadow-2xl
+          shadow-[0_20px_60px_rgba(0,0,0,.18)]
 
           transition-transform
           duration-300
+          ease-out
 
           ${
             open
@@ -99,198 +70,51 @@ max-w-[82vw]
           }
         `}
       >
-
         {/* HEADER */}
 
-        <div
-          className="
-            flex
-            items-center
-            justify-between
-
-            border-b
-
-            p-6
-          "
-        >
-
-          <Link
-            href="/"
-            onClick={onClose}
-            className="flex items-center gap-4"
-          >
-
-            <div
-              className="
-                flex
-                h-12
-                w-12
-                items-center
-                justify-center
-
-                rounded-2xl
-
-                bg-[#343C67]
-              "
-            >
-
-              <img
-                src="/favicon.png"
-                alt="IndoPOS"
-                className="h-7 w-7"
-              />
-
-            </div>
-
-            <div>
-
-              <h2 className="font-bold text-[#343C67]">
-                IndoPOS
-              </h2>
-
-              <p className="text-xs text-slate-500">
-                Smart Business Platform
-              </p>
-
-            </div>
-
-          </Link>
-
-          <button
-            onClick={onClose}
-            className="
-              rounded-xl
-
-              p-2
-
-              transition
-
-              hover:bg-slate-100
-            "
-          >
-
-            <X size={20} />
-
-          </button>
-
-        </div>
+        <DrawerHeader onClose={onClose} />
 
         {/* MENU */}
 
         <div
           className="
             flex-1
+            overflow-y-auto
 
-            p-5
+            px-5
+            py-5
+
+            space-y-2
           "
         >
-
-          <div className="space-y-2">
-
-            {menus.map((item) => {
-
-              const Icon = item.icon;
-
+          {drawerMenus.map((item) => {
+            if (item.children) {
               return (
-
-                <a
+                <DrawerAccordion
                   key={item.title}
-                  href={item.href}
-                  onClick={onClose}
-                  className="
-                    flex
-                    items-center
-                    gap-4
-
-                    rounded-2xl
-
-                    px-4
-                    py-4
-
-                    transition
-
-                    hover:bg-slate-100
-                  "
-                >
-
-                  <Icon
-                    size={20}
-                    className="text-[#343C67]"
-                  />
-
-                  <span className="font-medium">
-                    {item.title}
-                  </span>
-
-                </a>
-
+                  title={item.title}
+                  icon={item.icon}
+                  children={item.children}
+                  onNavigate={onClose}
+                />
               );
+            }
 
-            })}
-
-          </div>
-
+            return (
+              <DrawerItem
+                key={item.title}
+                title={item.title}
+                href={item.href ?? "#"}
+                icon={item.icon}
+                onClick={onClose}
+              />
+            );
+          })}
         </div>
 
         {/* FOOTER */}
 
-        <div
-          className="
-            border-t
-
-            p-5
-
-            space-y-3
-          "
-        >
-
-          <Link
-            href="/login"
-            onClick={onClose}
-            className="
-              flex
-              h-12
-              items-center
-              justify-center
-
-              rounded-2xl
-
-              border
-
-              font-semibold
-            "
-          >
-            Login
-          </Link>
-
-          <Link
-            href="/register"
-            onClick={onClose}
-            className="
-              flex
-              h-12
-              items-center
-              justify-center
-              gap-2
-
-              rounded-2xl
-
-              bg-[#343C67]
-
-              font-semibold
-
-              text-white
-            "
-          >
-
-            Mulai Gratis
-
-            <ArrowRight size={18} />
-
-          </Link>
-
-        </div>
-
+        <DrawerFooter onClose={onClose} />
       </aside>
     </>
   );

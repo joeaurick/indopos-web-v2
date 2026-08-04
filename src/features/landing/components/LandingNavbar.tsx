@@ -15,19 +15,21 @@ export function LandingNavbar() {
   return (
     <>
       <header
-        className="
-          sticky
-          top-0
-          z-50
+  className="
+    sticky
+    top-0
+    z-50
 
-          border-b
-          border-slate-200/70
+    border-b
+    border-slate-200/70
 
-          bg-white/80
+    bg-white/90
 
-          backdrop-blur-xl
-        "
-      >
+    shadow-sm
+
+    backdrop-blur-2xl
+  "
+>
       <div
         className="
           mx-auto
@@ -49,22 +51,26 @@ export function LandingNavbar() {
           className="flex items-center gap-4"
         >
           <div
-            className="
-              flex
-              h-12
-              w-12
-              items-center
-              justify-center
+  className="
+    flex
+    h-14
+    w-14
+    items-center
+    justify-center
 
-              rounded-2xl
+    rounded-2xl
 
-              bg-[#343C67]
-            "
-          >
+    bg-gradient-to-br
+    from-[#343C67]
+    to-[#4F5D95]
+
+    shadow-lg
+  "
+>
             <img
               src="/favicon.png"
               alt="IndoPOS"
-              className="h-7 w-7"
+              className="h-8 w-8"
             />
           </div>
 
@@ -72,7 +78,7 @@ export function LandingNavbar() {
 
             <h2
               className="
-                text-xl
+                text-2xl
                 font-bold
 
                 text-[#343C67]
@@ -83,7 +89,7 @@ export function LandingNavbar() {
 
             <p
               className="
-                text-xs
+                text-[13px]
 
                 text-slate-500
               "
@@ -240,23 +246,36 @@ export function LandingNavbar() {
 
         <button
   onClick={() => setOpen(true)}
-          className="
-            flex
-            h-12
-            w-12
-            items-center
-            justify-center
+  className="
+    flex
+    h-12
+    w-12
+    items-center
+    justify-center
 
-            rounded-2xl
+    rounded-2xl
 
-            border
-            border-slate-200
+    border
+    border-slate-200
 
-            lg:hidden
-          "
-        >
-          <Menu size={22} />
-        </button>
+    bg-white
+
+    shadow-sm
+
+    transition-all
+    duration-300
+
+    hover:shadow-lg
+    hover:bg-slate-50
+
+    lg:hidden
+  "
+>
+  <Menu
+    size={24}
+    className="text-[#343C67]"
+  />
+</button>
       </div>
       
     </header>

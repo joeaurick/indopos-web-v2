@@ -1,69 +1,91 @@
 "use client";
 
 import {
-  ShoppingCart,
-  Boxes,
-  BarChart3,
-  Users,
-  Store,
-  Smartphone,
+  ArrowRight,
+  Check,
 } from "lucide-react";
 
 const features = [
   {
     title: "Kasir Modern",
-    desc: "Transaksi cepat dengan tampilan POS Flutter yang modern dan mudah digunakan.",
-    icon: ShoppingCart,
-    color: "bg-[#EEF1FF]",
-    iconColor: "text-[#343C67]",
+    description:
+      "Transaksi lebih cepat dengan POS modern berbasis Flutter yang responsif dan mudah digunakan.",
+
+    image: "/landing/dashboard.png",
+
+    color: "from-indigo-500 to-indigo-700",
+
+    bullets: [
+      "Barcode Scanner",
+      "Split Payment",
+      "Cetak Struk",
+    ],
   },
+
   {
-    title: "Inventory Real-time",
-    desc: "Stok otomatis berkurang setiap transaksi tanpa input manual.",
-    icon: Boxes,
-    color: "bg-orange-50",
-    iconColor: "text-orange-600",
+    title: "Inventory Realtime",
+    description:
+      "Pantau stok setiap saat secara realtime tanpa pencatatan manual.",
+
+    image: "/landing/dashboard.png",
+
+    color: "from-orange-500 to-orange-600",
+
+    bullets: [
+      "Stock Opname",
+      "Transfer Gudang",
+      "Multi Gudang",
+    ],
   },
+
   {
     title: "Dashboard Analytics",
-    desc: "Pantau omzet, profit, transaksi dan performa bisnis secara realtime.",
-    icon: BarChart3,
-    color: "bg-emerald-50",
-    iconColor: "text-emerald-600",
+    description:
+      "Laporan penjualan, profit dan performa bisnis dalam satu dashboard cloud.",
+
+    image: "/landing/dashboard.png",
+
+    color: "from-emerald-500 to-emerald-600",
+
+    bullets: [
+      "Profit",
+      "Omzet",
+      "Export Excel",
+    ],
   },
-  {
-    title: "Multi User",
-    desc: "Atur hak akses Owner, Admin dan Kasir dalam satu sistem.",
-    icon: Users,
-    color: "bg-sky-50",
-    iconColor: "text-sky-600",
-  },
+
   {
     title: "Multi Outlet",
-    desc: "Kelola seluruh cabang dari satu dashboard cloud.",
-    icon: Store,
-    color: "bg-purple-50",
-    iconColor: "text-purple-600",
-  },
-  {
-    title: "Mobile & Desktop",
-    desc: "Dashboard web terintegrasi dengan aplikasi Flutter POS.",
-    icon: Smartphone,
-    color: "bg-pink-50",
-    iconColor: "text-pink-600",
+    description:
+      "Kelola seluruh cabang dari satu dashboard tanpa harus berpindah aplikasi.",
+
+    image: "/landing/dashboard.png",
+
+    color: "from-pink-500 to-pink-600",
+
+    bullets: [
+      "Cabang Unlimited",
+      "Hak Akses",
+      "Realtime Sync",
+    ],
   },
 ];
 
 export function LandingFeatures() {
   return (
     <section
-      id="features"
-      className="
-        bg-white
+  id="features"
+  className="
+    relative
 
-        py-28
-      "
-    >
+    bg-white
+
+    pt-48
+    pb-40
+
+    overflow-hidden
+  "
+>
       <div
         className="
           mx-auto
@@ -74,7 +96,17 @@ export function LandingFeatures() {
           lg:px-8
         "
       >
-        <div className="text-center">
+        <div
+  className="
+    mx-auto
+
+    flex
+    flex-col
+    items-center
+
+    text-center
+  "
+>
 
           <span
             className="
@@ -97,34 +129,39 @@ export function LandingFeatures() {
           </span>
 
           <h2
-            className="
-              mt-6
+  className="
+    mt-8
 
-              text-4xl
+    max-w-4xl
 
-              font-bold
+    text-center
 
-              text-slate-900
+    text-5xl
+    font-black
+    leading-tight
 
-              lg:text-5xl
-            "
-          >
+    text-slate-900
+
+    lg:text-6xl
+  "
+>
             Semua Yang Anda Butuhkan
           </h2>
 
           <p
-            className="
-              mx-auto
-              mt-6
+  className="
+    mt-8
 
-              max-w-3xl
+    max-w-3xl
 
-              text-lg
-              leading-8
+    text-center
 
-              text-slate-500
-            "
-          >
+    text-xl
+    leading-9
+
+    text-slate-500
+  "
+>
             IndoPOS dibangun untuk membantu bisnis
             berkembang dengan sistem yang cepat,
             modern dan mudah digunakan.
@@ -134,97 +171,209 @@ export function LandingFeatures() {
 
         <div
           className="
-            mt-20
+            mt-32
 
             grid
-            gap-6
+            gap-12
 
             md:grid-cols-2
             xl:grid-cols-3
           "
         >
 
-          {features.map((item) => {
+          {features.map((item) => (
 
-            const Icon = item.icon;
+  <article
+    key={item.title}
+    className="
+      group
 
-            return (
+      overflow-hidden
 
-              <div
-                key={item.title}
-                className="
-                  group
+      rounded-[32px]
 
-                  rounded-3xl
+      border
+      border-slate-200
 
-                  border
-                  border-slate-200
+      bg-white
 
-                  bg-white
+      shadow-sm
 
-                  p-8
+      transition-all
+      duration-500
 
-                  shadow-sm
+      hover:-translate-y-2
+      hover:shadow-2xl
+    "
+  >
 
-                  transition-all
-                  duration-300
+    {/* IMAGE */}
 
-                  hover:-translate-y-1
-                  hover:shadow-xl
-                "
-              >
+    <div
+      className="
+        overflow-hidden
 
-                <div
-                  className={`
-                    flex
-                    h-14
-                    w-14
-                    items-center
-                    justify-center
+        bg-slate-100
+      "
+    >
 
-                    rounded-2xl
+      <img
+        src={item.image}
+        alt={item.title}
+        className="
+          aspect-[16/10]
+          w-full
+          object-cover
 
-                    ${item.color}
-                  `}
-                >
+          transition-transform
+          duration-700
 
-                  <Icon
-                    size={28}
-                    className={item.iconColor}
-                  />
+          group-hover:scale-105
+        "
+      />
 
-                </div>
+    </div>
 
-                <h3
-                  className="
-                    mt-6
+    {/* CONTENT */}
 
-                    text-xl
-                    font-bold
+    <div className="p-10">
 
-                    text-slate-900
-                  "
-                >
-                  {item.title}
-                </h3>
+      {/* BADGE */}
 
-                <p
-                  className="
-                    mt-3
+      <div
+        className={`
+          inline-flex
 
-                    leading-7
+          rounded-full
 
-                    text-slate-500
-                  "
-                >
-                  {item.desc}
-                </p>
+          bg-gradient-to-r
 
-              </div>
+          ${item.color}
 
-            );
+          px-4
+          py-2
 
-          })}
+          text-sm
+          font-semibold
+
+          text-white
+        `}
+      >
+        {item.title}
+      </div>
+
+      {/* TITLE */}
+
+      <h3
+        className="
+          mt-8
+
+          text-3xl
+          font-bold
+
+          text-slate-900
+        "
+      >
+        {item.title}
+      </h3>
+
+      {/* DESCRIPTION */}
+
+      <p
+        className="
+          mt-5
+
+          leading-8
+
+          text-slate-500
+        "
+      >
+        {item.description}
+      </p>
+
+      {/* BULLET */}
+
+      <div
+        className="
+          mt-8
+
+          space-y-4
+        "
+      >
+
+        {item.bullets.map((bullet) => (
+
+          <div
+            key={bullet}
+            className="flex items-center gap-3"
+          >
+
+            <div
+              className="
+                flex
+                h-7
+                w-7
+                items-center
+                justify-center
+
+                rounded-full
+
+                bg-emerald-100
+              "
+            >
+
+              <Check
+                size={16}
+                className="text-emerald-600"
+              />
+
+            </div>
+
+            <span
+              className="
+                text-[15px]
+                text-slate-700
+              "
+            >
+              {bullet}
+            </span>
+
+          </div>
+
+        ))}
+
+      </div>
+
+      {/* BUTTON */}
+
+      <button
+        className="
+          mt-10
+
+          inline-flex
+          items-center
+          gap-2
+
+          font-semibold
+
+          text-[#343C67]
+
+          transition-all
+
+          group-hover:gap-4
+        "
+      >
+        Pelajari Selengkapnya
+
+        <ArrowRight size={18} />
+
+      </button>
+
+    </div>
+
+  </article>
+
+))}
 
         </div>
 
