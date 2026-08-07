@@ -56,16 +56,34 @@ const items = [
 
 export function LandingWhy() {
   return (
-    <section className="bg-slate-50 py-28">
+    <section className="bg-slate-50 py-24 lg:py-32">
+      <div
+  className="
+    mx-auto
 
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    flex
+    w-full
+    max-w-7xl
 
-        <div className="grid gap-20 lg:grid-cols-2 lg:items-center">
+    justify-center
 
-          {/* LEFT */}
+    px-6
 
-          <div>
+    lg:px-8
+  "
+>
+  <div
+    className="
+      flex
+      w-full
+      max-w-5xl
+      flex-col
+      items-center
+    "
+  >
+          {/* HEADER */}
 
+          <div className="mx-auto max-w-3xl text-center">
             <span
               className="
                 inline-flex
@@ -85,7 +103,9 @@ export function LandingWhy() {
               className="
                 mt-6
                 text-4xl
-                font-bold
+                font-black
+                leading-[1.08]
+                tracking-tight
                 text-slate-900
                 lg:text-5xl
               "
@@ -97,135 +117,97 @@ export function LandingWhy() {
 
             <p
               className="
+                mx-auto
                 mt-6
+                max-w-2xl
                 text-lg
                 leading-8
                 text-slate-500
               "
             >
-              IndoPOS menggabungkan Dashboard Admin
-              berbasis web dengan aplikasi Flutter POS
-              sehingga operasional bisnis menjadi
-              lebih cepat, mudah dan realtime.
+              IndoPOS menggabungkan Dashboard Admin berbasis web dengan aplikasi
+              Flutter POS sehingga operasional bisnis menjadi lebih cepat, mudah,
+              dan realtime.
             </p>
-
-            <div className="mt-12 grid gap-5">
-
-              {items.map((item) => {
-
-                const Icon = item.icon;
-
-                return (
-
-                  <div
-                    key={item.title}
-                    className="
-                      flex
-                      items-start
-                      gap-4
-
-                      rounded-3xl
-
-                      bg-white
-
-                      p-5
-
-                      shadow-sm
-                    "
-                  >
-
-                    <div
-                      className={`
-                        flex
-                        h-12
-                        w-12
-                        shrink-0
-                        items-center
-                        justify-center
-
-                        rounded-2xl
-
-                        ${item.bg}
-                      `}
-                    >
-
-                      <Icon
-                        size={22}
-                        className={item.color}
-                      />
-
-                    </div>
-
-                    <div>
-
-                      <h3
-                        className="
-                          font-semibold
-                          text-slate-900
-                        "
-                      >
-                        {item.title}
-                      </h3>
-
-                      <p
-                        className="
-                          mt-2
-                          text-sm
-                          leading-6
-                          text-slate-500
-                        "
-                      >
-                        {item.desc}
-                      </p>
-
-                    </div>
-
-                  </div>
-
-                );
-
-              })}
-
-            </div>
-
           </div>
 
-          {/* RIGHT */}
+          {/* FEATURES */}
 
           <div
-            className="
-              grid
-              grid-cols-2
-              gap-6
-            "
-          >
+  className="
+    mt-16
 
-            <Card
-              value="99.9%"
-              label="System Uptime"
-            />
+    grid
+    w-full
+    max-w-4xl
 
-            <Card
-              value="Realtime"
-              label="Data Sync"
-            />
+    gap-4
+  "
+>
+            {items.map((item) => {
+              const Icon = item.icon;
 
-            <Card
-              value="Cloud"
-              label="Infrastructure"
-            />
+              return (
+                <div
+                  key={item.title}
+                  className="
+                    flex
+                    items-center
+                    gap-4
 
-            <Card
-              value="24/7"
-              label="Business Ready"
-            />
+                    rounded-3xl
 
+                    border
+                    border-slate-200
+
+                    bg-white
+
+                    px-6
+                    py-5
+
+                    shadow-sm
+
+                    transition-all
+                    duration-300
+
+                    hover:-translate-y-1
+                    hover:shadow-md
+                  "
+                >
+                  <div
+                    className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${item.bg}`}
+                  >
+                    <Icon size={22} className={item.color} />
+                  </div>
+
+                  <div className="text-left">
+                    <h3 className="font-semibold text-slate-900">
+                      {item.title}
+                    </h3>
+
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
+          {/* DIVIDER */}
+
+          <div className="mx-auto my-16 h-px w-full max-w-4xl bg-slate-200" />
+
+          {/* STATS */}
+
+          <div className="mx-auto grid w-full max-w-4xl gap-5 sm:grid-cols-2">
+            <Card value="99.9%" label="System Uptime" />
+            <Card value="Realtime" label="Data Sync" />
+            <Card value="Cloud" label="Infrastructure" />
+            <Card value="24/7" label="Business Ready" />
+          </div>
         </div>
-
       </div>
-
     </section>
   );
 }

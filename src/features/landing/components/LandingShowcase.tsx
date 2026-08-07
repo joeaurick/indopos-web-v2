@@ -9,86 +9,72 @@ import {
 export function LandingShowcase() {
   return (
     <section
-      id="showcase"
-      className="
-        bg-slate-50
+  id="showcase"
+  className="bg-slate-50 py-24 lg:py-32"
+>
+  <div
+    className="
+      mx-auto
+      flex
+      w-full
+      max-w-7xl
+      flex-col
+      items-center
+      px-6
+      lg:px-8
+    "
+  >
+  {/* HEADER */}
 
-        py-28
-      "
-    >
-      <div
+  <div className="mx-auto w-full max-w-3xl text-center">
+    <div className="flex justify-center">
+      <span
         className="
-          mx-auto
-
-          max-w-7xl
-
-          px-6
-
-          lg:px-8
+          inline-flex
+          rounded-full
+          bg-[#343C67]/10
+          px-4
+          py-2
+          text-sm
+          font-semibold
+          text-[#343C67]
         "
       >
+        Showcase
+      </span>
+    </div>
 
-        <div className="text-center">
+    <h2
+      className="
+        mt-8
+        text-4xl
+        font-black
+        leading-[1.08]
+        tracking-tight
+        text-slate-900
+        sm:text-5xl
+        lg:text-6xl
+      "
+    >
+      Semua Bisnis
+      <br />
+      Dalam Satu Platform
+    </h2>
 
-          <span
-            className="
-              inline-flex
-
-              rounded-full
-
-              bg-[#343C67]/10
-
-              px-4
-              py-2
-
-              text-sm
-              font-semibold
-
-              text-[#343C67]
-            "
-          >
-            Showcase
-          </span>
-
-          <h2
-            className="
-              mt-6
-
-              text-4xl
-
-              font-bold
-
-              text-slate-900
-
-              lg:text-5xl
-            "
-          >
-            Semua Bisnis
-            <br />
-
-            Dalam Satu Platform
-          </h2>
-
-          <p
-            className="
-              mx-auto
-              mt-6
-
-              max-w-3xl
-
-              text-lg
-              leading-8
-
-              text-slate-500
-            "
-          >
-            Dashboard Admin dan aplikasi POS
-            Flutter saling terhubung secara
-            realtime sehingga operasional bisnis
-            menjadi lebih mudah.
-          </p>
-
-        </div>
+    <p
+      className="
+        mx-auto
+        mt-6
+        max-w-2xl
+        text-lg
+        leading-8
+        text-slate-500
+      "
+    >
+      Dashboard Admin dan aplikasi POS Flutter saling terhubung secara
+      realtime sehingga operasional bisnis menjadi lebih mudah.
+    </p>
+  </div>
 
         {/* MOCKUP */}
 
